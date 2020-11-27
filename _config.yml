@@ -3,17 +3,17 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
-subtitle: ''
-description: ''
+title: Err0r
+subtitle: 'gyy'
+description: 'gugugu'
 keywords:
-author: Err0rCM
-language: en
-timezone: ''
+author: gyy
+language: zh-CN
+timezone: 'Asia/Shanghai'
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://example.com/child' and root as '/child/'
-url: https://err0rcm.github.io/
+url: https://err0rcm.github.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -45,16 +45,12 @@ post_asset_folder: false
 relative_link: false
 future: true
 highlight:
-  enable: true
-  line_number: true
-  auto_detect: false
-  tab_replace: ''
-  wrap: true
-  hljs: false
+  enable: false
+
 prismjs:
   enable: false
   preprocess: true
-  line_number: true
+  line_number: false
   tab_replace: ''
 
 # Home page setting
