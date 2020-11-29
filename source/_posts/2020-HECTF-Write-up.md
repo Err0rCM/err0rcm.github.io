@@ -21,7 +21,7 @@ permalink:
 还在更新，抢了到人生第一次大一点点比赛的一血
 
 
-![img](2020 HECTF Write-up/1.png)
+![img](2020-HECTF-Write-up/1.png)
 
 ---
 
@@ -50,7 +50,7 @@ flag不在/flag中哦，你应该找找奇奇怪怪的文件名
 老MD5强类型比较，传入两个数组，数组的值不相等，造成MD5加密时报错产生NULL=NULL的情况，绕过比较。
 即`a[]=1&b[]=a`
 
-![image-20201129160030053](2020 HECTF Write-up/image-20201129160030053.png)
+![image-20201129160030053](2020-HECTF-Write-up/image-20201129160030053.png)
 
 访问./3b8cf4731c36d20776c76e20f9c774c7.php
 
@@ -107,11 +107,11 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 很明显无参数RCE，编写脚本，首先`print_r(getcwd());`
 
-![image-20201129160247187](2020 HECTF Write-up/image-20201129160247187.png)
+![image-20201129160247187](2020-HECTF-Write-up/image-20201129160247187.png)
 
 访问`/very_g00d_Y0u_got_it.php`得`/`，说明当前工作目录为根目录
 
-![image-20201129160318943](2020 HECTF Write-up/image-20201129160318943.png)
+![image-20201129160318943](2020-HECTF-Write-up/image-20201129160318943.png)
 
 然后`print_r(scandir(getcwd()));`扫一下目录
 
@@ -149,10 +149,10 @@ Array
 )
 ```
 
-![image-20201129160403000](2020 HECTF Write-up/image-20201129160403000.png)
+![image-20201129160403000](2020-HECTF-Write-up/image-20201129160403000.png)
 发现异常文件`Zmw0Z2dnZ2dnZ2dnZ2dnCg`，访问后得到了flag
 
-![image-20201129160434419](2020 HECTF Write-up/image-20201129160434419.png)
+![image-20201129160434419](2020-HECTF-Write-up/image-20201129160434419.png)
 最后base64一下发现`Zmw0Z2dnZ2dnZ2dnZ2dnCg`就是`fl4gggggggggggg`
 
 
@@ -184,13 +184,13 @@ print(response)
 题目链接：http://114.55.165.246:8082/
 
 题目提示为注入，进入界面为登陆框，第一时间想到SQL注入
-![image-20201129160533941](2020 HECTF Write-up/image-20201129160533941.png)
+![image-20201129160533941](2020-HECTF-Write-up/image-20201129160533941.png)
 
 输admin登陆一下
-![image-20201129160554397](2020 HECTF Write-up/image-20201129160554397.png)
+![image-20201129160554397](2020-HECTF-Write-up/image-20201129160554397.png)
 
 是GET传参，sqlmap跑一下没有结果，万能密码`1'or 1=1`试一下成功
-![image-20201129160625642](2020 HECTF Write-up/image-20201129160625642.png)
+![image-20201129160625642](2020-HECTF-Write-up/image-20201129160625642.png)
 
 怀疑是XXE，尝试了一会发现不是。
 后来想到XPath注入(傻了，报错里有...)
@@ -254,7 +254,7 @@ result: admin
 写脚本开始跑
 首先判断根下节点数
 因为是GET传参，直接访问`http://114.55.165.246:8082/?username=1' or count(/*)=1 or '1'='1&password=1&submit=登录`
-![image-20201129160726706](2020 HECTF Write-up/image-20201129160726706.png)
+![image-20201129160726706](2020-HECTF-Write-up/image-20201129160726706.png)
 
 这个结果应该是return 1，即根下有一个节点
 
@@ -299,15 +299,15 @@ print(result)
 
 ```
 结果爆出第一级为root
-![image-20201129161139719](2020 HECTF Write-up/image-20201129161139719.png)
+![image-20201129161139719](2020-HECTF-Write-up/image-20201129161139719.png)
 
 同理，修改第13行为`"1' or substring(name(/root/*[position()=1]),"`
 继续爆
-![image-20201129161225253](2020 HECTF Write-up/image-20201129161225253.png)
+![image-20201129161225253](2020-HECTF-Write-up/image-20201129161225253.png)
 
-![image-20201129161255235](2020 HECTF Write-up/image-20201129161255235.png)
+![image-20201129161255235](2020-HECTF-Write-up/image-20201129161255235.png)
 
-![image-20201129161318627](2020 HECTF Write-up/image-20201129161318627.png)
+![image-20201129161318627](2020-HECTF-Write-up/image-20201129161318627.png)
 
 最后爆出结构为/root/users/user[id]
 
@@ -352,14 +352,14 @@ print(result)
 
 ```
 爆username
-![image-20201129162416104](2020 HECTF Write-up/image-20201129162416104.png)
+![image-20201129162416104](2020-HECTF-Write-up/image-20201129162416104.png)
 果然是admin
 
 继续爆password
-![image-20201129161907953](2020 HECTF Write-up/image-20201129161907953.png)
+![image-20201129161907953](2020-HECTF-Write-up/image-20201129161907953.png)
 
 
 结果password=339db714647a1d66b85cd08442287841
 
 登录一下，获得flag
-![image-20201129161946397](2020 HECTF Write-up/image-20201129161946397.png)
+![image-20201129161946397](2020-HECTF-Write-up/image-20201129161946397.png)
