@@ -1,5 +1,6 @@
 ---
 title: 网络空间安全期末Write-up
+urlname: examination-Write-up
 date: 2020-10-20 22:27:25
 updated: 
 comments: false

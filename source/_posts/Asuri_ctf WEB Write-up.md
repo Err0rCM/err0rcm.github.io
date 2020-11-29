@@ -1,5 +1,6 @@
 ---
 title: Asuri_ctf WEB Write-up
+urlname: Asuri_ctf-WEB-Write-up
 date: 2020-10-12 16:58:25
 updated: 
 comments: false

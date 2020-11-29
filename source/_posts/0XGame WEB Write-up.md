@@ -1,5 +1,6 @@
 ---
 title: 0XGame WEB Write-up
+urlname: 0XGame-WEB-Write-up
 date: 2020-10-10 16:57:25
 updated: 
 comments: false

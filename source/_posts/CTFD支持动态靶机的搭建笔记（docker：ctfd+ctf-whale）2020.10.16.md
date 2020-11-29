@@ -1,5 +1,6 @@
 ---
 title: CTFD支持动态靶机的搭建笔记（docker：ctfd+ctf-whale）2020.10.16
+urlname: CTFD
 date: 2020-10-17 17:49:25
 updated: 
 comments: false

@@ -1,5 +1,6 @@
 ---
 title: Netcat 网络测试工具
+urlname: Netcat
 date: 2020-11-3 17:57:25
 updated: 
 comments: false

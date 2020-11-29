@@ -1,5 +1,6 @@
 ---
 title: Hello World
+urlname: Hello World
 date: 2020/9/1 00:00:00
 updated: 
 comments: false

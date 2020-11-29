@@ -1,5 +1,6 @@
 ---
 title: 2020hxb-Writeup-cOMING
+urlname: 2020hxb-Writeup-cOMING
 date: 2020-11-13 09:22:25
 updated: 
 comments: false
