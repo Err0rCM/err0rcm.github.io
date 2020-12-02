@@ -17,7 +17,7 @@ permalink:
 
 ## 本篇文章最后更新于2020.10.17
 
-[TOC]
+
 
 
 ## 前言
@@ -83,7 +83,7 @@ docker node ls
 docker node update --label-add name=linux-1 <节点 ID>
 ```
 
-![docker集群设置](https://img-blog.csdnimg.cn/20201017233032375.png#pic_center)
+![docker集群设置](CTFD支持动态靶机的搭建笔记（docker：ctfd+ctf-whale）2020.10.17/20201017233032375.png)
 
 具体原理等可以查看其它ctfd搭建文章，文末会贴出，这里不做过多阐述
 
@@ -96,7 +96,7 @@ docker node update --label-add name=linux-1 <节点 ID>
 frpc是在ctfd里的，frps是在docker机里的
 
 上传赵师傅的Frp-Docker-For-CTFd-Whale，进入目录后运行`docker-compose up -d`即可，然后`docker ps`可看到frps的容器运行中
-![frps](https://img-blog.csdnimg.cn/202010172331132.png#pic_center)
+![frps](CTFD支持动态靶机的搭建笔记（docker：ctfd+ctf-whale）2020.10.17/202010172331132.png)
 
 这里看到frps有28000-28100，这是在**Frp-Docker-For-CTFd-Whale里的docker-compose.yml**，可更改配置后compose
 ```
@@ -243,34 +243,29 @@ networks:
                 - subnet: 172.2.0.0/16
 
 ```
+
+
 然后**注意！注意！注意！**
 
-1. 在docker-compose.yml同目录下建nginx文件夹，即与第一个#这里注意相应，然后建`http.conf`文件写入以下内容
+在docker-compose.yml同目录下建nginx文件夹，即与第一个#这里注意相应，然后建`http.conf`文件写入以下内容
+
+
+
 ```
 worker_processes 4;
-
 events {
-
   worker_connections 1024;
 }
-
 http {
-
   # Configuration containing list of application servers
   upstream app_servers {
-
     server ctfd:8000;
   }
-
   server {
-
     listen 80;
-
     client_max_body_size 4G;
-
     # Handle Server Sent Events for Notifications
     location /events {
-
       proxy_pass http://app_servers;
       proxy_set_header Connection '';
       proxy_http_version 1.1;
@@ -283,10 +278,8 @@ http {
       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
       proxy_set_header X-Forwarded-Host $server_name;
     }
-
     # Proxy connections to the application servers
     location / {
-
       proxy_pass http://app_servers;
       proxy_redirect off;
       proxy_set_header Host $host;
@@ -300,16 +293,25 @@ http {
 ```
 
 
-2. 在docker-compose.yml同目录下建frpc文件夹，即与第二个#这里注意相应，然后进入解压的/frp_0.29.0_linux_amd64文件夹，或直接上传，将
+
+在docker-compose.yml同目录下建frpc文件夹，即与第二个#这里注意相应，然后进入解压的/frp_0.29.0_linux_amd64文件夹，或直接上传，将
+
+
 
 ```
 frpc
 frpc.ini
 frpc_full.ini
 LICENSE
+
 ```
+
+
 放入frpc文件夹
 接着配置frpc.ini，直接上配置
+
+
+
 ```
 [common]
 token = randomme
@@ -320,6 +322,7 @@ tls_enable = true
 
 admin_addr = 172.1.0.3 #一定要加！！与后面相应
 admin_port = 7400
+
 ```
 
 此处非常重要，之前本人在这里踩了好多次坑。
@@ -375,19 +378,19 @@ ENTRYPOINT ["/opt/CTFd/docker-entrypoint.sh"]
 ### 6.准备完毕
 运行`docker-compose build`
 静待完成
-![build](https://img-blog.csdnimg.cn/20201017233234439.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NvbHV0aW9uMTIz,size_16,color_FFFFFF,t_70#pic_center)
+![build](CTFD支持动态靶机的搭建笔记（docker：ctfd+ctf-whale）2020.10.17/20201017233234439.png)
 
 
 然后运行`docker-compose up -d`
 
 
-![up](https://img-blog.csdnimg.cn/20201017233300241.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NvbHV0aW9uMTIz,size_16,color_FFFFFF,t_70#pic_center)
+![up](CTFD支持动态靶机的搭建笔记（docker：ctfd+ctf-whale）2020.10.17/20201017233300241.png)
 
 
 如图所示，有WARNING即为在集群网络类，是正常情况
 运行`docker ps`查看容器情况
 
-![ps](https://img-blog.csdnimg.cn/20201017233329640.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NvbHV0aW9uMTIz,size_16,color_FFFFFF,t_70#pic_center)
+![ps](CTFD支持动态靶机的搭建笔记（docker：ctfd+ctf-whale）2020.10.17/20201017233329640.png)
 
 
 访问 http://ip:8000 即可访问ctfd
@@ -417,11 +420,11 @@ ENTRYPOINT ["/opt/CTFd/docker-entrypoint.sh"]
 | Docker Container Timeout                         | 单位为秒                              |
 
 最后附上我的配置图片
-![配置1](https://img-blog.csdnimg.cn/20201017233350699.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NvbHV0aW9uMTIz,size_16,color_FFFFFF,t_70#pic_center)
+![配置1](CTFD支持动态靶机的搭建笔记（docker：ctfd+ctf-whale）2020.10.17/20201017233350699.png)
 
-![配置2](https://img-blog.csdnimg.cn/20201017233413853.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NvbHV0aW9uMTIz,size_16,color_FFFFFF,t_70#pic_center)
+![配置2](CTFD支持动态靶机的搭建笔记（docker：ctfd+ctf-whale）2020.10.17/20201017233413853.png)
 
-![配置3](https://img-blog.csdnimg.cn/20201017233431163.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NvbHV0aW9uMTIz,size_16,color_FFFFFF,t_70#pic_center)
+![配置3](CTFD支持动态靶机的搭建笔记（docker：ctfd+ctf-whale）2020.10.17/20201017233431163.png)
 
 
 ### 设置docker网络
@@ -430,17 +433,17 @@ ENTRYPOINT ["/opt/CTFd/docker-entrypoint.sh"]
 发现frpc在无限重启，因为我们还没有配置网络
 运行`docker network ls`
 
-![容器](https://img-blog.csdnimg.cn/20201017234359215.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NvbHV0aW9uMTIz,size_16,color_FFFFFF,t_70#pic_center)
+![容器](CTFD支持动态靶机的搭建笔记（docker：ctfd+ctf-whale）2020.10.17/20201017234359215.png)
 
 
 显示ctfd_frp-containers
 
 运行`docker network inspect ctfd_frp`
 
-![ctfd_frp](https://img-blog.csdnimg.cn/20201017234428683.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NvbHV0aW9uMTIz,size_16,color_FFFFFF,t_70#pic_center)
+![ctfd_frp](CTFD支持动态靶机的搭建笔记（docker：ctfd+ctf-whale）2020.10.17/20201017234428683.png)
 
 
-这个是docker-compose里compose后创建的网络，我们将frps加入此网络，例如我的frp容器id为12345，则运行`docker network connect ctfd_frp 12345<即frp容器id>`。再运行`docker network inspect ctfd_frp`，如下![在这里插入图片描述](https://img-blog.csdnimg.cn/20201017234344822.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NvbHV0aW9uMTIz,size_16,color_FFFFFF,t_70#pic_center)
+这个是docker-compose里compose后创建的网络，我们将frps加入此网络，例如我的frp容器id为12345，则运行`docker network connect ctfd_frp 12345<即frp容器id>`。再运行`docker network inspect ctfd_frp`，如下![在这里插入图片描述](CTFD支持动态靶机的搭建笔记（docker：ctfd+ctf-whale）2020.10.17/20201017234344822.png)
 
 
 这里可以看到ip与我们之前设置的相应。
@@ -449,18 +452,18 @@ ENTRYPOINT ["/opt/CTFd/docker-entrypoint.sh"]
 
 然后`docker ps`
 
-最终如下![ps](https://img-blog.csdnimg.cn/20201017234457228.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NvbHV0aW9uMTIz,size_16,color_FFFFFF,t_70#pic_center)
+最终如下![ps](CTFD支持动态靶机的搭建笔记（docker：ctfd+ctf-whale）2020.10.17/20201017234457228.png)
 
 
 成功完成。
 
 最后设置道题目选择（我做了汉化）
-![题目1](https://img-blog.csdnimg.cn/20201017233701655.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NvbHV0aW9uMTIz,size_16,color_FFFFFF,t_70#pic_center)
+![题目1](CTFD支持动态靶机的搭建笔记（docker：ctfd+ctf-whale）2020.10.17/20201017233701655.png)
 
 
-![题目2](https://img-blog.csdnimg.cn/20201017233922648.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NvbHV0aW9uMTIz,size_16,color_FFFFFF,t_70#pic_center)
+![题目2](CTFD支持动态靶机的搭建笔记（docker：ctfd+ctf-whale）2020.10.17/20201017233922648.png)
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20201017234241273.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NvbHV0aW9uMTIz,size_16,color_FFFFFF,t_70#pic_center)
+![在这里插入图片描述](CTFD支持动态靶机的搭建笔记（docker：ctfd+ctf-whale）2020.10.17/20201017234241273.png)
 
 `docker ps`里可以看到容器成功启动，地址正常访问
 
@@ -470,7 +473,7 @@ ENTRYPOINT ["/opt/CTFd/docker-entrypoint.sh"]
 2. 如果出现安装某个文件失败问题，请更换源，很多都是源里没有指定文件造成的。可以自行访问一下网站，查看一下要下载的文件名，再进行配置。
 3. 似乎docker和系统的版本会有影响，本机为CentOS7.4 64位，腾讯云，docker配置如下
 
-![版本](https://img-blog.csdnimg.cn/20201017234315447.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NvbHV0aW9uMTIz,size_16,color_FFFFFF,t_70#pic_center)
+![版本](CTFD支持动态靶机的搭建笔记（docker：ctfd+ctf-whale）2020.10.17/20201017234315447.png)
 
 
 4. python的问题，上面提到的，可以删除，是因为没有指定版本的原因，也可以指定版本再下载
@@ -564,6 +567,8 @@ ENTRYPOINT ["/opt/CTFd/docker-entrypoint.sh"]
 
  可以使用 `docker logs ctfd_ctfd_1` 查看输出，如果发现输出类似： 
 
+
+
 ```
 /usr/local/lib/python3.7/site-packages/tzlocal/unix.py:158: UserWarning: Can not find any timezone configuration, defaulting to UTC.
   warnings.warn('Can not find any timezone configuration, defaulting to UTC.')
@@ -586,6 +591,7 @@ Starting CTFd
 [2020-10-11 12:31:37 +0000] [33] [INFO] Booting worker with pid: 33
 [2020-10-11 12:31:39 +0000] [35] [INFO] Booting worker with pid: 35
 [2020-10-11 12:31:40 +0000] [37] [INFO] Booting worker with pid: 37(一直在加)
+
 ```
 
  则问题为[这篇文章中所提到的问题](https://stackoverflow.com/questions/64105616/greenlet-runtime-error-and-deployed-app-in-docker-keeps-booting-all-the-workers)，只需要删除 `requirements.txt` 中的 `gevent` 版本号即可，结果类似下面这样 
