@@ -7,6 +7,7 @@ updated:
 permalink:
 tags:
 categories: 靶场实战
+hide: index
 ---
 
 刷刷DVWA靶场

