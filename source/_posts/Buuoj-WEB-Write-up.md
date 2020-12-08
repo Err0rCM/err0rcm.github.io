@@ -983,3 +983,60 @@ payload：
 
 ----
 
+
+
+# [SUCTF 2019]CheckIn
+
+## 文件上传
+
+![image-20201203151206446](Buuoj-WEB-Write-up/image-20201203151206446.png)
+
+上来很直白，传个码看看
+
+![image-20201203151245517](Buuoj-WEB-Write-up/image-20201203151245517.png)
+
+改后缀
+
+![image-20201203151428059](Buuoj-WEB-Write-up/image-20201203151428059.png)文件内容还检查，加`GIF98a`可以
+
+![image-20201203151803538](Buuoj-WEB-Write-up/image-20201203151803538.png)
+
+会返回上传文件夹目录的数组，目录穿越上传不行，php过滤死了，传含码图片，过滤`<?`，而`<%`也不解析，路走不通。
+
+传个`.htaccess`
+
+![image-20201203152651182](Buuoj-WEB-Write-up/image-20201203152651182.png)
+
+但是好像没解析...
+
+![image-20201203152715211](Buuoj-WEB-Write-up/image-20201203152715211.png)
+
+经查询，nginx使用`.user.ini`自定义设置
+
+于是传个`.user.ini`
+
+```ini
+.user.ini
+
+GIF89a                  //绕过exif_imagetype()
+
+auto_prepend_file=gyy.jpg //指定在主文件之前自动解析的文件的名称，并包含该文件，就像使用require函数调用它一样。它包含在所有php文件前先执行
+auto_append_file=gyy.jpg  //解析后进行包含，它包含在所有php文件执行后执行
+```
+
+![image-20201203161427723](Buuoj-WEB-Write-up/image-20201203161427723.png)
+
+ok,再传码
+
+![image-20201203161504788](Buuoj-WEB-Write-up/image-20201203161504788.png)
+
+然后直接访问`index.php`就可以了，因为`.user.ini`里写了，提前加载了`gyy.jpg`文件，而里面是我们写好的码，shell直接连上
+
+![image-20201203161829593](Buuoj-WEB-Write-up/image-20201203161829593.png)
+
+
+
+----
+
+
+
