@@ -10,6 +10,7 @@ tags:
   - ctf-whale
 categories: 
   - 杂谈笔记
+  - 菜鸡教程
 permalink: 
 ---
 

