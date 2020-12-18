@@ -3,11 +3,13 @@ title: SSTI模板注入
 comments: false
 hide: false
 date: 2020-12-13 14:58:27
-urlname:SSTI
-updated:
+urlname: ssti
+updated: 2020-12-15 11:58:27
 permalink:
 tags:
-categories:
+categories: 
+  - 杂谈笔记
+  - 学习笔记
 ---
 
 
@@ -104,3 +106,4 @@ http://ip:port/error?msg={{handler.settings}}
 
 
 
+ 
