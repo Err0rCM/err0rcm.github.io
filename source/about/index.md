@@ -81,4 +81,4 @@ type:
 
 
 
-~~[secret](/little)~~
+<small>~~[secret](/little)~~</small>
