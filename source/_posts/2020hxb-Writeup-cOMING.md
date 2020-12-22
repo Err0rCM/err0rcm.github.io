@@ -7,11 +7,8 @@ comments: false
 tags: 
   - 内存取证
   - 文件上传
-  - volatility
   - 伪加密
   - 明文攻击
-  - 维吉尼亚密码
-  - pyc反编译
 categories: 
   - Write-Up
 permalink: 

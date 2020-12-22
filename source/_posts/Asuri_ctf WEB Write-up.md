@@ -27,7 +27,8 @@ f12直接看源码
 题目地址：<a class="url" href="http://106.15.177.94:10017/" target="_blank" rel="noopener noreferrer">http://106.15.177.94:10017/</a>
 
 打开直接给源码
-<pre><code class="language-php" lang="php"><?php
+```php
+<?php
 require('flag.php');//寮曞叆flag鍜宎bc鍙橀噺
 foreach($_GET as $key => $value){
     $key=$value;
@@ -38,7 +39,10 @@ if($a==$abc)
 }
 show_source(__FILE__);
 ?>
-</code></pre>
+```
+
+
+
 get直接收个a参数，a=abc就出flag，非常简单
 <h3>最终</h3>
 payload：./?a=abc
@@ -51,7 +55,7 @@ payload：./?a=abc
 题目地址：<a class="url" href="http://106.15.177.94:10019" target="_blank" rel="noopener noreferrer">http://106.15.177.94:10019</a>
 
 打开得源码
-<pre><code class="language-php" lang="php">
+```php
 <?php
 include_once('flag.php');
 //flag.php涓�$flag鍙橀噺
@@ -63,9 +67,12 @@ if (isset($_GET['ans'])) {
 }
 show_source(__FILE__);
 ?>
+```
 
-</code></pre>
+
+
 不说了
+
 <h3>最终</h3>
 payload：./ans=hello_world
 
@@ -110,6 +117,7 @@ x' or 1=1 or 'x'='y
 <h3>同上</h3>
 一样，payload登录提示要从本地登录
 加个<code>X-Forwarded-For: 127.0.0.1</code>即可
+
 <h3>最终</h3>
 问题解决：Asuri{1m_Adm1n}
 

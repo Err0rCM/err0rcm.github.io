@@ -5,7 +5,6 @@ date: 2020-10-10 16:57:25
 updated: 
 comments: false
 tags: 
-  - robots协议
   - XFF
   - SQL注入
   - XXE
@@ -33,7 +32,6 @@ Disallow: /flaaaggg.php
 
 
 <h3>最终</h3>
-
 访问/flaaaggg.php即可
 
 问题解决：0xGame{now_you_k0nw_robots_Protocol}
