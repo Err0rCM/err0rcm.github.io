@@ -23,6 +23,8 @@ permalink:
 ## 队伍成员
 gyy,Trick,hxq
 
+<!-- more -->
+
 ## Web
 
 ### 题目名字不重要反正题挺简单的
