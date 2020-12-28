@@ -1,5 +1,5 @@
 ---
-title: 2020hxb-Writeup-cOMING
+title: 2020hxb-Writeup
 urlname: 2020hxb-Writeup-cOMING
 date: 2020-11-13 09:22:25
 updated: 2020-12-23 09:22:25
@@ -15,12 +15,14 @@ permalink:
 ---
 
 # 湖湘杯2020
-## 队伍情况
+队伍情况
+
 队伍名称：cOMING
 
 ![](2020hxb-Writeup-cOMING/b98885edfaae8f28a1142482b1c5a273.png)
 
-## 队伍成员
+队伍成员
+
 gyy,Trick,hxq
 
 <!-- more -->
