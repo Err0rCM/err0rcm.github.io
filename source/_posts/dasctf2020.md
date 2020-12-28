@@ -7,7 +7,8 @@ urlname: dasctf2020
 updated:
 permalink: 
 tags:
-  - 
+  - SSRF
+  - 反序列化
 categories:
   - Write-Up
 ---
