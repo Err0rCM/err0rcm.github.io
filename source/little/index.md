@@ -56,7 +56,7 @@ comments: false
 
 ---
 
-2021惹，后悔在2020上半年没有建树
+2021惹，后悔在2020上半年没有建树，希望今年能像师傅们一样强！
 
  ![img](index/AY3O75`B55B1YRCFMMF3SLB.png) 
 
