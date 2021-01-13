@@ -104,3 +104,15 @@ deploy:
   repo: https://github.com/Err0rCM/err0rcm.github.io # 比如：https://github.com/YunYouJun/yunyoujun.github.io
   branch: master # 默认使用 master 分支
   message: Update Hexo Static Content # 你可以自定义此次部署更新的说明
+
+# Security
+encrypt: # hexo-blog-encrypt
+  abstract: 有东西被加密了欸, 请输入密码查看.
+  message: 这里需要密码查看哦.
+  tags:
+  - {name: tagName, password: 密码A}
+  - {name: tagName, password: 密码B}
+  silent: true
+  theme: blink
+  wrong_pass_message: 密码不太对，别想骗窝.
+  wrong_hash_message: 抱歉, 这个文章不能被校验, 不过您还是能看看解密后的内容.

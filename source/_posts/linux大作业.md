@@ -8,6 +8,7 @@ updated:
 permalink: 
 tags: 
 categories: Programme
+password: gyycoming
 ---
 
 Linux C环境编程的题目，防止抄袭，CSDN上的我删掉了部分代码，这里放出完整版本
