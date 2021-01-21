@@ -9,7 +9,7 @@
     "server": "hexo server"
   },
   "hexo": {
-    "version": "5.3.0"
+    "version": "5.2.0"
   },
   "dependencies": {
     "hexo": "^5.2.0",
@@ -17,7 +17,7 @@
     "hexo-deployer-git": "^2.1.0",
     "hexo-generator-archive": "^1.0.0",
     "hexo-generator-category": "^1.0.0",
-    "hexo-generator-index": "^2.0.0",
+    "hexo-generator-index-pin-top": "^0.2.2",
     "hexo-generator-search": "^2.4.1",
     "hexo-generator-tag": "^1.0.0",
     "hexo-image-link": "0.0.3",
@@ -28,6 +28,7 @@
     "hexo-renderer-stylus": "^2.0.1",
     "hexo-server": "^2.0.0",
     "hexo-simple-image": "^1.0.2",
+    "hexo-wordcount": "^6.0.1",
     "prismjs": "^1.22.0",
     "scrollreveal": "^4.0.7"
   }

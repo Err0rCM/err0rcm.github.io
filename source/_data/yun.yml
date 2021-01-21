@@ -164,7 +164,7 @@ archive:
   last_word: 没有更多的黑历史了_(:з」∠)_
 
 wordcloud:
-  enable: false
+  enable: true
   height: 350
 
 # You can set color for every tag or category.
@@ -286,7 +286,7 @@ cdn:
 
 # cdn for third-party library (alternative include)
 # please see in _vendors.yml
-vendors:
+#vendors:
 
 # UI
 banner:
@@ -338,7 +338,7 @@ trianglify:
   opacity: 0.5
 
 cursor:
-  enable: false
+  enable: true
   default: https://cdn.jsdelivr.net/gh/YunYouJun/cdn/css/md-cursors/pointer.cur
   pointer: https://cdn.jsdelivr.net/gh/YunYouJun/cdn/css/md-cursors/link.cur
   text: https://cdn.jsdelivr.net/gh/YunYouJun/cdn/css/md-cursors/text.cur
@@ -347,7 +347,7 @@ smoothScroll: true
 
 # You can see effect in https://scrollrevealjs.org/
 scrollreveal:
-  enable: false
+  enable: true
   targets:
     - .post-card
     - .post-content img
@@ -590,5 +590,9 @@ slide:
   theme: white
   config:
     history: true
-    mouseWheel: false
+    mouseWheel: true
 
+wordcount:
+  enable: true
+  count: true
+  time: true
