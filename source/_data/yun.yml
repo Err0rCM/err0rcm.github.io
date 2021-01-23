@@ -164,7 +164,7 @@ archive:
   last_word: 没有更多的黑历史了_(:з」∠)_
 
 wordcloud:
-  enable: true
+  enable: false
   height: 350
 
 # You can set color for every tag or category.
@@ -220,6 +220,9 @@ types:
   zhihu:
     color: "#0084FF"
     icon: icon-zhihu-line
+  2021:
+    color: "#0084FF"
+    icon: icon-calendar-2-line
 
 # post_card
 post_card:
