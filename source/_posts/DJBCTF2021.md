@@ -1,14 +1,15 @@
 ---
 title: DJBCTF2021
 comments: false
-hide: false
+hide: true
 date: 2021-01-25 01:36:11
-urlname:
+urlname: djbctf2021
 updated:
 permalink:
 password:
 tags:
-categories:
+  - 反序列化
+categories: Write-Up
 ---
 
 
