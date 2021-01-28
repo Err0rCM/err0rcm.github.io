@@ -1,7 +1,7 @@
 ---
 title: DJBCTF2021
 comments: false
-hide: true
+hide: false
 date: 2021-01-25 00:36:11
 urlname: djbctf2021
 updated:
@@ -9,20 +9,21 @@ permalink:
 password:
 tags:
   - 反序列化
+  - Crypto
 categories: Write-Up
 ---
 
 2021第一场比赛
 
-DJBctf
+昵称：别答了别答了再答人傻了
 
 <!-- more -->
 
-昵称：别答了别答了再答人傻了
+DJBctf，孩子太菜了呜呜呜
 
 做了两道web，签到题有非预期(汗)，分析下预期和非预期解法，加上些个人的理解
 
-Web ![img](DJBCTF2021/12C9F137.png)何德何能，做了一道密码学...无限接近答案，赛后终于出了。
+本Web狗何德何能，尝试做了一道密码学...赛后才终于出了。
 
 ---
 
