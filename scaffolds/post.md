@@ -1,6 +1,6 @@
 ---
 title: {{ title }}
-urlname: 
+urlname: #必填
 date: {{ date }}
 updated: 
 comments: false
