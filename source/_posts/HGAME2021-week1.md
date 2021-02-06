@@ -1,15 +1,14 @@
 ---
-
-
 title: HGAME2021-week1
 comments: false
 hide: false
-date: 2021-01-31 22:59:51
+date: 2021-02-06 13:59:51
 urlname: hgame2021week1
 updated:
 password: hgame2021week1
 tags:
-categories:Write-Up
+categories: Write-Up
+
 ---
 
 
