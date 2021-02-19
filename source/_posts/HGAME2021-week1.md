@@ -5,7 +5,7 @@ hide: false
 date: 2021-02-06 13:59:51
 urlname: hgame2021week1
 updated:
-password: hgame2021week1
+password: 
 tags:
 categories: Write-Up
 
