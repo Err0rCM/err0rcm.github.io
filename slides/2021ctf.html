@@ -1,440 +1,430 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#000000"><meta name="author" content="gyy"><meta name="copyright" content="gyy"><meta name="generator" content="Hexo 5.2.0"><meta name="theme" content="hexo-theme-yun"><title>2021ctf | Err0r</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/solarized.css"></head><body><div class="reveal"><div class="slides"><section data-markdown data-separator="---" data-separator-vertical="~~" data-separator-notes="^Note:"><script type="text/template">
-## 2021のCTF比赛
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
 
-<small>
+  
+  <title>2021ctf | Err0r</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="2021のCTF比赛  新的开始，准备好了吗？     学得越多，越觉得自己渺小。 努力成长吧。    &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; 一月    |    二月    |    三月    |    四月 五月    |    六月    |    七月    |    八月 九月    |    十月    |    十一月    |    十二月 &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;">
+<meta property="og:type" content="website">
+<meta property="og:title" content="2021ctf">
+<meta property="og:url" content="https://err0r.top/slides/2021ctf.html">
+<meta property="og:site_name" content="Err0r">
+<meta property="og:description" content="2021のCTF比赛  新的开始，准备好了吗？     学得越多，越觉得自己渺小。 努力成长吧。    &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; 一月    |    二月    |    三月    |    四月 五月    |    六月    |    七月    |    八月 九月    |    十月    |    十一月    |    十二月 &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-02-19T08:22:06.120Z">
+<meta property="article:author" content="gyy">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Err0r" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
 
-新的开始，准备好了吗？
+<meta name="generator" content="Hexo 5.2.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Err0r</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://err0r.top"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="slide-" class="article article-type-slide" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/slides/2021ctf.html" class="article-date">
+  <time datetime="2020-12-31T16:00:00.000Z" itemprop="datePublished">2021-01-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      2021ctf
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="2021のCTF比赛"><a href="#2021のCTF比赛" class="headerlink" title="2021のCTF比赛"></a>2021のCTF比赛</h2><small>
+
+<p>新的开始，准备好了吗？</p>
 </small>
 
----
-
-> 学得越多，越觉得自己渺小。
->
-> 努力成长吧。
-
-
-
+<hr>
+<blockquote>
+<p>学得越多，越觉得自己渺小。</p>
+<p>努力成长吧。</p>
+</blockquote>
 <small>
 
-==============================
-
-[一月](#/2)	|	[二月](#/3)	|	[三月](#/4)	|	[四月](#/5)
-
-[五月](#/6)	|	[六月](#/7)	|	[七月](#/8)	|	[八月](#/9)
-
-[九月](#/10)	|	[十月](#/11)	|	[十一月](#/12)	|	[十二月](#/13)
-
-==============================
-
+<p>==============================</p>
+<p><a href="#/2">一月</a>    |    <a href="#/3">二月</a>    |    <a href="#/4">三月</a>    |    <a href="#/5">四月</a></p>
+<p><a href="#/6">五月</a>    |    <a href="#/7">六月</a>    |    <a href="#/8">七月</a>    |    <a href="#/9">八月</a></p>
+<p><a href="#/10">九月</a>    |    <a href="#/11">十月</a>    |    <a href="#/12">十一月</a>    |    <a href="#/13">十二月</a></p>
+<p>==============================</p>
 </small>
 
-[**年度WP总结**](#/16)
-
----
-
-
-
-## 一月 · 睦月
-
-January · 比赛总览
-
+<p><a href="#/16"><strong>年度WP总结</strong></a></p>
+<hr>
+<h2 id="一月-·-睦月"><a href="#一月-·-睦月" class="headerlink" title="一月 · 睦月"></a>一月 · 睦月</h2><p>January · 比赛总览</p>
 <small>
 
-[大吉大利杯(已结束)](#/2/1)
-
-[DASCTF一月赛(已结束)](#/2/2)
-
-[春秋杯·新春赛(已结束)](#/2/3)
-
+<p><a href="#/2/1">大吉大利杯(已结束)</a></p>
+<p><a href="#/2/2">DASCTF一月赛(已结束)</a></p>
+<p><a href="#/2/3">春秋杯·新春赛(已结束)</a></p>
 </small>
 
-~~
+<p>~~</p>
+<h2 id="大吉大利杯-CTF"><a href="#大吉大利杯-CTF" class="headerlink" title="大吉大利杯 CTF"></a>大吉大利杯 CTF</h2><small>
 
-## 大吉大利杯 CTF
-
-<small>
-
-简称DJB CTF
-
+<p>简称DJB CTF</p>
 </small>
 
-比赛时间：1月23日 9:00 - 1月24日 22:00(已结束)
+<p>比赛时间：1月23日 9:00 - 1月24日 22:00(已结束)</p>
+<p>比赛形式：线上个人赛</p>
+<p>积分规则：动态积分</p>
+<p>报名/比赛地址：<a target="_blank" rel="noopener" href="https://ctf.show/">https://ctf.show</a></p>
+<p>~~</p>
+<h2 id="2021一月DASCTF——一赛两赢"><a href="#2021一月DASCTF——一赛两赢" class="headerlink" title="2021一月DASCTF——一赛两赢"></a>2021一月DASCTF——一赛两赢</h2><small>
 
-比赛形式：线上个人赛
-
-积分规则：动态积分
-
-报名/比赛地址：https://ctf.show
-
-~~
-
-## 2021一月DASCTF——一赛两赢
-
-<small>
-
-硬件安全专场无web，二进制爷爷带带我。
-
+<p>硬件安全专场无web，二进制爷爷带带我。</p>
 </small>
 
-比赛时间：
+<p>比赛时间：</p>
+<p>1月28日 18:00 - 2月1日 09:30 (已结束)</p>
+<p>比赛形式：线上团体赛(至多三人)</p>
+<p>积分规则：动态积分</p>
+<p>报名地址： <a target="_blank" rel="noopener" href="http://dasctf.com/">http://dasctf.com</a> </p>
+<p>比赛地址：<a target="_blank" rel="noopener" href="https://www.linkedbyx.com/">https://www.linkedbyx.com</a></p>
+<p>~~</p>
+<h2 id="春秋杯·新春欢乐赛"><a href="#春秋杯·新春欢乐赛" class="headerlink" title="春秋杯·新春欢乐赛"></a>春秋杯·新春欢乐赛</h2><small>
 
-1月28日 18:00 - 2月1日 09:30 (已结束)
-
-比赛形式：线上团体赛(至多三人)
-
-积分规则：动态积分
-
-报名地址： http://dasctf.com 
-
-比赛地址：https://www.linkedbyx.com
-
-~~
-
-## 春秋杯·新春欢乐赛
-
-<small>
-
-赛题不设置Web、Pwn、Misc等题型划分，统一定义为Fungame且由常规考点题目以及**以往比赛0解且未公开writeup的题目**组成，共10道赛题
-
+<p>赛题不设置Web、Pwn、Misc等题型划分，统一定义为Fungame且由常规考点题目以及<strong>以往比赛0解且未公开writeup的题目</strong>组成，共10道赛题</p>
 </small>
 
-比赛时间：1月29日 10:00 - 1月31日 17:00(已结束)
-
-比赛形式：线上个人赛
-
-积分规则：沙漏积分
-
+<p>比赛时间：1月29日 10:00 - 1月31日 17:00(已结束)</p>
+<p>比赛形式：线上个人赛</p>
+<p>积分规则：沙漏积分</p>
 <small>
 赛题出现一血之后，题目分值随着时间的推移而逐渐减少到最小值
 </small>
 
-报名地址：https://www.ichunqiu.com/gctf20bye
-
-比赛地址：https://race.ichunqiu.com/gctf20bye
-
----
-
-## 二月 · 如月
-
-February · 比赛总览
-
+<p>报名地址：<a target="_blank" rel="noopener" href="https://www.ichunqiu.com/gctf20bye">https://www.ichunqiu.com/gctf20bye</a></p>
+<p>比赛地址：<a target="_blank" rel="noopener" href="https://race.ichunqiu.com/gctf20bye">https://race.ichunqiu.com/gctf20bye</a></p>
+<hr>
+<h2 id="二月-·-如月"><a href="#二月-·-如月" class="headerlink" title="二月 · 如月"></a>二月 · 如月</h2><p>February · 比赛总览</p>
 <small>
 
-[HGAME(正在进行)](#/3/1)
-
-[单人公测赛(已结束)](#/3/2)
-
-[XSC CTF](#/3/3)
-
+<p><a href="#/3/1">HGAME(正在进行)</a></p>
+<p><a href="#/3/2">单人公测赛(已结束)</a></p>
+<p><a href="#/3/3">XSC CTF(已结束)</a></p>
 </small>
 
-~~
+<p>~~</p>
+<h2 id="HGAME2021"><a href="#HGAME2021" class="headerlink" title="HGAME2021"></a>HGAME2021</h2><small>
 
-## HGAME2021
-
-<small>
-
-面向新手哦，持续一月，线下赛待定
-
+<p>面向新手哦，持续一月，线下赛待定</p>
 </small>
 
-比赛时间：1月30日 20:00 - 2月27日 20:00(正在进行)
+<p>比赛时间：1月30日 20:00 - 2月27日 20:00(正在进行)</p>
+<p>比赛形式：线上个人赛</p>
+<p>积分规则：静态积分+一血机制</p>
+<p>报名/比赛地址：<a target="_blank" rel="noopener" href="https://hgame.vidar.club/">https://hgame.vidar.club</a></p>
+<p>~~</p>
+<h2 id="CTF-单人公测赛"><a href="#CTF-单人公测赛" class="headerlink" title="CTF 单人公测赛"></a>CTF 单人公测赛</h2><p><small>天创商业公司的比赛</small></p>
+<p>比赛时间：2月5日 9:00 - 12:00(已结束)</p>
+<p>比赛形式：线上个人赛</p>
+<p>积分规则：静态积分+一血机制</p>
+<p>报名地址：<a target="_blank" rel="noopener" href="https://a2.rabbitpre.com/m2/aUe1ZjRCdz#161203334995220">https://a2.rabbitpre.com/m2/aUe1ZjRCdz#161203334995220</a></p>
+<p>~~</p>
+<h2 id="SXC-CTF"><a href="#SXC-CTF" class="headerlink" title="SXC CTF"></a>SXC CTF</h2><small>
 
-比赛形式：线上个人赛
-
-积分规则：静态积分+一血机制
-
-报名/比赛地址：https://hgame.vidar.club
-
-
-
-~~
-
-## CTF 单人公测赛
-
-<small>天创商业公司的比赛</small>
-
-比赛时间：2月5日 9:00 - 12:00(已结束)
-
-比赛形式：线上个人赛
-
-积分规则：静态积分+一血机制
-
-报名地址：https://a2.rabbitpre.com/m2/aUe1ZjRCdz#161203334995220
-
-
-
-~~
-
-## SXC CTF
-
-<small>
-
-第一届，不太知名，Starsnow团队，可以打打看，不清楚难度
-
+<p>第一届，不太知名，Starsnow团队，可以打打看，不清楚难度</p>
 </small>
 
-比赛时间：2月12日
-
-<small>大年初一比赛有点离谱...</small>
-
-比赛形式：线上个人赛
-
-积分规则：动态积分
-
-报名/比赛地址：http://sxc.starsnowsec.cn
-
-
-
----
-
-
-
-## 三月 · 弥生
-
-March · 比赛总览
-
+<p>比赛时间：2月9日(已结束)</p>
+<p><small>大年初一比赛有点离谱…</small></p>
+<p>比赛形式：线上个人赛</p>
+<p>积分规则：动态积分</p>
+<p>报名/比赛地址：<a target="_blank" rel="noopener" href="http://sxc.starsnowsec.cn/">http://sxc.starsnowsec.cn</a></p>
+<hr>
+<h2 id="三月-·-弥生"><a href="#三月-·-弥生" class="headerlink" title="三月 · 弥生"></a>三月 · 弥生</h2><p>March · 比赛总览</p>
 <small>
 
 
 
 </small>
 
-~~
-
-
-
-To be continue...
-
----
-
-
-
-## 四月 · 卯月
-
-April · 比赛总览
-
+<p>~~</p>
+<p>To be continue…</p>
+<hr>
+<h2 id="四月-·-卯月"><a href="#四月-·-卯月" class="headerlink" title="四月 · 卯月"></a>四月 · 卯月</h2><p>April · 比赛总览</p>
 <small>
 
 
 
 </small>
 
-~~
-
-
-
-
-
-To be continue...
-
----
-
-
-
-## 五月 · 皋月
-
-May · 比赛总览
-
+<p>~~</p>
+<p>To be continue…</p>
+<hr>
+<h2 id="五月-·-皋月"><a href="#五月-·-皋月" class="headerlink" title="五月 · 皋月"></a>五月 · 皋月</h2><p>May · 比赛总览</p>
 <small>
 
 
 
 </small>
 
-~~
-
-
-
-
-
-To be continue...
-
----
-
-
-
-## 六月 · 水无月
-
-June · 比赛总览
-
+<p>~~</p>
+<p>To be continue…</p>
+<hr>
+<h2 id="六月-·-水无月"><a href="#六月-·-水无月" class="headerlink" title="六月 · 水无月"></a>六月 · 水无月</h2><p>June · 比赛总览</p>
 <small>
 
 
 
 </small>
 
-~~
-
-
-
-
-
-To be continue...
-
----
-
-
-
-## 七月 · 文月
-
-July · 比赛总览
-
+<p>~~</p>
+<p>To be continue…</p>
+<hr>
+<h2 id="七月-·-文月"><a href="#七月-·-文月" class="headerlink" title="七月 · 文月"></a>七月 · 文月</h2><p>July · 比赛总览</p>
 <small>
 
 
 
 </small>
 
-~~
-
-
-
-
-
-To be continue...
-
----
-
-
-
-## 八月 · 叶月
-
-August · 比赛总览
-
+<p>~~</p>
+<p>To be continue…</p>
+<hr>
+<h2 id="八月-·-叶月"><a href="#八月-·-叶月" class="headerlink" title="八月 · 叶月"></a>八月 · 叶月</h2><p>August · 比赛总览</p>
 <small>
 
 
 
 </small>
 
-~~
-
-
-
-
-
-To be continue...
-
----
-
-
-
-## 九月 · 长月
-
-September · 比赛总览
-
+<p>~~</p>
+<p>To be continue…</p>
+<hr>
+<h2 id="九月-·-长月"><a href="#九月-·-长月" class="headerlink" title="九月 · 长月"></a>九月 · 长月</h2><p>September · 比赛总览</p>
 <small>
 
 
 
 </small>
 
-~~
-
-
-
-
-
-To be continue...
-
----
-
-
-
-## 十月 · 神无月
-
-October · 比赛总览
-
+<p>~~</p>
+<p>To be continue…</p>
+<hr>
+<h2 id="十月-·-神无月"><a href="#十月-·-神无月" class="headerlink" title="十月 · 神无月"></a>十月 · 神无月</h2><p>October · 比赛总览</p>
 <small>
 
 
 
 </small>
 
-~~
-
-
-
-
-
-To be continue...
-
----
-
-
-
-## 十一月 · 霜月
-
-November · 比赛总览
-
+<p>~~</p>
+<p>To be continue…</p>
+<hr>
+<h2 id="十一月-·-霜月"><a href="#十一月-·-霜月" class="headerlink" title="十一月 · 霜月"></a>十一月 · 霜月</h2><p>November · 比赛总览</p>
 <small>
 
 
 
 </small>
 
-~~
-
-
-
-
-
-To be continue...
-
----
-
-
-
-## 十二月 · 师走
-
-December · 比赛总览
-
+<p>~~</p>
+<p>To be continue…</p>
+<hr>
+<h2 id="十二月-·-师走"><a href="#十二月-·-师走" class="headerlink" title="十二月 · 师走"></a>十二月 · 师走</h2><p>December · 比赛总览</p>
 <small>
 
 
 
 </small>
 
-~~
+<p>~~</p>
+<p>To be continue…</p>
+<hr>
+<h2 id="年度总结"><a href="#年度总结" class="headerlink" title="年度总结"></a>年度总结</h2><p>~~</p>
+<p>待续</p>
+<hr>
+<h2 id="回到开始"><a href="#回到开始" class="headerlink" title="回到开始"></a><a href="#/">回到开始</a></h2><hr>
+<h2 id="年度WP总结"><a href="#年度WP总结" class="headerlink" title="年度WP总结"></a>年度WP总结</h2><p><small>在写了，真的在写了…</small></p>
+<p><a href="/article/djbctf2021">DJBctf-WP</a></p>
+<p><a href="/article/cqb2021/">新春杯</a></p>
+<p><a href="/article/2021gongcesai/">公测赛</a></p>
+<p><a href="/article/hgame2021week1">HGAME</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://err0r.top/slides/2021ctf.html" data-id="cklc0zh1h0006fpov48co8dj3" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Programme/">Programme</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Write-Up/">Write-Up</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9D%82%E8%B0%88%E7%AC%94%E8%AE%B0/">杂谈笔记</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9D%82%E8%B0%88%E7%AC%94%E8%AE%B0/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9D%82%E8%B0%88%E7%AC%94%E8%AE%B0/%E8%8F%9C%E9%B8%A1%E6%95%99%E7%A8%8B/">菜鸡教程</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Crypto/" rel="tag">Crypto</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git%E6%B3%84%E9%9C%B2/" rel="tag">Git泄露</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MISC/" rel="tag">MISC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OOB%E5%B8%A6%E5%A4%96%E6%94%BB%E5%87%BB/" rel="tag">OOB带外攻击</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL%E6%B3%A8%E5%85%A5/" rel="tag">SQL注入</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSRF/" rel="tag">SSRF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSTI/" rel="tag">SSTI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XFF/" rel="tag">XFF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XPath%E6%B3%A8%E5%85%A5/" rel="tag">XPath注入</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XXE/" rel="tag">XXE</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ctf-whale/" rel="tag">ctf-whale</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ctfd/" rel="tag">ctfd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/md5/" rel="tag">md5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netcat/" rel="tag">netcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pgsql/" rel="tag">pgsql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%AA%E5%8A%A0%E5%AF%86/" rel="tag">伪加密</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" rel="tag">信息收集</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98%E5%8F%96%E8%AF%81/" rel="tag">内存取证</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" rel="tag">反序列化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8D%E5%BC%B9shell/" rel="tag">反弹shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" rel="tag">命令执行</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8F%90%E6%9D%83/" rel="tag">提权</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" rel="tag">文件上传</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%A0%E5%8F%82%E6%95%B0RCE/" rel="tag">无参数RCE</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%98%8E%E6%96%87%E6%94%BB%E5%87%BB/" rel="tag">明文攻击</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Crypto/" style="font-size: 10px;">Crypto</a> <a href="/tags/Git%E6%B3%84%E9%9C%B2/" style="font-size: 10px;">Git泄露</a> <a href="/tags/MISC/" style="font-size: 10px;">MISC</a> <a href="/tags/OOB%E5%B8%A6%E5%A4%96%E6%94%BB%E5%87%BB/" style="font-size: 10px;">OOB带外攻击</a> <a href="/tags/SQL%E6%B3%A8%E5%85%A5/" style="font-size: 16.67px;">SQL注入</a> <a href="/tags/SSRF/" style="font-size: 10px;">SSRF</a> <a href="/tags/SSTI/" style="font-size: 10px;">SSTI</a> <a href="/tags/XFF/" style="font-size: 13.33px;">XFF</a> <a href="/tags/XPath%E6%B3%A8%E5%85%A5/" style="font-size: 10px;">XPath注入</a> <a href="/tags/XXE/" style="font-size: 13.33px;">XXE</a> <a href="/tags/ctf-whale/" style="font-size: 10px;">ctf-whale</a> <a href="/tags/ctfd/" style="font-size: 10px;">ctfd</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/md5/" style="font-size: 10px;">md5</a> <a href="/tags/netcat/" style="font-size: 10px;">netcat</a> <a href="/tags/pgsql/" style="font-size: 10px;">pgsql</a> <a href="/tags/%E4%BC%AA%E5%8A%A0%E5%AF%86/" style="font-size: 10px;">伪加密</a> <a href="/tags/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" style="font-size: 13.33px;">信息收集</a> <a href="/tags/%E5%86%85%E5%AD%98%E5%8F%96%E8%AF%81/" style="font-size: 10px;">内存取证</a> <a href="/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 20px;">反序列化</a> <a href="/tags/%E5%8F%8D%E5%BC%B9shell/" style="font-size: 10px;">反弹shell</a> <a href="/tags/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" style="font-size: 10px;">命令执行</a> <a href="/tags/%E6%8F%90%E6%9D%83/" style="font-size: 10px;">提权</a> <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" style="font-size: 13.33px;">文件上传</a> <a href="/tags/%E6%97%A0%E5%8F%82%E6%95%B0RCE/" style="font-size: 10px;">无参数RCE</a> <a href="/tags/%E6%98%8E%E6%96%87%E6%94%BB%E5%87%BB/" style="font-size: 13.33px;">明文攻击</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">十二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/article/hgame2021week1/">HGAME2021-week1</a>
+          </li>
+        
+          <li>
+            <a href="/article/2021gongcesai/">CnHongKe2021公测赛</a>
+          </li>
+        
+          <li>
+            <a href="/article/cqb2021/">春秋杯2021新春欢乐赛一道题——按F注入 对pgsql的研究</a>
+          </li>
+        
+          <li>
+            <a href="/article/djbctf2021/">DJBCTF2021</a>
+          </li>
+        
+          <li>
+            <a href="/article/2021/">2021</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 gyy<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
 
 
-
-To be continue...
-
+<script src="/js/script.js"></script>
 
 
----
 
-## 年度总结
 
-~~
-
-待续
-
----
-
-## [回到开始](#/)
-
----
-
-## 年度WP总结
-
-<small>在写了，真的在写了...</small>
-
-[DJBctf-WP](/article/djbctf2021)
-
-[新春杯](/article/cqb2021/)
-
-[公测赛](/article/2021gongcesai/)
-
-[HGAME](/article/hgame2021week1)
-
-</script></section></div></div><script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script><script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/markdown.js"></script><script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/notes/notes.js"></script><script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/highlight/highlight.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.0.2/plugin/highlight/monokai.css"><script>document.addEventListener("DOMContentLoaded", function() {
-  const revealConfig = {"history":true,"mouseWheel":true}
-  revealConfig.plugins = [ RevealMarkdown, RevealNotes, RevealHighlight ]
-  Reveal.initialize(revealConfig);
-})</script></body></html>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

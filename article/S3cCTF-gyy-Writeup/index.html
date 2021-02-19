@@ -1,12 +1,13 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#000000"><meta name="author" content="gyy"><meta name="copyright" content="gyy"><meta name="generator" content="Hexo 5.2.0"><meta name="theme" content="hexo-theme-yun"><title>S3cCTF-出题人gyy-Writeup | Err0r</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/star-markdown-css@0.1.22/dist/yun/yun-markdown.min.css"><script src="//at.alicdn.com/t/font_1140697_ed8vp4atwoj.js" async></script><script src="https://cdn.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>document.addEventListener("DOMContentLoaded", () => <!-- hexo-inject:begin --><!-- hexo-inject:end -->{
-  [".post-card",".post-content img"].forEach((target)=> {
-    ScrollReveal().reveal(target);
-  })
-});
-</script><link id="light-prism-css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@latest/themes/prism.css" media="(prefers-color-scheme: light)"><link id="dark-prism-css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@latest/themes/prism-tomorrow.css" media="(prefers-color-scheme: dark)"><link rel="shortcut icon" type="image/svg+xml" href="/favicon.ico"><link rel="mask-icon" href="/favicon.ico" color="#000000"><link rel="alternate icon" href="/yun.ico"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="preload" href="/js/utils.js" as="script"><link rel="preload" href="/js/hexo-theme-yun.js" as="script"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><script id="yun-config">
-    const Yun = window.Yun || {};
-    window.CONFIG = {"hostname":"err0r.top","root":"/","title":"浅伴独蓝的小站","version":"1.5.1","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"想要搜些什么？","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）"},"anonymous_image":"https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/avatar/none.jpg","say":{"api":"https://v1.hitokoto.cn","hitokoto":true},"local_search":{"path":"/search.xml"}};
-  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/utils.js"></script><script src="/js/hexo-theme-yun.js"></script><meta name="description" content="S3cCTF-gyy-Writeup出题人：gyy 写在前面： 本次招新赛我主要负责WEB方面的出题，当然兼顾一些MISC，本着简单易懂的原则，刚开始出了很多简单WEB题，但是这届新生的实力明显比我们当时强&#x3D; &#x3D;，后期又赶了一些提升题，当然和真正的CTF比赛还是有非常大的距离，例如在群里放出的周六的题目可以看出。所以，这些只是入门CTF的基础，去年的这时，我们参加的招新比赛比今年更加困难（所以今年">
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+
+  
+  <title>S3cCTF-出题人gyy-Writeup | Err0r</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="S3cCTF-gyy-Writeup出题人：gyy 写在前面： 本次招新赛我主要负责WEB方面的出题，当然兼顾一些MISC，本着简单易懂的原则，刚开始出了很多简单WEB题，但是这届新生的实力明显比我们当时强&#x3D; &#x3D;，后期又赶了一些提升题，当然和真正的CTF比赛还是有非常大的距离，例如在群里放出的周六的题目可以看出。所以，这些只是入门CTF的基础，去年的这时，我们参加的招新比赛比今年更加困难（所以今年">
 <meta property="og:type" content="article">
 <meta property="og:title" content="S3cCTF-出题人gyy-Writeup">
 <meta property="og:url" content="https://err0r.top/article/S3cCTF-gyy-Writeup/index.html">
@@ -71,17 +72,90 @@
 <meta property="article:tag" content="信息收集">
 <meta property="article:tag" content="MISC">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://err0r.top/article/S3cCTF-gyy-Writeup/20201122173122547.png"><script src="/js/ui/mode.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-list-ordered"></use></svg></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-passport-line"></use></svg></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="gyy"><img width="96" loading="lazy" src="/images/avatar.jpg" alt="gyy"></a><div class="site-author-name"><a href="/about/">gyy</a></div><a class="site-name" href="/about/site.html">Err0r</a><sub class="site-subtitle">gyy</sub><div class="site-desciption">gugugu</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">21</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">5</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">26</span></a></div><a class="site-state-item hty-icon-button" target="_blank" rel="noopener" href="https://yun.yunyoujun.cn" title="文档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-settings-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" title="QQ MTkwNjk2ODc2NA==" target="_blank" style="color:#12B7F5"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qq-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/Err0rCM" title="GitHub" target="_blank" style="color:#6e5494"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://space.bilibili.com/8408670" title="哔哩哔哩" target="_blank" style="color:#FF8EB3"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-bilibili-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="mailto:1906968764@qq.com" title="E-Mail" target="_blank" style="color:#8E71C1"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-mail-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://travellings.now.sh/" title="Travelling" target="_blank" style="color:var(--hty-text-color)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-send-plane-2-line"></use></svg></a></div><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们|友情链接" style="color:dodgerblue"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-open-arm-line"></use></svg></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-contrast-2-line"></use></svg></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#S3cCTF-gyy-Writeup"><span class="toc-number">1.</span> <span class="toc-text">S3cCTF-gyy-Writeup</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#WEB"><span class="toc-number">2.</span> <span class="toc-text">WEB</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#How-to-solve-ctf"><span class="toc-number">2.1.</span> <span class="toc-text">How_to_solve_ctf</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BA%E9%A2%98%E8%A7%A3%E6%9E%90"><span class="toc-number">2.1.1.</span> <span class="toc-text">出题解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%96%B9%E5%BC%8F"><span class="toc-number">2.1.2.</span> <span class="toc-text">解题方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nof12"><span class="toc-number">2.2.</span> <span class="toc-text">nof12</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BA%E9%A2%98%E8%A7%A3%E6%9E%90-1"><span class="toc-number">2.2.1.</span> <span class="toc-text">出题解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%96%B9%E5%BC%8F-1"><span class="toc-number">2.2.2.</span> <span class="toc-text">解题方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Local"><span class="toc-number">2.3.</span> <span class="toc-text">Local</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BA%E9%A2%98%E8%A7%A3%E6%9E%90-2"><span class="toc-number">2.3.1.</span> <span class="toc-text">出题解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%96%B9%E5%BC%8F-2"><span class="toc-number">2.3.2.</span> <span class="toc-text">解题方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flag-not-found"><span class="toc-number">2.4.</span> <span class="toc-text">Flag not found</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BA%E9%A2%98%E8%A7%A3%E6%9E%90-3"><span class="toc-number">2.4.1.</span> <span class="toc-text">出题解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%96%B9%E5%BC%8F-3"><span class="toc-number">2.4.2.</span> <span class="toc-text">解题方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E8%AE%A1%E7%AE%97"><span class="toc-number">2.5.</span> <span class="toc-text">快速计算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BA%E9%A2%98%E8%A7%A3%E6%9E%90-4"><span class="toc-number">2.5.1.</span> <span class="toc-text">出题解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%96%B9%E5%BC%8F-4"><span class="toc-number">2.5.2.</span> <span class="toc-text">解题方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vim"><span class="toc-number">2.6.</span> <span class="toc-text">Vim</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BA%E9%A2%98%E8%A7%A3%E6%9E%90-5"><span class="toc-number">2.6.1.</span> <span class="toc-text">出题解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%96%B9%E5%BC%8F-5"><span class="toc-number">2.6.2.</span> <span class="toc-text">解题方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Upload"><span class="toc-number">2.7.</span> <span class="toc-text">Upload</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BA%E9%A2%98%E8%A7%A3%E6%9E%90-6"><span class="toc-number">2.7.1.</span> <span class="toc-text">出题解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%96%B9%E5%BC%8F-6"><span class="toc-number">2.7.2.</span> <span class="toc-text">解题方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XML-External-Entity"><span class="toc-number">2.8.</span> <span class="toc-text">XML External Entity</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BA%E9%A2%98%E8%A7%A3%E6%9E%90-7"><span class="toc-number">2.8.1.</span> <span class="toc-text">出题解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%96%B9%E5%BC%8F-7"><span class="toc-number">2.8.2.</span> <span class="toc-text">解题方式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MISC"><span class="toc-number">3.</span> <span class="toc-text">MISC</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E6%90%9C%E7%B4%A2"><span class="toc-number">3.1.</span> <span class="toc-text">信息搜索</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BA%E9%A2%98%E8%A7%A3%E6%9E%90-8"><span class="toc-number">3.1.1.</span> <span class="toc-text">出题解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%96%B9%E5%BC%8F-8"><span class="toc-number">3.1.2.</span> <span class="toc-text">解题方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%88%AA%E8%87%B32020%E5%B9%B410%E6%9C%8831%E6%97%A5%EF%BC%8CRFC%E6%9C%80%E6%96%B0%E7%9A%84%E6%AD%A3%E5%BC%8F%E6%96%87%E6%A1%A3%E7%BC%96%E5%8F%B7%E6%98%AF%E5%A4%9A%E5%B0%91"><span class="toc-number">3.1.2.1.</span> <span class="toc-text">1.截至2020年10月31日，RFC最新的正式文档编号是多少?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%9B%BD%E5%AE%B6%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AE%A3%E4%BC%A0%E5%91%A8%E7%AC%AC%E4%B8%80%E5%B1%8A%E6%98%AF%E5%9C%A8%E5%93%AA%E4%B8%80%E5%B9%B4%E4%B8%BE%E8%A1%8C%E7%9A%84%EF%BC%9F"><span class="toc-number">3.1.2.2.</span> <span class="toc-text">2.国家网络安全宣传周第一届是在哪一年举行的？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%9C%AC%E6%A0%A1%E6%A0%A1%E5%9B%AD%E5%8D%A1%E4%B8%8A%E5%AF%B9%E5%BA%94%E7%9A%84%E6%95%99%E5%AD%A6%E6%A5%BC%E6%98%AF%E4%B8%BB%E6%A0%A1%E5%8C%BA%E7%9A%84%E5%87%A0%E5%8F%B7%E6%95%99%E5%AD%A6%E6%A5%BC%EF%BC%9F"><span class="toc-number">3.1.2.3.</span> <span class="toc-text">3. 本校校园卡上对应的教学楼是主校区的几号教学楼？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-S3C%E6%88%98%E9%98%9F%E4%BB%A3%E8%A1%A8%E5%AD%A6%E6%A0%A1%E5%9C%A8%E7%AC%AC%E5%8D%81%E4%B8%89%E5%B1%8A%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%88%9B%E6%96%B0%E5%AE%9E%E8%B7%B5%E8%83%BD%E5%8A%9B%E8%B5%9B%E6%80%BB%E5%86%B3%E8%B5%9B%E4%B8%8A%E5%8F%96%E5%BE%97%E4%BA%86%E5%A4%9A%E5%B0%91%E5%90%8D%E7%9A%84%E6%88%90%E7%BB%A9%EF%BC%9F"><span class="toc-number">3.1.2.4.</span> <span class="toc-text">4. S3C战队代表学校在第十三届全国大学生信息安全创新实践能力赛总决赛上取得了多少名的成绩？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E6%88%AA%E8%87%B3%E7%9B%AE%E5%89%8D%E6%9C%80%E6%96%B0%E7%9A%84C%E8%AF%AD%E8%A8%80%E6%A0%87%E5%87%86%E6%98%AFC%E5%A4%9A%E5%B0%91%EF%BC%9F"><span class="toc-number">3.1.2.5.</span> <span class="toc-text">5. 截至目前最新的C语言标准是C多少？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#myid"><span class="toc-number">3.2.</span> <span class="toc-text">myid</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BA%E9%A2%98%E8%A7%A3%E6%9E%90-9"><span class="toc-number">3.2.1.</span> <span class="toc-text">出题解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%96%B9%E5%BC%8F-9"><span class="toc-number">3.2.2.</span> <span class="toc-text">解题方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flag-jpg"><span class="toc-number">3.3.</span> <span class="toc-text">flag.jpg</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BA%E9%A2%98%E8%A7%A3%E6%9E%90-10"><span class="toc-number">3.3.1.</span> <span class="toc-text">出题解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%96%B9%E5%BC%8F-10"><span class="toc-number">3.3.2.</span> <span class="toc-text">解题方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Manchester"><span class="toc-number">3.4.</span> <span class="toc-text">Manchester</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BA%E9%A2%98%E8%A7%A3%E6%9E%90-11"><span class="toc-number">3.4.1.</span> <span class="toc-text">出题解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%96%B9%E5%BC%8F-11"><span class="toc-number">3.4.2.</span> <span class="toc-text">解题方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SlientEye"><span class="toc-number">3.5.</span> <span class="toc-text">SlientEye</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BA%E9%A2%98%E8%A7%A3%E6%9E%90-12"><span class="toc-number">3.5.1.</span> <span class="toc-text">出题解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%96%B9%E5%BC%8F-12"><span class="toc-number">3.5.2.</span> <span class="toc-text">解题方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Plaintext"><span class="toc-number">3.6.</span> <span class="toc-text">Plaintext</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BA%E9%A2%98%E8%A7%A3%E6%9E%90-13"><span class="toc-number">3.6.1.</span> <span class="toc-text">出题解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%96%B9%E5%BC%8F-13"><span class="toc-number">3.6.2.</span> <span class="toc-text">解题方式</span></a></li></ol></li></ol></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article"><link itemprop="mainEntityOfPage" href="https://err0r.top/article/S3cCTF-gyy-Writeup/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="gyy"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="Err0r"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">S3cCTF-出题人gyy-Writeup</h1><div class="post-meta"><div class="post-time" style="display:block"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-line"></use></svg></span> <time title="创建时间：2020-11-23 18:18:25" itemprop="dateCreated datePublished" datetime="2020-11-23T18:18:25+08:00">2020-11-23</time><span class="post-meta-divider">-</span><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-2-line"></use></svg></span> <time title="修改时间：2021-02-19 15:10:14" itemprop="dateModified" datetime="2021-02-19T15:10:14+08:00">2021-02-19</time></div><span class="post-count"><span class="post-symbolcount"><span class="post-meta-item-icon" title="本文字数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-file-word-line"></use></svg></span> <span title="本文字数">2.7k</span><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读时长"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-timer-line"></use></svg></span> <span title="阅读时长">10m</span></span></span><span class="post-busuanzi"><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读次数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-eye-line"></use></svg> <span id="busuanzi_value_page_pv"></span></span></span><div class="post-classify"><span class="post-category"> <span class="post-meta-item-icon" style="margin-right:3px;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-line"></use></svg></span><span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category" href="/categories/Write-Up/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">Write-Up</span></a></span></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body" style="--smc-primary:#000000;"><h1 id="S3cCTF-gyy-Writeup"><a href="#S3cCTF-gyy-Writeup" class="headerlink" title="S3cCTF-gyy-Writeup"></a>S3cCTF-gyy-Writeup</h1><p><strong>出题人：gyy</strong></p>
-<!-- hexo-inject:begin --><!-- hexo-inject:end --><p><strong>写在前面：</strong></p>
+<meta name="twitter:image" content="https://err0r.top/article/S3cCTF-gyy-Writeup/20201122173122547.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Err0r" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.2.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Err0r</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://err0r.top"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-S3cCTF-出题人gyy-Writeup" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/article/S3cCTF-gyy-Writeup/" class="article-date">
+  <time datetime="2020-11-23T10:18:25.000Z" itemprop="datePublished">2020-11-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Write-Up/">Write-Up</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      S3cCTF-出题人gyy-Writeup
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="S3cCTF-gyy-Writeup"><a href="#S3cCTF-gyy-Writeup" class="headerlink" title="S3cCTF-gyy-Writeup"></a>S3cCTF-gyy-Writeup</h1><p><strong>出题人：gyy</strong></p>
+<p><strong>写在前面：</strong></p>
 <p>本次招新赛我主要负责WEB方面的出题，当然兼顾一些MISC，本着简单易懂的原则，刚开始出了很多简单WEB题，但是这届新生的实力明显比我们当时强= =，后期又赶了一些提升题，当然和真正的CTF比赛还是有非常大的距离，例如在群里放出的周六的题目可以看出。所以，这些只是入门CTF的基础，去年的这时，我们参加的招新比赛比今年更加困难（所以今年我有同感地出了不少简单题），我希望大家不要止步于此，当初我也有一腔热血，觉得CTF不过如此（甚至还想双修）。但，走的越高，越会发现自己越渺小，这条道路可能还没有尽头。技术可以后期培养，这次招新比赛分数也只能作为检测基础的测试，如果你有强烈的意向和兴趣，比比赛成绩更为重要，我们欢迎你和我们联系，希望大家不忘初心，砥砺前行。</p>
 <h1 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h1><h2 id="How-to-solve-ctf"><a href="#How-to-solve-ctf" class="headerlink" title="How_to_solve_ctf"></a>How_to_solve_ctf</h2><h3 id="出题解析"><a href="#出题解析" class="headerlink" title="出题解析"></a>出题解析</h3><p>本题旨在指引大家，考了一下HTML的知识</p>
 <h3 id="解题方式"><a href="#解题方式" class="headerlink" title="解题方式"></a>解题方式</h3><p>F12查看源代码，给了提示<code>&lt;!-- html元素是可以修改的 --&gt;</code><br>修改form表单里input文本框的长度限制，提交s3c2020即可获得flag<br>由于是GET传参，也可以直接传<code>key=s3c2020</code>即可</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122173122547.png" class="" title="web1" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122173122547.png" class="" title="web1">
 
 <hr>
 <h2 id="nof12"><a href="#nof12" class="headerlink" title="nof12"></a>nof12</h2><h3 id="出题解析-1"><a href="#出题解析-1" class="headerlink" title="出题解析"></a>出题解析</h3><p>本题利用script限制了鼠标右键和f12</p>
 <h3 id="解题方式-1"><a href="#解题方式-1" class="headerlink" title="解题方式"></a>解题方式</h3><p>与题目 <strong>S3C_NOT_BAD</strong> 重复，Ctrl+U或者burp抓包或者curl访问都可</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122174018834.png" class="" title="web2" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122174018834.png" class="" title="web2">
 
 <hr>
 <h2 id="Local"><a href="#Local" class="headerlink" title="Local"></a>Local</h2><h3 id="出题解析-2"><a href="#出题解析-2" class="headerlink" title="出题解析"></a>出题解析</h3><p>本题旨在考XFF（X-Forwarded-For）和Referer<br>伪造地址三种方式：</p>
@@ -91,7 +165,7 @@ Host: 127.0.0.1
 Referer: 127.0.0.1</code></pre>
 
 <h3 id="解题方式-2"><a href="#解题方式-2" class="headerlink" title="解题方式"></a>解题方式</h3><p>只有本地管理员才能访问本页面！<br>burp抓包修改即可</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122174702383.png" class="" title="web3" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122174702383.png" class="" title="web3">
 
 <hr>
 <h2 id="Flag-not-found"><a href="#Flag-not-found" class="headerlink" title="Flag not found"></a>Flag not found</h2><h3 id="出题解析-3"><a href="#出题解析-3" class="headerlink" title="出题解析"></a>出题解析</h3><p>302重定向</p>
@@ -112,16 +186,16 @@ Referer: 127.0.0.1</code></pre>
 <span class="token delimiter important">?></span></span></code></pre>
 
 <h3 id="解题方式-3"><a href="#解题方式-3" class="headerlink" title="解题方式"></a>解题方式</h3><p>打开点击后跳转Not Found，仔细看发现界面是伪造的</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122175207502.png" class="" width="404" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122175207502.png" class="" width="404">
 <p>因为界面是我自己写的假界面，特意写了个注释，由此想到重定向<br>直接在header里能看到flag</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122175439466.png" class="" title="flag" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122175439466.png" class="" title="flag">
 <p>拿去base64解一下即可获得flag</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122175814189.png" class="" title="base64" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122175814189.png" class="" title="base64">
 <hr>
 <h2 id="快速计算"><a href="#快速计算" class="headerlink" title="快速计算"></a>快速计算</h2><h3 id="出题解析-4"><a href="#出题解析-4" class="headerlink" title="出题解析"></a>出题解析</h3><p>本题考查PHP和Python脚本，3秒内…有人能做得到嘛？</p>
 <p>本题网上找一个脚本改改完全没问题，其实还有一题计算字符串（原创题目前网上没有脚本），师傅们说不放就没放啦，有兴趣可以做做 <a target="_blank" rel="noopener" href="http://49.234.89.193:8088/">题目链接</a>(链接可能会挂，题目随时可能哪天我就关了…)</p>
 <h3 id="解题方式-4"><a href="#解题方式-4" class="headerlink" title="解题方式"></a>解题方式</h3><p>请在3秒内计算以下算式并提交并提交<br>在服务器设的SESSION，3秒刷新，超时也是不算的<br>设了个小坑，抓个包可以看到，每次提交的请求还有个参数<code>submits=提交</code></p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122180918644.png" class="" title="参数" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122180918644.png" class="" title="参数">
 <p>如果没有就会die退出</p>
 <pre class="language-php" data-language="php"><code class="language-php"><span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token single-quoted-string string">'submits'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
         <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"少了点东西啊...好好看看吧"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
@@ -164,60 +238,60 @@ res <span class="token operator">=</span> session<span class="token punctuation"
 <span class="token keyword">print</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span><span class="token punctuation">.</span>content<span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token string">'utf-8'</span><span class="token punctuation">)</span>
 </code></pre>
 
-<img src="/article/S3cCTF-gyy-Writeup/20201122181549903.png" class="" title="calnum" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122181549903.png" class="" title="calnum">
 <p>本人蹩脚自学的python，语法规范问题请见谅</p>
 <hr>
 <h2 id="Vim"><a href="#Vim" class="headerlink" title="Vim"></a>Vim</h2><h3 id="出题解析-5"><a href="#出题解析-5" class="headerlink" title="出题解析"></a>出题解析</h3><p>本题考察Linux下Vim的应用，同时考察PHP代码审计及robots协议</p>
 <p>给了hint：vim强退会在当前目录生成生成备份文件</p>
 <h3 id="解题方式-5"><a href="#解题方式-5" class="headerlink" title="解题方式"></a>解题方式</h3><p>打开先看源代码</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122192109829.png" class="" title="vim" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122192109829.png" class="" title="vim">
 <p>Recover<br>Linux中，如果vim强退的话（ctrl+z）就会在目录下生成备份文件，如图所示</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122192350871.png" class="" title="ctrl+z" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122192350871.png" class="" title="ctrl+z">
 <p>而再vim编辑就会有如下提示</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122192439588.png" class="" title="re" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122192439588.png" class="" title="re">
 <p>直接Recover恢复即可。</p>
 <p>根据提示，访问./.index.php.swp。发现下载.swp文件<br>这里注意，备份文件是隐藏文件，文件名前面有个点<br>拿去linux系统恢复，可以发现</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122192914742.png" class="" title="flag1" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122192914742.png" class="" title="flag1">
 <p>由此，flag分为多部分<br>接下来代码审计很简单，回到index.php，POST传参</p>
 <pre class="language-php" data-language="php"><code class="language-php">username<span class="token operator">=</span>admin<span class="token operator">&amp;</span>pazzword<span class="token operator">=</span>a599ac85a73384ee3219fa684296eaa62667238d608efa81837030bd1ce1bf04</code></pre>
 
-<img src="/article/S3cCTF-gyy-Writeup/20201122193206215.png" class="" title="flag2" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122193206215.png" class="" title="flag2">
 <p>机器人会告诉你剩下的，联想robots协议，访问./robots.txt</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122193300252.png" class="" title="robots" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122193300252.png" class="" title="robots">
 <p>可得flag在./r/o/b/o/a/t/s/1.php</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122193344579.png" class="" title="flag3" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122193344579.png" class="" title="flag3">
 <p>将三段flag组合即可</p>
 <hr>
 <h2 id="Upload"><a href="#Upload" class="headerlink" title="Upload"></a>Upload</h2><h3 id="出题解析-6"><a href="#出题解析-6" class="headerlink" title="出题解析"></a>出题解析</h3><p>本题考察文件上传，考察上传绕过的姿势，因为比赛限制，没有出太难的过滤</p>
 <h3 id="解题方式-6"><a href="#解题方式-6" class="headerlink" title="解题方式"></a>解题方式</h3><p>当然，不是真的让你上传个动图。。我服务器里发现了好多奇奇怪怪的图片<br>一般文件上传一句话木马直接获取shell<br><code>&lt;?php @eval($_POST[gyy])?&gt;</code><br>需要能被php解析才行，.txt,.gif都是不可被解析的<br>或者直接用script标签<br><code>&lt;script language=&#39;php&#39;&gt;@eval($_POST[gyy]);&lt;/script&gt;</code><br>后缀名限制</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122194102133.png" class="" title="php" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122194102133.png" class="" title="php">
 <p>上传普通图片，被过滤</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122193716205.png" class="" title="gif" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122193716205.png" class="" title="gif">
 <p>抓包上传,原始如下</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122194225470.png" class="" title="post1" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122194225470.png" class="" title="post1">
 <p>修改如下</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122195020428.png" class="" title="post2" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122195020428.png" class="" title="post2">
 
 
 <p>请求头检查：content-type，MIME类型限制，修改为<code>image/gif</code><br>文件后缀绕过：只要能被php解析的文件名就可以<br>这里我只限制了<code>.php</code>,<code>.php3</code>,<code>.php4</code>,<code>.php5</code><br>MIME类型限制只允许<code>image/gif</code></p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122195119845.png" class="" title="upload" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122195119845.png" class="" title="upload">
 <p>然后访问文件</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122195246767.png" class="" title="upload2" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122195246767.png" class="" title="upload2">
 <p>发现代码被执行了，直接蚁剑连上get shell</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122195418743.png" class="" title="upload3" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122195418743.png" class="" title="upload3">
 <p>根目录发现flag</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122195438365.png" class="" title="upload4" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122195438365.png" class="" title="upload4">
 
 
 <p>你们真的传了一堆堆奇奇怪怪的图片。。。</p>
 <hr>
 <h2 id="XML-External-Entity"><a href="#XML-External-Entity" class="headerlink" title="XML External Entity"></a>XML External Entity</h2><h3 id="出题解析-7"><a href="#出题解析-7" class="headerlink" title="出题解析"></a>出题解析</h3><p>考察XXE注入，即 XML实体注入</p>
 <h3 id="解题方式-7"><a href="#解题方式-7" class="headerlink" title="解题方式"></a>解题方式</h3><p>打开直接给phpinfo，源代码有提示</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122195910990.png" class="" title="hint" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122195910990.png" class="" title="hint">
 <p>底部发现</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122195933621.png" class="" title="system" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122195933621.png" class="" title="system">
 <p>其实是执行了<code>system(&quot;ls&quot;);</code></p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122200056166.png" class="" title="index" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122200056166.png" class="" title="index">
 <p>然后每个文件都高亮了语法，<code>dom.php</code>、<code>SimpleXMLElement.php</code>、<code>simplexml_load_string.php</code>均可触发XXE漏洞，具体输出点请阅读这三个文件的代码。存在的XXE漏洞具体可以百度研究一下。<br>样例Payload：</p>
 <pre class="language-none"><code class="language-none">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;utf-8&quot;?&gt; 
 &lt;!DOCTYPE xxe [
@@ -227,49 +301,49 @@ res <span class="token operator">=</span> session<span class="token punctuation"
 &lt;name&gt;&amp;xxe;&lt;&#x2F;name&gt;
 &lt;&#x2F;root&gt;</code></pre>
 
-<img src="/article/S3cCTF-gyy-Writeup/20201122200729886.png" class="" title="dom" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122200729886.png" class="" title="dom">
 <p>其实还可以利用写入一句话木马等操作。</p>
 <hr>
 <h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><h2 id="信息搜索"><a href="#信息搜索" class="headerlink" title="信息搜索"></a>信息搜索</h2><h3 id="出题解析-8"><a href="#出题解析-8" class="headerlink" title="出题解析"></a>出题解析</h3><p>信息搜索也是门技术，好好利用搜索引擎可以达到事半功倍的效果.<br>确实，只要仔细搜索，没有任何问题</p>
 <h3 id="解题方式-8"><a href="#解题方式-8" class="headerlink" title="解题方式"></a>解题方式</h3><p>打开五道题，一道道解决</p>
 <h4 id="1-截至2020年10月31日，RFC最新的正式文档编号是多少"><a href="#1-截至2020年10月31日，RFC最新的正式文档编号是多少" class="headerlink" title="1.截至2020年10月31日，RFC最新的正式文档编号是多少?"></a>1.截至2020年10月31日，RFC最新的正式文档编号是多少?</h4><p>RFC文档，Request For Comments，官网连<em>科学上网</em>都不需要</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122201134715.png" class="" title="rfc" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122201134715.png" class="" title="rfc">
 <p>访问<code>https://www.ietf.org/</code></p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122201307663.png" class="" title="rfc" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122201307663.png" class="" title="rfc">
 <p>或者直接访问RFC文档搜索网站<code>https://www.rfc-editor.org/search/rfc_search.php</code></p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122201725572.png" class="" title="rfc" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122201725572.png" class="" title="rfc">
 <p>截至2020年10月31日，一查</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122201943714.png" class="" title="rfc" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122201943714.png" class="" title="rfc">
 <p>最新为RFC8940<br>这种东西最标准还是去官网查</p>
 <h4 id="2-国家网络安全宣传周第一届是在哪一年举行的？"><a href="#2-国家网络安全宣传周第一届是在哪一年举行的？" class="headerlink" title="2.国家网络安全宣传周第一届是在哪一年举行的？"></a>2.国家网络安全宣传周第一届是在哪一年举行的？</h4><p>2014</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122202110805.png" class="" width="2014" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122202110805.png" class="" width="2014">
 
 <h4 id="3-本校校园卡上对应的教学楼是主校区的几号教学楼？"><a href="#3-本校校园卡上对应的教学楼是主校区的几号教学楼？" class="headerlink" title="3. 本校校园卡上对应的教学楼是主校区的几号教学楼？"></a>3. 本校校园卡上对应的教学楼是主校区的几号教学楼？</h4><p>拿出来看看…百度地图打开，</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122202320233.png" class="" width="1" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122202320233.png" class="" width="1">
 <p>全景地图</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122202433684.png" class="" width="1" loading="lazy">
-<p>有点老，仔细观察地图，只有1教有那么大地方，2教3教都不会有那么大的中央空地<img src="/article/S3cCTF-gyy-Writeup/20201122202751489.jfif" class="" width="1" loading="lazy"><br>good</p>
+<img src="/article/S3cCTF-gyy-Writeup/20201122202433684.png" class="" width="1">
+<p>有点老，仔细观察地图，只有1教有那么大地方，2教3教都不会有那么大的中央空地<img src="/article/S3cCTF-gyy-Writeup/20201122202751489.jfif" class="" width="1"><br>good</p>
 <h4 id="4-S3C战队代表学校在第十三届全国大学生信息安全创新实践能力赛总决赛上取得了多少名的成绩？"><a href="#4-S3C战队代表学校在第十三届全国大学生信息安全创新实践能力赛总决赛上取得了多少名的成绩？" class="headerlink" title="4. S3C战队代表学校在第十三届全国大学生信息安全创新实践能力赛总决赛上取得了多少名的成绩？"></a>4. S3C战队代表学校在第十三届全国大学生信息安全创新实践能力赛总决赛上取得了多少名的成绩？</h4><p>33<br>招新PPT上写的，学校公众号也能查到</p>
 <h4 id="5-截至目前最新的C语言标准是C多少？"><a href="#5-截至目前最新的C语言标准是C多少？" class="headerlink" title="5. 截至目前最新的C语言标准是C多少？"></a>5. 截至目前最新的C语言标准是C多少？</h4><p>18<br>C标准以年号结尾命名，有人问为什么不是C99,C11….我只能说，现在最新的是C18，百度好好查查吧…（2年了）</p>
 <p>全部答对给flag，不行爆破也行</p>
 <hr>
 <h2 id="myid"><a href="#myid" class="headerlink" title="myid"></a>myid</h2><h3 id="出题解析-9"><a href="#出题解析-9" class="headerlink" title="出题解析"></a>出题解析</h3><p>社工大佬，怕了怕了</p>
 <h3 id="解题方式-9"><a href="#解题方式-9" class="headerlink" title="解题方式"></a>解题方式</h3><p>原本考爆破的，后来干脆直接你们社工算了…</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122203410982.png" class="" title="id" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122203410982.png" class="" title="id">
 <p>打开去掉disable标签</p>
-<img src="/article/S3cCTF-gyy-Writeup/2020112220344579.png" class="" title="id" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/2020112220344579.png" class="" title="id">
 <p>下面提示</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122203500307.png" class="" title="id" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122203500307.png" class="" title="id">
 <p>原来想考爆破，最后都知道了…id是我学号，直接开始社工，索性改分类为MISC。<br>再给个hint：<code>计算机院 2019 懂？</code><br>首先2019级即前5位为<code>12019</code><br>计算机院为050-055(大概）<br>所以前八位<code>1201905x</code>，爆破一下就好了。<br>当然也有问学长学姐的，问墙的，翻我空间的，查学校名册的，都可以。这题就当玩玩233333<br>ID:12019054018</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122203854684.png" class="" title="id" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122203854684.png" class="" title="id">
 
 <hr>
 <h2 id="flag-jpg"><a href="#flag-jpg" class="headerlink" title="flag.jpg"></a>flag.jpg</h2><h3 id="出题解析-10"><a href="#出题解析-10" class="headerlink" title="出题解析"></a>出题解析</h3><p>考察工具利用以及查看属性</p>
 <h3 id="解题方式-10"><a href="#解题方式-10" class="headerlink" title="解题方式"></a>解题方式</h3><p>小戈:give me a flag 一看属性竟然用 SteganPEG 而且还没那么简单</p>
 <p>提示很明显，用软件 SteganPEG ，密码就是<code>givemeaflag</code>（生怕你们看不见），其实正规地方在文件的属性里</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122204149398.png" class="" title="flag" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122204149398.png" class="" title="flag">
 <p>软件读文件</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122204353880.png" class="" title="flag" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122204353880.png" class="" title="flag">
 <p>拖出来打开就是flag</p>
 <hr>
 <h2 id="Manchester"><a href="#Manchester" class="headerlink" title="Manchester"></a>Manchester</h2><h3 id="出题解析-11"><a href="#出题解析-11" class="headerlink" title="出题解析"></a>出题解析</h3><p>考察 学习理解能力 百度曼彻斯特编码</p>
@@ -297,12 +371,12 @@ res <span class="token operator">=</span> session<span class="token punctuation"
  <span class="token punctuation">&#125;</span> </code></pre>
 
 <p>得到<code>011100110011001101100011011110110100110101100001011011100100001101101000010001010111001101110100011001010111001001011111011101110011000101110100011010000101111100110000001100010011000001111101</code><br>复制去二进制转字符，直接出答案</p>
-<img src="/article/S3cCTF-gyy-Writeup/2020112220515011.png" class="" title="man" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/2020112220515011.png" class="" title="man">
 
 <hr>
 <h2 id="SlientEye"><a href="#SlientEye" class="headerlink" title="SlientEye"></a>SlientEye</h2><h3 id="出题解析-12"><a href="#出题解析-12" class="headerlink" title="出题解析"></a>出题解析</h3><p>水题，考察知识面，和搜索…</p>
 <h3 id="解题方式-12"><a href="#解题方式-12" class="headerlink" title="解题方式"></a>解题方式</h3><p>真的水题，搜索标题<code>SlientEye</code>，是的，这是个软件<br>默认设置解密，直接出答案</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122205451153.png" class="" title="slient" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122205451153.png" class="" title="slient">
 
 <hr>
 <h2 id="Plaintext"><a href="#Plaintext" class="headerlink" title="Plaintext"></a>Plaintext</h2><h3 id="出题解析-13"><a href="#出题解析-13" class="headerlink" title="出题解析"></a>出题解析</h3><p>写的很清楚，明文攻击<br>给了hint，暗示伪加密<br>开赛题坚持了这么久我没想到…</p>
@@ -312,59 +386,165 @@ res <span class="token operator">=</span> session<span class="token punctuation"
 </code></pre>
 
 <p>明示软件AZPR，这是个爆破软件<br>伪加密百度有一篇很详细的文章<br>修改加密位为<code>00</code>，不知道哪个文件是伪加密直接所有加密位为<code>00</code></p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122210335385.png" class="" width="00" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122210335385.png" class="" width="00">
 <p>保存后解压只有副本那个文件可以保存，其他两个文件是真加密</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122210502282.png" class="" width="00" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122210502282.png" class="" width="00">
 <p>根据明文攻击方法，将这个文件打包zip然后去题目再下一遍原文件,此时文件被修改，也可以改回去</p>
 <p>用AZPR选择明文攻击即可</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122210917960.png" class="" title="在这里插入图片描述" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122210917960.png" class="" title="在这里插入图片描述">
 <p>可以看到密钥被恢复了，不用找密码了，直接可以保存</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122211504935.png" class="" title="在这里插入图片描述" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122211504935.png" class="" title="在这里插入图片描述">
 <p>保存文件，其实已经破解出来了</p>
-<img src="/article/S3cCTF-gyy-Writeup/20201122210823677.png" class="" title="在这里插入图片描述" loading="lazy">
+<img src="/article/S3cCTF-gyy-Writeup/20201122210823677.png" class="" title="在这里插入图片描述">
 <p>或者用rbkcrack也可以<br>直接打开flag.txt得flag</p>
-</div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>gyy</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="https://err0r.top/article/S3cCTF-gyy-Writeup/" title="S3cCTF-出题人gyy-Writeup">https://err0r.top/article/S3cCTF-gyy-Writeup/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><svg class="icon"><use xlink:href="#icon-creative-commons-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-by-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-nc-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-sa-line"></use></svg></a> 许可协议。</li></ul></section></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/article/md5/" rel="prev" title="md5比较"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-left-s-line"></use></svg><span class="post-nav-text">md5比较</span></a></div><div class="post-nav-item"><a class="post-nav-next" href="/article/2020-HECTF-Write-up/" rel="next" title="2020 HECTF Write-up"><span class="post-nav-text">2020 HECTF Write-up</span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-right-s-line"></use></svg></a></div></div></div></main><footer class="sidebar-translate" id="footer"><div class="beian"><a rel="noopener" href="https://beian.miit.gov.cn/" target="_blank">苏ICP备20028116号-1</a></div><div class="copyright"><span>&copy; 2020 – 2021 </span><span class="with-love" id="animate"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cloud-line"></use></svg></span><span class="author"> gyy</span></div><div class="live_time"><span>本博客已在各种灾难中运行了</span><span id="display_live_time"></span><span class="moe-text">(●'◡'●)</span><script>function blog_live_time() {
-  setTimeout(blog_live_time, 1000);
-  const start = new Date('2020-10-20T00:00:00');
-  const now = new Date();
-  const timeDiff = (now.getTime() - start.getTime());
-  const msPerMinute = 60 * 1000;
-  const msPerHour = 60 * msPerMinute;
-  const msPerDay = 24 * msPerHour;
-  const passDay = Math.floor(timeDiff / msPerDay);
-  const passHour = Math.floor((timeDiff % msPerDay) / 60 / 60 / 1000);
-  const passMinute = Math.floor((timeDiff % msPerHour) / 60 / 1000);
-  const passSecond = Math.floor((timeDiff % msPerMinute) / 1000);
-  display_live_time.innerHTML = " " + passDay + " 天 " + passHour + " 小时 " + passMinute + " 分 " + passSecond + " 秒";
-}
-blog_live_time();
-</script></div><div id="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_site_uv" title="总访客量"><span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-user-line"></use></svg></span><span id="busuanzi_value_site_uv"></span></span><span class="footer-separator">|</span><span id="busuanzi_container_site_pv" title="总访问量"><span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-eye-line"></use></svg></span><span id="busuanzi_value_site_pv"></span></span></div></footer><a class="hty-icon-button" id="goUp" aria-label="back-to-top" href="#"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-up-s-line"></use></svg><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round"></circle></svg></a><a class="popup-trigger hty-icon-button icon-search" id="search" href="javascript:;" title="搜索"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-search-line"></use></svg></span></a><script>window.addEventListener("DOMContentLoaded", () => {
-  // Handle and trigger popup window
-  document.querySelector(".popup-trigger").addEventListener("click", () => {
-    document.querySelector(".popup").classList.add("show");
-    setTimeout(() => {
-      document.querySelector(".search-input").focus();
-    }, 100);
-  });
 
-  // Monitor main search box
-  const onPopupClose = () => {
-    document.querySelector(".popup").classList.remove("show");
-  };
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://err0r.top/article/S3cCTF-gyy-Writeup/" data-id="cklc0zh1n000xfpov1vmh2bwo" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MISC/" rel="tag">MISC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/XFF/" rel="tag">XFF</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/XXE/" rel="tag">XXE</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" rel="tag">信息收集</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" rel="tag">文件上传</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%98%8E%E6%96%87%E6%94%BB%E5%87%BB/" rel="tag">明文攻击</a></li></ul>
 
-  document.querySelector(".popup-btn-close").addEventListener("click", () => {
-    onPopupClose();
-  });
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/article/md5/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          md5比较
+        
+      </div>
+    </a>
+  
+  
+    <a href="/article/2020-HECTF-Write-up/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">2020 HECTF Write-up</div>
+    </a>
+  
+</nav>
 
-  window.addEventListener("keyup", event => {
-    if (event.key === "Escape") {
-      onPopupClose();
-    }
-  });
-});
-</script><script src="/js/search/local-search.js" defer></script><div class="popup search-popup"><div class="search-header"><span class="popup-btn-close close-icon hty-icon-button"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-close-line"></use></svg></span></div><div class="search-input-container"><input class="search-input" id="local-search-input" type="text" placeholder="想要搜些什么？" value=""></div><div id="local-search-result"></div></div><script>const date = new Date();
-const today = (date.getMonth() + 1) + "-" + date.getDate()
-const mourn_days = ["4-4","9-18","12-13"]
-if (mourn_days.includes(today)) {
-  document.documentElement.style.filter = "grayscale(1)";
-}</script></div><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Programme/">Programme</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Write-Up/">Write-Up</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9D%82%E8%B0%88%E7%AC%94%E8%AE%B0/">杂谈笔记</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9D%82%E8%B0%88%E7%AC%94%E8%AE%B0/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9D%82%E8%B0%88%E7%AC%94%E8%AE%B0/%E8%8F%9C%E9%B8%A1%E6%95%99%E7%A8%8B/">菜鸡教程</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Crypto/" rel="tag">Crypto</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git%E6%B3%84%E9%9C%B2/" rel="tag">Git泄露</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MISC/" rel="tag">MISC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OOB%E5%B8%A6%E5%A4%96%E6%94%BB%E5%87%BB/" rel="tag">OOB带外攻击</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL%E6%B3%A8%E5%85%A5/" rel="tag">SQL注入</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSRF/" rel="tag">SSRF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSTI/" rel="tag">SSTI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XFF/" rel="tag">XFF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XPath%E6%B3%A8%E5%85%A5/" rel="tag">XPath注入</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XXE/" rel="tag">XXE</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ctf-whale/" rel="tag">ctf-whale</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ctfd/" rel="tag">ctfd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/md5/" rel="tag">md5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netcat/" rel="tag">netcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pgsql/" rel="tag">pgsql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BC%AA%E5%8A%A0%E5%AF%86/" rel="tag">伪加密</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" rel="tag">信息收集</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98%E5%8F%96%E8%AF%81/" rel="tag">内存取证</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" rel="tag">反序列化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8D%E5%BC%B9shell/" rel="tag">反弹shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" rel="tag">命令执行</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8F%90%E6%9D%83/" rel="tag">提权</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" rel="tag">文件上传</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%A0%E5%8F%82%E6%95%B0RCE/" rel="tag">无参数RCE</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%98%8E%E6%96%87%E6%94%BB%E5%87%BB/" rel="tag">明文攻击</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Crypto/" style="font-size: 10px;">Crypto</a> <a href="/tags/Git%E6%B3%84%E9%9C%B2/" style="font-size: 10px;">Git泄露</a> <a href="/tags/MISC/" style="font-size: 10px;">MISC</a> <a href="/tags/OOB%E5%B8%A6%E5%A4%96%E6%94%BB%E5%87%BB/" style="font-size: 10px;">OOB带外攻击</a> <a href="/tags/SQL%E6%B3%A8%E5%85%A5/" style="font-size: 16.67px;">SQL注入</a> <a href="/tags/SSRF/" style="font-size: 10px;">SSRF</a> <a href="/tags/SSTI/" style="font-size: 10px;">SSTI</a> <a href="/tags/XFF/" style="font-size: 13.33px;">XFF</a> <a href="/tags/XPath%E6%B3%A8%E5%85%A5/" style="font-size: 10px;">XPath注入</a> <a href="/tags/XXE/" style="font-size: 13.33px;">XXE</a> <a href="/tags/ctf-whale/" style="font-size: 10px;">ctf-whale</a> <a href="/tags/ctfd/" style="font-size: 10px;">ctfd</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/md5/" style="font-size: 10px;">md5</a> <a href="/tags/netcat/" style="font-size: 10px;">netcat</a> <a href="/tags/pgsql/" style="font-size: 10px;">pgsql</a> <a href="/tags/%E4%BC%AA%E5%8A%A0%E5%AF%86/" style="font-size: 10px;">伪加密</a> <a href="/tags/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" style="font-size: 13.33px;">信息收集</a> <a href="/tags/%E5%86%85%E5%AD%98%E5%8F%96%E8%AF%81/" style="font-size: 10px;">内存取证</a> <a href="/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 20px;">反序列化</a> <a href="/tags/%E5%8F%8D%E5%BC%B9shell/" style="font-size: 10px;">反弹shell</a> <a href="/tags/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" style="font-size: 10px;">命令执行</a> <a href="/tags/%E6%8F%90%E6%9D%83/" style="font-size: 10px;">提权</a> <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" style="font-size: 13.33px;">文件上传</a> <a href="/tags/%E6%97%A0%E5%8F%82%E6%95%B0RCE/" style="font-size: 10px;">无参数RCE</a> <a href="/tags/%E6%98%8E%E6%96%87%E6%94%BB%E5%87%BB/" style="font-size: 13.33px;">明文攻击</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">十二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/article/hgame2021week1/">HGAME2021-week1</a>
+          </li>
+        
+          <li>
+            <a href="/article/2021gongcesai/">CnHongKe2021公测赛</a>
+          </li>
+        
+          <li>
+            <a href="/article/cqb2021/">春秋杯2021新春欢乐赛一道题——按F注入 对pgsql的研究</a>
+          </li>
+        
+          <li>
+            <a href="/article/djbctf2021/">DJBCTF2021</a>
+          </li>
+        
+          <li>
+            <a href="/article/2021/">2021</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 gyy<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
