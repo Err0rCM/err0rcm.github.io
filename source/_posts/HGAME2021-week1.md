@@ -425,9 +425,9 @@ base64+base32+base16 不解释
 
 压缩包密码知道是啥嘛？
 
-<img src="HGAME2021-week1/0NMHW9V1R`V2J31%KI]1Q27.jpg" alt="img" style="zoom: 25%;" />
+![1](HGAME2021-week1/1.jpg)
 
-23333
+23333没错就是的
 
 misc3好像是流量包，能提出来一张几M的图片，分析图片
 
