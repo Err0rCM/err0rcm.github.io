@@ -17,9 +17,7 @@ categories:
 
 ![rank](cnhonghe2021公测赛/image-20210205133228513.png)
 
-
-
-感谢大师傅们手下留情
+小比赛
 
 <!-- more -->
 
