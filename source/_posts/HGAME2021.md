@@ -1,11 +1,11 @@
 ---
-title: HGAME2021-week1
+title: HGAME2021
 comments: false
 hide: false
 date: 2021-02-06 13:59:51
-urlname: hgame2021week1
+urlname: hgame2021
 updated:
-password: hgame2021week1
+password: 
 tags:
 categories: Write-Up
 
@@ -19,9 +19,11 @@ HAME2021-week 个人WP
 
 <!-- more -->
 
+# Week1
+
 这是week1，做了Web和部分Misc，后续会整合成一篇文章(先让我水着)
 
-![image-20210206151019347](HGAME2021-week1/image-20210206151019347.png)
+![image-20210206151019347](HGAME2021/image-20210206151019347.png)
 
 **由于某些原因，以后会注重原理上的研究**
 
@@ -37,11 +39,11 @@ HAME2021-week 个人WP
 
 题目地址： [http://hitchhiker42.0727.site:42420](http://hitchhiker42.0727.site:42420/) 
 
-![image-20210206151406243](HGAME2021-week1/image-20210206151406243.png)
+![image-20210206151406243](HGAME2021/image-20210206151406243.png)
 
 抓包看看顺风车啥样
 
-![image-20210206151614330](HGAME2021-week1/image-20210206151614330.png)
+![image-20210206151614330](HGAME2021/image-20210206151614330.png)
 
 状态码405Method Not Allowed
 
@@ -49,11 +51,11 @@ HAME2021-week 个人WP
 
 > 注意:在burpsuite里面，右键改变请求方式即可
 >
-> ![change](HGAME2021-week1/image-20210206152237254.png)
+> ![change](HGAME2021/image-20210206152237254.png)
 
 随后提示`只有使用"无限非概率引擎"(Infinite Improbability Drive)才能访问这里～`
 
-![image-20210206152332459](HGAME2021-week1/image-20210206152332459.png)
+![image-20210206152332459](HGAME2021/image-20210206152332459.png)
 
 这里只要改UA就行了，User-Agent 简单来说就是告诉服务器访问者是通过什么工具来请求的，添加`Infinite Improbability Drive`或者直接删掉UA只加这个也可以
 
@@ -63,17 +65,17 @@ HAME2021-week 个人WP
 你知道吗？<a href="https://github.com/wuhan005">茄子</a>特别要求：你得从他的<a href="https://cardinal.ink/">Cardinal</a>过来
 ```
 
-![image-20210206152624452](HGAME2021-week1/image-20210206152624452.png)
+![image-20210206152624452](HGAME2021/image-20210206152624452.png)
 
 这里是要改Referer，简单来说就是告诉服务器该网页是从哪个页面链接过来的，服务器因此可以获得一些信息用于处理，用法一般是为了防外连接，直接用`<a href="">`，`用Submit或<input type="image">提交的表单(POST或GET)`，或者`使用JavaScript提交的[表单](https://baike.baidu.com/item/表单)(POST或GET)`都是会带上Referer，当然伪造也很简单。
 
 最后提示`flag仅能通过本地访问获得`
 
-![image-20210206153338355](HGAME2021-week1/image-20210206153338355.png)
+![image-20210206153338355](HGAME2021/image-20210206153338355.png)
 
 很简单的XFF，XFF就是表示客户端最原始的IP地址，也是很容易伪造
 
-![image-20210206153608572](HGAME2021-week1/image-20210206153608572.png)
+![image-20210206153608572](HGAME2021/image-20210206153608572.png)
 
 python脚本如下
 
@@ -113,17 +115,17 @@ print(res)
 
 紧跟潮流的小游戏，作者把源码公开了，所以有很多二创。抢了个一血
 
-![first](HGAME2021-week1/first.png)
+![first](HGAME2021/first.png)
 手快2333
-![image-20210206153657660](HGAME2021-week1/image-20210206153657660.png)
+![image-20210206153657660](HGAME2021/image-20210206153657660.png)
 
 看到小游戏题，第一眼看js，github搜一圈了解到这个游戏的源码在./src/project.js。但是代码四千行，因为游戏开源，所以很容易能找到分析的源码资料，[参考链接](https://www.cnblogs.com/xuanyu-10-18/p/14340204.html)，直接搜到控制分数的代码，改掉
 
-![image-20210206155153207](HGAME2021-week1/image-20210206155153207.png)
+![image-20210206155153207](HGAME2021/image-20210206155153207.png)
 
 可以看到这一块3436行`default.score`是计分块，改成+999999保存，然后把游戏玩结束弹flag
 
-![image-20210206155459828](HGAME2021-week1/image-20210206155459828.png)
+![image-20210206155459828](HGAME2021/image-20210206155459828.png)
 
 
 
@@ -172,7 +174,7 @@ Client-IP: 127.0.0.1
 1
 ```
 
-![image-20210206161847925](HGAME2021-week1/image-20210206161847925.png)
+![image-20210206161847925](HGAME2021/image-20210206161847925.png)
 
 
 
@@ -188,13 +190,13 @@ Client-IP: 127.0.0.1
 
 又到了写脚本环节，首先看下题目
 
-![image-20210206162112398](HGAME2021-week1/image-20210206162112398.png)
+![image-20210206162112398](HGAME2021/image-20210206162112398.png)
 
 我大概是假的大学生
 
 先找题目，全是ax+b的形式，那就挺好办的，找源码看看怎么取数字
 
-![image-20210206162233545](HGAME2021-week1/image-20210206162233545.png)
+![image-20210206162233545](HGAME2021/image-20210206162233545.png)
 
 应该还是挺好取的，但是开始写脚本发现GET请求不到，应该是对接api的，果然在Sources里面找到了个`fuckmath.js`
 
@@ -278,17 +280,17 @@ function submit(){
 
 直接访问`./api/getFlag`看看？
 
-![image-20210206162746009](HGAME2021-week1/image-20210206162746009.png)
+![image-20210206162746009](HGAME2021/image-20210206162746009.png)
 
 被骂了555...应该是检查session看做题情况，其他都访问一下看看
 
-![image-20210206162926231](HGAME2021-week1/image-20210206162926231.png)
+![image-20210206162926231](HGAME2021/image-20210206162926231.png)
 
-![image-20210206162952785](HGAME2021-week1/image-20210206162952785.png)
+![image-20210206162952785](HGAME2021/image-20210206162952785.png)
 
 最后确认答案是`answer`，开始写脚本
 
-![image-20210206163154279](HGAME2021-week1/image-20210206163154279.png)
+![image-20210206163154279](HGAME2021/image-20210206163154279.png)
 
 赶时间，没搞正则，凑合着用用吧，蹩脚编程勿喷2333
 
@@ -366,7 +368,7 @@ if __name__ == '__main__':
 
 一 键 获 取 flag
 
-![image-20210206163540205](HGAME2021-week1/image-20210206163540205.png)
+![image-20210206163540205](HGAME2021/image-20210206163540205.png)
 
 
 
@@ -392,7 +394,7 @@ Liki 日记：
 
 相同payload，改改host就行
 
-![QQ图片20210206163759](HGAME2021-week1/QQ图片20210206163759.png)
+![QQ图片20210206163759](HGAME2021/QQ图片20210206163759.png)
 
 
 
@@ -425,7 +427,11 @@ base64+base32+base16 不解释
 
 压缩包密码知道是啥嘛？
 
+<<<<<<< HEAD:source/_posts/HGAME2021-week1.md
 ![1](HGAME2021-week1/1.jpg)
+=======
+<img src="HGAME2021/0NMHW9V1R`V2J31%KI]1Q27.jpg" alt="img" style="zoom: 25%;" />
+>>>>>>> 47fb9852da10891a4ed5b58a06aed82cf5a1dd14:source/_posts/HGAME2021.md
 
 23333没错就是的
 
@@ -447,13 +453,13 @@ misc3好像是流量包，能提出来一张几M的图片，分析图片
 
 两个word文档，先看属性
 
-![image-20210206164905132](HGAME2021-week1/image-20210206164905132.png)
+![image-20210206164905132](HGAME2021/image-20210206164905132.png)
 
 估计另一个有密码，直接以压缩包形式打开
 
 很轻易有个`word/password.xml`
 
-![image-20210206165015840](HGAME2021-week1/image-20210206165015840.png)
+![image-20210206165015840](HGAME2021/image-20210206165015840.png)
 
 ```
 <password>+++++ +++[- >++++ ++++< ]>+++ +.<++ +[->+ ++<]> ++.<+ ++[-> +++<] >+.<+ ++[-> ---<] >-.++ ++++. <+++[ ->--- <]>-. +++.+ .++++ ++++. <+++[ ->--- <]>-- ----. +.--- --..+ .++++ +++++ .<+++ [->-- -<]>- ----- .<</password>
@@ -467,19 +473,19 @@ misc3好像是流量包，能提出来一张几M的图片，分析图片
 
 开第二个文档，分析了一下什么都没有，文档只有一张图片
 
-![image-20210206165425076](HGAME2021-week1/image-20210206165425076.png)
+![image-20210206165425076](HGAME2021/image-20210206165425076.png)
 
 选中文档发现不对劲，显示隐藏标记发现有隐藏字符，把字符取消隐藏
 
-![image-20210206170404252](HGAME2021-week1/image-20210206170404252.png)
+![image-20210206170404252](HGAME2021/image-20210206170404252.png)
 
 发现是空白的，单独保存下来
 
-![image-20210206170505833](HGAME2021-week1/image-20210206170505833.png)
+![image-20210206170505833](HGAME2021/image-20210206170505833.png)
 
 结合图片跟雪有关，可能是snow加密，去跑一下试试
 
-![image-20210206170631851](HGAME2021-week1/image-20210206170631851.png)
+![image-20210206170631851](HGAME2021/image-20210206170631851.png)
 
 确实
 
@@ -488,3 +494,12 @@ misc3好像是流量包，能提出来一张几M的图片，分析图片
 ---
 
 其他题目可以等官方或者PWN师傅的WP啦，每次做题不管简单还是困难都要有所收获，week2师傅们也要加油！提前祝师傅们新年快乐！
+
+---
+
+# week2
+
+换了新电脑，重新配环境ing
+
+### Web
+

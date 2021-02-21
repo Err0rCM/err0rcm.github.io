@@ -33,9 +33,9 @@ nc/ncat 是 netcat 的缩写，它可以读写 TCP 与 UDP 端口——或许你
 
 前往 [此处](https://github.com/andrew-d/static-binaries/blob/master/binaries/windows/x86/ncat.exe) (github链接)下载此程序。我们也在这里提供了一份。下载下来即可。
 
-[ncat.zip](http://err0r.top/flag/sourses/ncat.zip)
+[ncat.zip](/download/ncat.zip)
 
-*注：nc/ncat 事实上是两个不同的程序，但在我们接下来的使用上，基本没有区别。ncat 是由 Nmap 项目开发的“重置版的 Netcat”。*
+> 注：nc/ncat 事实上是两个不同的程序，但在我们接下来的使用上，基本没有区别。ncat 是由 Nmap 项目开发的“重置版的 Netcat”。
 
 #### Q:我的杀毒软件报毒怎么办
 
@@ -49,7 +49,7 @@ nc/ncat 是 netcat 的缩写，它可以读写 TCP 与 UDP 端口——或许你
 
 Windows 10 中，你可以使用资源管理器 -> 文件来在你存放 nc 的目录中打开命令提示符或 PowerShell。
 
-![](http://err0r.top/wp-content/uploads/2020/11/explorer-1024x510-1.png)
+![](Netcat%20%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7/explorer-1024x510.png)
 ###### 在 Windows 资源管理器中打开命令提示符或 PowerShell
 
 可以直接在`ncat.exe`所在目录，按住`Shift+鼠标右键`点击`在此处打开Powershell窗口`输入`ncat`
@@ -63,7 +63,7 @@ Windows 10 中，你可以使用资源管理器 -> 文件来在你存放 nc 的�
 
 当显示以下内容时，说明你成功运行了它。
 
-![nc](http://err0r.top/wp-content/uploads/2020/11/QQ图片20201103174245.png)
+![nc](Netcat%20%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7/image-20210220172523253.png)
 ###### 成功运行 ncat
 
 
@@ -80,6 +80,8 @@ usage: nc [-46AacCDdEFhklMnOortUuvz] [-K tc] [-b boundif] [-i interval] [-p sour
 
 出现了类似上面的输出，说明运行成功了。
 
+![image-20210220170815879](Netcat%20%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7/image-20210220170815879.png)
+
 
 ### 示例
 
@@ -90,7 +92,7 @@ usage: nc [-46AacCDdEFhklMnOortUuvz] [-K tc] [-b boundif] [-i interval] [-p sour
 输入 `nc www.baidu.com 80`（或者 `ncat www.baidu.com 80`，或者 `./ncat www.baidu.com 80`，请根据以上的介绍自行修改），程序会等待你的输入。
 
 输入 GET / HTTP/1.0。这表示，我们使用 HTTP/1.0 这个协议版本，用 GET 的方式请求根 /。输入**两下**回车，代表我们的 HTTP 请求完成。如果你的网络畅通，百度的网页服务器会立刻返回大量信息，可以自行搜索，了解它们的含义。现在，你成功（在不使用浏览器的情况下）完成了一次与百度网站的连接！
-![nc success](http://err0r.top/wp-content/uploads/2020/11/QQ图片2.png)
+![nc success](Netcat%20%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7/image-20210220172713535.png)
 ###### 内容可能不同，返回类似即表示成功
 
 如果你成功了，那么你可以开始愉快地完成我们的题目了！
