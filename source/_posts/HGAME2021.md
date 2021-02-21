@@ -427,11 +427,7 @@ base64+base32+base16 不解释
 
 压缩包密码知道是啥嘛？
 
-<<<<<<< HEAD:source/_posts/HGAME2021-week1.md
-![1](HGAME2021-week1/1.jpg)
-=======
-<img src="HGAME2021/0NMHW9V1R`V2J31%KI]1Q27.jpg" alt="img" style="zoom: 25%;" />
->>>>>>> 47fb9852da10891a4ed5b58a06aed82cf5a1dd14:source/_posts/HGAME2021.md
+![1](HGAME2021/1.jpg)
 
 23333没错就是的
 
