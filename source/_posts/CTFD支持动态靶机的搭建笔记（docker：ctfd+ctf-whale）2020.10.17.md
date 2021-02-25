@@ -1,5 +1,5 @@
 ---
-title: CTFD支持动态靶机的搭建笔记（docker：ctfd+ctf-whale）2020.10.16
+title: CTFD支持动态靶机的搭建笔记（docker：ctfd+ctf-whale）
 urlname: CTFD
 date: 2020-10-17 17:49:25
 updated: 
@@ -14,16 +14,18 @@ categories:
 permalink: 
 ---
 
-# CTFD支持动态靶机的搭建笔记（docker：ctfd+ctf-whale）2020.10.17
+# CTFD支持动态靶机的搭建笔记（docker：ctfd+ctf-whale）
 
-## 本篇文章最后更新于2020.10.17
+## 本篇文章最后更新于2021.2.25
 
-
+转载请注明来源：https://err0r.top/article/CTFD/
 
 
 ## 前言
 ctfd可以说是如今最方便的ctf靶场搭建平台，支持各种插件与二次开发，[赵师傅](https://www.zhaoj.in/)早前写了一款插件ctf-whale非常方便，但本人在搭建的过程中遇到了不少问题，经过不断研究终于完成，特此记录，以防后期忘记，也供大家交流学习。
 赵师傅开发的插件是为了适合 [buu](https://buuoj.cn) 的架构,本篇文章采用完整流程+填坑讲解的格式。
+
+我修改了一份CTFd，已上传github：https://github.com/Err0rCM/CTFd_with_CTFd-whale，启动后仍需按照教程后半部分配置，省去前半部分时间，如有问题请提issue或者从头自行配置。
 
 #### 强调！
 由于国内git clone实在太慢，本人采用的方法是科学上网下载zip解压的方式，可自行百度git clong与Download zip的区别。本篇文章是用本地下载zip解压上传的方式完成**在服务器上**搭建
@@ -100,7 +102,7 @@ frpc是在ctfd里的，frps是在docker机里的
 ![frps](CTFD支持动态靶机的搭建笔记（docker：ctfd+ctf-whale）2020.10.17/202010172331132.png)
 
 这里看到frps有28000-28100，这是在**Frp-Docker-For-CTFd-Whale里的docker-compose.yml**，可更改配置后compose
-```
+```yaml
 version: '2'
 
 services:
@@ -135,7 +137,7 @@ token = randomme
 ### 4.配置ctfd
 
 直接上**ctfd的docker-compose.yml**配置
-```
+```yaml
 version: '2.2'
 
 services:
@@ -146,7 +148,7 @@ services:
     user: root
     restart: always
     ports:
-      #- "85:80"     #我将这里注释掉了，这里通过nginx转发感觉速度访问速度会变慢，多次尝试之后直接开8000端口访问不会对服务造成影响
+      #- "85:80"     #我将这里注释掉了，这里通过nginx转发感觉速度访问速度会变慢，可能因为我的配置问题，多次尝试之后直接开8000端口访问不会对服务造成影响
       - "443:443"
     networks:
         default:
@@ -250,7 +252,9 @@ networks:
 
 在docker-compose.yml同目录下建nginx文件夹，即与第一个#这里注意相应，然后建`http.conf`文件写入以下内容
 
+**2021年2月25日更新**目前最新版本的CTFd已经有此配置了，不需要再另加了。
 
+转载请注明来源：https://err0r.top/article/CTFD/
 
 ```
 worker_processes 4;
@@ -331,8 +335,8 @@ admin_port = 7400
 
 ### 5.配置Dockerfile
 
-还是直接上配置，**Dockerfile**
-```
+还是直接上配置，**Dockerfile**.注意，最新版本的CTFd已经更换了Dockerfile的写法，可以参考一下apt换源
+```dockerfile
 FROM python:3.7-alpine  #如果出现问题可尝试更换python，一般不需要
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories && \
     apk update && \
@@ -352,7 +356,7 @@ RUN for d in CTFd/plugins/*; do \
       if [ -f "$d/requirements.txt" ]; then \
         pip install -r $d/requirements.txt -i https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple/ ; \
       fi; \
-    done;
+    done; #同样注意2
 
 RUN chmod +x /opt/CTFd/docker-entrypoint.sh
 RUN chown -R 1001:1001 /opt/CTFd
@@ -610,6 +614,86 @@ flask-restplus==0.13.0
 
  然后 `docker-compose down` 再启动 `docker-compose up -d --build` 不出意外应该就能解决问题 
 
+(更新)12.出现如下问题可参考[此issue](https://github.com/glzjin/CTFd-Whale/issues/20)提出的问题，在ctfd的docker-compose.yml添加`/var/run/docker.sock:/var/run/docker.sock`
+
+![image](CTFD%E6%94%AF%E6%8C%81%E5%8A%A8%E6%80%81%E9%9D%B6%E6%9C%BA%E7%9A%84%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0%EF%BC%88docker%EF%BC%9Actfd+ctf-whale%EF%BC%892020.10.17/99216164-ee25b080-280f-11eb-95a9-2c2a17895068.png)
+
+如下
+
+![image-20210225153426310](CTFD%E6%94%AF%E6%8C%81%E5%8A%A8%E6%80%81%E9%9D%B6%E6%9C%BA%E7%9A%84%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0%EF%BC%88docker%EF%BC%9Actfd+ctf-whale%EF%BC%892020.10.17/image-20210225153426310.png)
+
+## 2021.2.25 更新
+
+最新的CTFd改了部分代码，由于兼容性问题，需要重新编辑一些东西，例如`Dockerfile`
+
+```dockerfile
+FROM python:3.7-slim-buster
+WORKDIR /opt/CTFd
+RUN mkdir -p /opt/CTFd /var/log/CTFd /var/uploads
+
+# hadolint ignore=DL3008
+RUN echo 'deb http://mirrors.aliyun.com/debian/ buster main non-free contrib \
+ deb http://mirrors.aliyun.com/debian/ buster-updates main non-free contrib \
+ deb http://mirrors.aliyun.com/debian/ buster-backports main non-free contrib \
+ deb-src http://mirrors.aliyun.com/debian/ buster main non-free contrib \
+ deb-src http://mirrors.aliyun.com/debian/ buster-updates main non-free contrib \
+ deb-src http://mirrors.aliyun.com/debian/ buster-backports main non-free contrib \
+ deb http://mirrors.aliyun.com/debian-security/ buster/updates main non-free contrib \
+ deb-src http://mirrors.aliyun.com/debian-security/ buster/updates main non-free contrib'> /etc/apt/sources.list && \
+    apt-get update \
+    && apt-get install -y --no-install-recommends \
+        build-essential \
+        default-mysql-client \
+        python3-dev \
+        libffi-dev \
+        libssl-dev \
+        git \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt /opt/CTFd/
+
+RUN pip install -r requirements.txt -i http://mirrors.aliyun.com/pypi/simple/ --no-cache-dir
+
+COPY . /opt/CTFd
+
+# hadolint ignore=SC2086
+RUN for d in CTFd/plugins/*; do \
+        if [ -f "$d/requirements.txt" ]; then \
+            pip install -r $d/requirements.txt -i http://mirrors.aliyun.com/pypi/simple/ --no-cache-dir; \
+        fi; \
+    done;
+
+RUN adduser \
+    --disabled-login \
+    -u 1001 \
+    --gecos "" \
+    --shell /bin/bash \
+    ctfd
+RUN chmod +x /opt/CTFd/docker-entrypoint.sh \
+    && chown -R 1001:1001 /opt/CTFd /var/log/CTFd /var/uploads
+
+USER 1001
+EXPOSE 8000
+ENTRYPOINT ["/opt/CTFd/docker-entrypoint.sh"]
+```
+
+其他pip源
+
+```
+清华：https://pypi.tuna.tsinghua.edu.cn/simple/
+中国科技大学 https://pypi.mirrors.ustc.edu.cn/simple/
+华中理工大学：http://pypi.hustunique.com/
+山东理工大学：http://pypi.sdutlinux.org/
+豆瓣：http://pypi.douban.com/simple/
+```
+
+![image-20210225163134408](CTFD%E6%94%AF%E6%8C%81%E5%8A%A8%E6%80%81%E9%9D%B6%E6%9C%BA%E7%9A%84%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0%EF%BC%88docker%EF%BC%9Actfd+ctf-whale%EF%BC%892020.10.17/image-20210225163134408.png)
+
+![image-20210225163821673](CTFD%E6%94%AF%E6%8C%81%E5%8A%A8%E6%80%81%E9%9D%B6%E6%9C%BA%E7%9A%84%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0%EF%BC%88docker%EF%BC%9Actfd+ctf-whale%EF%BC%892020.10.17/image-20210225163821673.png)
+
+**我整合了一下CTFd+ctfd-whale+frpc+frps，可以参考一下，[已上传github](https://github.com/Err0rCM/CTFd_with_CTFd-whale)**
+
 ### 参考文章
 
  [CTFd-Whale 推荐部署实践](https://www.zhaoj.in/read-6333.html)(赵师傅官方)
@@ -619,5 +703,7 @@ flask-restplus==0.13.0
  [ctfd使用ctfd-whale动态靶机插件搭建靶场指南](https://vaala.cat/2020/09/21/ctfd使用ctfd-whale动态靶机插件搭建靶场指南/)
 
 
+
+转载请注明来源：https://err0r.top/article/CTFD/
 
 如果有问题请私信联系我，不足之处敬请谅解
