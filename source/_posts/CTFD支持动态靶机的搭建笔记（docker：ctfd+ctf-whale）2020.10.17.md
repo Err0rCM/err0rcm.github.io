@@ -25,7 +25,7 @@ permalink:
 ctfd可以说是如今最方便的ctf靶场搭建平台，支持各种插件与二次开发，[赵师傅](https://www.zhaoj.in/)早前写了一款插件ctf-whale非常方便，但本人在搭建的过程中遇到了不少问题，经过不断研究终于完成，特此记录，以防后期忘记，也供大家交流学习。
 赵师傅开发的插件是为了适合 [buu](https://buuoj.cn) 的架构,本篇文章采用完整流程+填坑讲解的格式。
 
-我修改了一份CTFd，已上传github：https://github.com/Err0rCM/CTFd_with_CTFd-whale，启动后仍需按照教程后半部分配置，省去前半部分时间，如有问题请提issue或者从头自行配置。
+我修改了一份CTFd，已上传github：[https://github.com/Err0rCM/CTFd_with_CTFd-whale](https://github.com/Err0rCM/CTFd_with_CTFd-whale) ，启动后仍需按照教程后半部分配置，省去前半部分时间，如有问题请提issue或者从头自行配置。
 
 #### 强调！
 由于国内git clone实在太慢，本人采用的方法是科学上网下载zip解压的方式，可自行百度git clong与Download zip的区别。本篇文章是用本地下载zip解压上传的方式完成**在服务器上**搭建

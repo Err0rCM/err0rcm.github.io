@@ -20,7 +20,7 @@ permalink:
 抢了到人生第一次大一点点比赛的一血
 
 
-![img](2020-HECTF-Write-up/1.png)
+![first](2020-HECTF-Write-up/1.png)
 
 ---
 
