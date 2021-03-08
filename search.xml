@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>sqltest</title>
+      <link href="article/sqltest/"/>
+      <url>article/sqltest/</url>
+      
+        <content type="html"><![CDATA[<p>sql注入学习笔记</p><a id="more"></a>]]></content>
+      
+      
+      <categories>
+          
+          <category> 杂谈笔记 </category>
+          
+          <category> 学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> SQL注入 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>HGAME2021</title>
       <link href="article/hgame2021/"/>
       <url>article/hgame2021/</url>
