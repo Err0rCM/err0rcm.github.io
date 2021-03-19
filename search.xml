@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>BlackWatch入群题-Web2</title>
+      <link href="article/blackwatchweb2/"/>
+      <url>article/blackwatchweb2/</url>
+      
+        <content type="html"><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="密码不太对，别想骗窝." data-whm="抱歉, 这个文章不能被校验, 不过您还是能看看解密后的内容.">  <script id="hbeData" type="hbeData" data-hmacdigest="feb6d7af6b6767e665163b45edbd84cde173d680d521904deb69ef8b0b878f56">094b9a30c019691c99cdbb2abce86b77cf51cac6aab58367fbfc40f92a1e8cb0f353d6b611997b877685ad49a964e8a84b617e3f20d524b274756d80d2c3b2628319e3aa8abfe2271d06c4eeef9ca9c1</script>  <div class="hbe hbe-content">    <div class="hbe hbe-input hbe-input-blink">      <input class="hbe hbe-input-field hbe-input-field-blink" type="password" id="hbePass">      <label class="hbe hbe-input-label hbe-input-label-blink" for="hbePass">        <span class="hbe hbe-input-label-content hbe-input-label-content-blink" data-content="这里需要密码查看哦.">这里需要密码查看哦.</span>      </label>    </div>  </div></div><script src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+      
+      
+      <categories>
+          
+          <category> Write-Up </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>V&amp;N2021公开赛</title>
       <link href="article/VN2021ctf/"/>
       <url>article/VN2021ctf/</url>
