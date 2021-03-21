@@ -1,12 +1,12 @@
 ---
-title: [Black Watch 入群题]Web2
+title: BlackWatch入群题-Web2
 comments: false
 hide: false
 date: 2021-03-18 19:39:24
 urlname: blackwatchweb2
-updated:
+updated: 
 password: H3ll0_My_Br0
-tags:
+tags: 
 categories: Write-Up
 ---
 
