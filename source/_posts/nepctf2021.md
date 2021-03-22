@@ -1,5 +1,5 @@
 ---
-title: nepctf2021
+title: NepCTF2021
 comments: false
 hide: false
 date: 2021-03-22 12:59:47
