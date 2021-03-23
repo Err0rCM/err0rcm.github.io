@@ -1,6 +1,6 @@
 # ---------------
 # mode: light | dark | auto | time
-mode: auto
+mode: time
 
 # Theme color for customize
 # Notice: color value must in double quotes: "#000000"
@@ -154,10 +154,10 @@ menu:
     - type: tags
       path: /tags/
       icon: icon-price-tag-3-line
-  custom:
-    title: 文档
-    path: https://yun.yunyoujun.cn
-    icon: icon-settings-line
+  # custom:
+  #   title: 文档
+  #   path: https://yun.yunyoujun.cn
+  #   icon: icon-settings-line
 
 # archive
 archive:
@@ -579,7 +579,7 @@ mourn:
 
 # SEO
 # https://ziyuan.baidu.com/linksubmit/index
-baidu_push: false
+baidu_push: true
 
 # custom (You can use variables.)
 custom:
