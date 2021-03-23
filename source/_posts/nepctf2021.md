@@ -546,6 +546,27 @@ Tzo0OiJHYW1lIjo3OntzOjg6InVzZXJuYW1lIjtzOjU6ImFkbWluIjtzOjg6InBhc3N3b3JkIjtzOjU6
 
 ![flag](nepctf2021/image-20210322173545249.png)
 
+记录一下，获取类函数名的方法
+
+```php
+<?php
+$classes = get_declared_classes();
+foreach ($classes as $class) {
+    $methods = get_class_methods($class);
+    foreach ($methods as $method) {
+        if (in_array($method, array(
+            '__destruct',
+            '__wakeup',
+            '__call',
+            '__callStatic',
+            'open'
+        ))) {
+            print $class . '::' . $method . "\n";
+        }
+    }
+}
+```
+
 
 
 ---
