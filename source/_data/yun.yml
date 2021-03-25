@@ -91,9 +91,13 @@ social:
   #  icon: icon-telegram-line
   #  color: "#0088CC"
   - name: E-Mail
-    link: mailto:1906968764@qq.com
+    link: mailto:err0rcm@qq.com
     icon: icon-mail-line
     color: "#8E71C1"
+  - name: RSS
+    link: /atom.xml # config.feed.path
+    icon: icon-rss-line
+    color: orange
   - name: Travelling
     link: https://travellings.now.sh/
     icon: icon-send-plane-2-line

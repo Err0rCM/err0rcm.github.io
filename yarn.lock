@@ -1117,6 +1117,14 @@
   dependencies:
     "hexo-pagination" "1.0.0"
 
+"hexo-generator-feed@^3.0.0":
+  "integrity" "sha1-QSbvXjCCZMQlmfsO/a+I7RH6WZ4="
+  "resolved" "https://registry.npm.taobao.org/hexo-generator-feed/download/hexo-generator-feed-3.0.0.tgz"
+  "version" "3.0.0"
+  dependencies:
+    "hexo-util" "^2.1.0"
+    "nunjucks" "^3.0.0"
+
 "hexo-generator-index-pin-top@^0.2.2":
   "integrity" "sha1-NLW575DhvKj76VfTs8GDyjOt6Tc="
   "resolved" "https://registry.npm.taobao.org/hexo-generator-index-pin-top/download/hexo-generator-index-pin-top-0.2.2.tgz"
@@ -1874,7 +1882,7 @@
   "resolved" "https://registry.npm.taobao.org/normalize-path/download/normalize-path-3.0.0.tgz"
   "version" "3.0.0"
 
-"nunjucks@^3.0.1", "nunjucks@^3.2.1":
+"nunjucks@^3.0.0", "nunjucks@^3.0.1", "nunjucks@^3.2.1":
   "integrity" "sha1-RfkV/vD4n7qzjEidyFAl9khZ9GY="
   "resolved" "https://registry.npm.taobao.org/nunjucks/download/nunjucks-3.2.2.tgz"
   "version" "3.2.2"
