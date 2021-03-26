@@ -1,12 +1,11 @@
 ---
-title: S3C WEB Write-up
-urlname: S3C WEB Write-up
+title: 随缘的WEB Write-up
+urlname: suiyuan
 date: 2020-9-20 16:18:25
 updated: 
 comments: false
 tags: 
   - 信息收集
-  - Git泄露
   - SQL注入
   - 反序列化
 categories: 
