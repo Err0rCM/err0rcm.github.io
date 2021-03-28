@@ -15,7 +15,7 @@ links:
   - url: http://m0nit0r.top/
     blog: dw师傅
     avatar: img/dw.jpg
-    desc: 戴师傅强
+    desc: 戴队戴队
     color: "#0080e7" # 代表色
     email: # 非必须
 
@@ -36,7 +36,7 @@ links:
   - url: http://trick.ink/
     blog: yjj师傅
     avatar: img/yjj.jpg
-    desc: pwn爷ddw
+    desc: 一pwn压三web
     color: "#0078e7" # 代表色
     email: # 非必须
 
@@ -51,4 +51,4 @@ placeholder: 还没想好说些什么 # 默认对友链的描述
 tip: 友链加载中～如失败请刷新重试～
 ---
 
-<p align="center">互换友链请联系QQ~(左侧栏)</p>
+<p align="center">互换友链请左侧栏联系我～</p>
