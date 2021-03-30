@@ -3,11 +3,10 @@ title: 2020 HECTF Write-up
 urlname: 2020-HECTF-Write-up
 date: 2020-11-22 22:00:00
 updated: 
-comments: false
+comments: true
 tags: 
-  - md5
-  - 无参数RCE
-  - XPath注入
+  - SQL
+  - PHP
 categories: 
   - Write-Up
 permalink: 

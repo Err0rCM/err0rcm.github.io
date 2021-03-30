@@ -1,12 +1,14 @@
 ---
 title: HGAME2021
-comments: false
+comments: true
 hide: false
 date: 2021-02-06 13:59:51
 urlname: hgame2021
 updated:
 password: 
 tags:
+  - PHP
+  - Python
 categories: Write-Up
 
 ---
@@ -490,12 +492,4 @@ misc3好像是流量包，能提出来一张几M的图片，分析图片
 ---
 
 其他题目可以等官方或者PWN师傅的WP啦，每次做题不管简单还是困难都要有所收获，week2师傅们也要加油！提前祝师傅们新年快乐！
-
----
-
-# week2
-
-换了新电脑，重新配环境ing
-
-### Web
 

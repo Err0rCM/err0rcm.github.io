@@ -1,6 +1,6 @@
 ---
 title: md5比较
-comments: false
+comments: true
 hide: false
 date: 2020-12-9 13:55:00
 urlname: md5

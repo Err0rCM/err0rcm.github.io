@@ -1,12 +1,13 @@
 ---
-title: mardasctf
-comments: false
+title: DASCTF三月赛
+comments: true
 hide: false
 date: 2021-03-29 19:17:53
 urlname: mardasctf
 updated:
 password:
 tags:
+  - SQL
 categories: Write-Up
 ---
 
@@ -71,7 +72,7 @@ categories: Write-Up
 
 ---
 
-#### 无参数查询
+#### 无列名查询
 
 例如join进行无列名注入，现在有张表`table`如下
 

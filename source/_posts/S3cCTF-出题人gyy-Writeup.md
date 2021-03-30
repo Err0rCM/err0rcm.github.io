@@ -3,14 +3,9 @@ title: S3cCTF-出题人gyy-Writeup
 urlname: S3cCTF-gyy-Writeup
 date: 2020-11-23 18:18:25
 updated: 
-comments: false
+comments: true
 tags: 
-  - 信息收集
-  - XFF
-  - XXE
-  - 文件上传
-  - 明文攻击
-  - MISC
+  - PHP
 categories: 
   - Write-Up
 permalink: 

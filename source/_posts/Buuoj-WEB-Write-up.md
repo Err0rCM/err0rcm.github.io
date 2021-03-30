@@ -3,13 +3,17 @@ title: Buuoj WEB Write-up
 urlname: Buuoj-WEB-Write-up
 date: 2020-10-20 17:25:50
 updated: 2020-12-11 11:22:50
-comments: false
+comments: true
 tags: 
-  - 
+  - PHP
+  - Python
+  - Linux
+  - SQL
+  - JAVA
 categories: 
   - Write-Up
 permalink: 
-top: 2
+top: 
 ---
 
 by:gyy
@@ -1926,7 +1930,7 @@ gopher://10.138.132.10:6379/_%2A1%0D%0A%248%0D%0Aflushall%0D%0A%2A3%0D%0A%243%0D
 
 
 
-## [[网鼎杯 2018]Comment](#Comment)
+## [[网鼎杯 2018]Comment](/article/Buuoj-WEB-Write-up/#Comment)
 
 打开题目为留言板，猜测SSTI，sql注入之类的。
 

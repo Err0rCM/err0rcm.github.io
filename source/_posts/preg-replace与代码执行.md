@@ -1,12 +1,13 @@
 ---
 title: preg_replace与代码执行
-comments: false
+comments: true
 hide: false
 date: 2020-12-10 13:53:27
 urlname: preg_replace
 updated:
 permalink:
 tags:
+  - PHP
 categories:
   - 杂谈笔记
   - 学习笔记

@@ -1,15 +1,14 @@
 ---
 title: 2020BMZctf-Writeup
-comments: false
+comments: true
 hide: false
 date: 2020-12-28 20:47:11
 urlname: bmzctf2020
 updated:
 permalink:
 tags:
-  - 命令执行
-  - 提权
-  - 反弹shell
+  - PHP
+  - Linux
 categories:
   - Write-Up
 ---

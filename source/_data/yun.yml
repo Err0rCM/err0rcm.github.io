@@ -603,3 +603,30 @@ wordcount:
   enable: true
   count: true
   time: true
+
+comment:
+  enable: true
+  tips:
+    - 若您想及时得到回复提醒，建议私发邮件联系。
+    - 评论请遵守评论公德，博主会不定时检查评论并进行回复。
+  candidates:
+    - waline
+    # - valine
+    # - utterances
+
+waline:
+  enable: true
+  serverURL: https://comments-err0rcm.vercel.app # https://your-waline.vercel.app
+  visitor: false
+  comment: true
+
+github_issues:
+  enable: false
+  username: YunYouJun
+  repository: yunyoujun.github.io
+  filters: is:issue
+
+github_discussions:
+  enable: false
+  username: YunYouJun
+  repository: yunyoujun.github.io

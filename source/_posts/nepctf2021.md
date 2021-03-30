@@ -1,12 +1,13 @@
 ---
 title: NepCTF2021
-comments: false
+comments: true
 hide: false
 date: 2021-03-22 12:59:47
 urlname: Nepctf2021
 updated:
 password:
 tags:
+  - PHP
 categories: Write-Up
 ---
 

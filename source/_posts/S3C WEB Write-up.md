@@ -3,11 +3,10 @@ title: 随缘的WEB Write-up
 urlname: suiyuan
 date: 2020-9-20 16:18:25
 updated: 
-comments: false
+comments: true
 tags: 
-  - 信息收集
-  - SQL注入
-  - 反序列化
+  - SQL
+  - PHP
 categories: 
   - Write-Up
 permalink: 

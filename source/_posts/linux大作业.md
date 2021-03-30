@@ -1,12 +1,14 @@
 ---
 title: linux大作业
-comments: false
+comments: true
 hide: false
 date: 2019-12-15 19:34:13
 urlname: linuxprogramme
 updated: 
 permalink: 
 tags: 
+  - 编程
+  - Linux
 categories: Programme
 password: gyycoming
 ---

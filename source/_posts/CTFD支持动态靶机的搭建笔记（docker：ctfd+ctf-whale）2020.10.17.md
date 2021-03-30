@@ -3,11 +3,9 @@ title: CTFD支持动态靶机的搭建笔记（docker：ctfd+ctf-whale）
 urlname: CTFD
 date: 2020-10-17 17:49:25
 updated: 
-comments: false
+comments: true
 tags: 
-  - docker
-  - ctfd
-  - ctf-whale
+  - CTFd
 categories: 
   - 杂谈笔记
   - 菜鸡教程

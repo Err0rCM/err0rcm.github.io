@@ -3,11 +3,10 @@ title: 0XGame WEB Write-up
 urlname: 0XGame-WEB-Write-up
 date: 2020-10-10 16:57:25
 updated: 
-comments: false
+comments: true
 tags: 
-  - XFF
-  - SQL注入
-  - XXE
+  - SQL
+  - PHP
 categories: 
   - Write-Up
 permalink: 

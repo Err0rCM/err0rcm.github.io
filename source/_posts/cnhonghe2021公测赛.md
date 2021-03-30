@@ -1,12 +1,14 @@
 ---
 title: CnHongKe2021公测赛
-comments: false
+comments: true
 hide: false
 date: 2021-02-05 13:31:14
 urlname: 2021gongcesai
 updated:
 password:
 tags:
+  - Python
+  - PHP
 categories:
   - Write-Up
 ---

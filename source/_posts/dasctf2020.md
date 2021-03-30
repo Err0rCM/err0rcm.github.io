@@ -1,14 +1,14 @@
 ---
 title: 2020DASctf-Writeup
-comments: false
+comments: true
 hide: false
 date: 2020-12-26 16:01:29
 urlname: dasctf2020
 updated:
 permalink: 
 tags:
-  - SSRF
-  - 反序列化
+  - PHP
+  - Python
 categories:
   - Write-Up
 ---

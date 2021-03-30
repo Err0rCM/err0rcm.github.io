@@ -3,12 +3,9 @@ title: 2020hxb-Writeup
 urlname: 2020hxb-Writeup-cOMING
 date: 2020-11-13 09:22:25
 updated: 2020-12-23 09:22:25
-comments: false
+comments: true
 tags: 
-  - 内存取证
-  - 文件上传
-  - 伪加密
-  - 明文攻击
+  - PHP
 categories: 
   - Write-Up
 permalink: 

@@ -3,7 +3,7 @@ title: {{ title }}
 urlname: #必填
 date: {{ date }}
 updated: 
-comments: false
+comments: true
 hide: false
 password: 
 tags:

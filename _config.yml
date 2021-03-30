@@ -46,7 +46,7 @@ post_asset_folder: true
 relative_link: false
 future: true
 highlight:
-  enable: false
+  enable: true
 
 prismjs:
   enable: true

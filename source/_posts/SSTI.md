@@ -1,6 +1,6 @@
 ---
 title: SSTI模板注入
-comments: false
+comments: true
 hide: false
 date: 2020-12-13 14:58:27
 urlname: ssti
