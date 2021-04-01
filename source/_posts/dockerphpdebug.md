@@ -36,7 +36,7 @@ categories:
 `docker run -d -p 10004:80 -v /Users/gyy/dockerPHP/www/html:/var/www/html php:7.3-apache`
 `docker run -d -p 10005:80 -v /Users/gyy/dockerPHP/www/html:/var/www/html php:7.0-apache`
 
-随意，要啥版本起啥容器，可以去https://hub.docker.com/_/php看
+随意，要啥版本起啥容器，可以去https://hub.docker.com/_/php 看
 
 参数解释：
 
@@ -127,9 +127,9 @@ php多版本+mysql服务
 ```
 |	docker-compose.yml
 └--5.6
-	  └-Dockerfile
+	 └-Dockerfile
 └--7.4
-	  └-Dockerfile
+	 └-Dockerfile
 ```
 
 Docker-compose.yml，如果需要起不同或更多的版本，照着修改yml和Dockerfile即可
