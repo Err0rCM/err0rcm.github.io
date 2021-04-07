@@ -26,7 +26,7 @@ ctfd可以说是如今最方便的ctf靶场搭建平台，支持各种插件与�
 我修改了一份CTFd，已上传github：[https://github.com/Err0rCM/CTFd_with_CTFd-whale](https://github.com/Err0rCM/CTFd_with_CTFd-whale) ，启动后仍需按照教程后半部分配置，省去前半部分时间，如有问题请提issue或者从头自行配置。
 
 #### 强调！
-由于国内git clone实在太慢，本人采用的方法是科学上网下载zip解压的方式，可自行百度git clong与Download zip的区别。本篇文章是用本地下载zip解压上传的方式完成**在服务器上**搭建
+由于当时国内git clone实在太慢，因为本人未配好代理，所以采用的方法是科学上网下载zip解压的方式，可自行百度git clong与Download zip的区别。本篇文章是用本地下载zip解压上传的方式完成**在服务器上**搭建
 
 如果阅读中操作出现问题请自行百度，翻到文末查看坑点讲解或者查看其它搭建文章
 
