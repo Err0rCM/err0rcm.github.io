@@ -21,7 +21,7 @@ categories:
 
 > **信息是从多个可能状态中确定实际状态的代价**
 
-有篇知乎的回答挺好的，借用了一些图和描述，推荐看看https://www.zhihu.com/question/22178202
+有些平台的回答挺好的，建议看看参考链接
 
 ![Entropy](entropy-and-information/640)
 
