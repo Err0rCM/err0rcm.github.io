@@ -1,7 +1,7 @@
 ---
 title: xss学习
 comments: true
-hide: false
+hide: true
 date: 2021-04-24 13:24:44
 urlname: xss
 updated:
