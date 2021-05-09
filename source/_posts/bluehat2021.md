@@ -2,7 +2,7 @@
 title: 蓝帽杯2021一道题——One_Pointer_PHP
 comments: true
 hide: false
-date: 2021-05-03 13:04:27
+date: 2021-05-02 13:04:27
 urlname: bluehat2021
 updated:
 password:
@@ -245,7 +245,7 @@ gcc hpdoger.c -fPIC -shared -o hpdoger.so
 
 同样写在html目录
 
->用户访问http://127.0.0.1/index.php?a=1&b=2，如果web目录是/var/www/html，那么Nginx会将这个请求变成如下key-value对：
+>用户访问`http://127.0.0.1/index.php?a=1&b=2`，如果web目录是/var/www/html，那么Nginx会将这个请求变成如下key-value对：
 >
 >> {
 >> 'GATEWAY_INTERFACE': 'FastCGI/1.0',
