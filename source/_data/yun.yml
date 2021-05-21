@@ -499,7 +499,6 @@ busuanzi:
   page_pv_icon: icon-eye-line
 
 
-
 # search
 search:
   modal: true
@@ -519,6 +518,12 @@ local_search:
   enable: true
   src: /js/search/local-search.js
 
+# https://github.com/oncletom/hexo-algolia
+algolia_search:
+  enable: false
+  src: /js/search/algolia-search.js
+  hits:
+    per_page: 8 # the number of search results per page
 
 # Ads
 # ---------------
