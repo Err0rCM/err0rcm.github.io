@@ -1,7 +1,7 @@
 ---
 title: sql注入分享
 comments: true
-hide: false
+hide: true
 date: 2021-05-26 13:43:04
 urlname: sqlinjection
 updated:
