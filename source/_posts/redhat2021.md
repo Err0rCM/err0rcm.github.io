@@ -7,7 +7,7 @@ urlname: redhat2021
 updated:
 password:
 tags:
-categories:
+categories: Write-Up
 ---
 
 

@@ -9,49 +9,49 @@ links:
     blog: 王神
     avatar: img/wf.jpg
     desc: yyds.
-    color: "#0078e7" # 代表色
+    color: "#239F8F" # 代表色
     email: # 非必须
 
   - url: http://m0nit0r.top/
     blog: m0nit0r师傅
     avatar: img/dw.jpg
     desc: 戴队戴队
-    color: "#0080e8" # 代表色
+    color: "#9F674C" # 代表色
     email: # 非必须
 
   - url: https://blog.dkkkkk.com/
     blog: dkk师傅
     avatar: img/dk.jpg
     desc: dkkddw.
-    color: "#0078e9" # 代表色
+    color: "#9F674C" # 代表色
     email: # 非必须
 
   - url: http://blog.hkk.ink/
     blog: hkk师傅
     avatar: img/hkx.jpg
     desc: 黄师傅帅
-    color: "#007900" # 代表色
+    color: "#9F674C" # 代表色
     email: # 非必须
 
   - url: http://trick.ink/
     blog: Trick师傅
     avatar: img/yjj.jpg
     desc: 一pwn压三web
-    color: "#007901" # 代表色
+    color: "#419F36" # 代表色
     email: # 非必须
 
   - url: http://cy-tian.vip/
     blog: cy师傅
     avatar: img/cy.jpg
     desc: 全能选手
-    color: "#007902" # 代表色
+    color: "#419F36" # 代表色
     email: # 非必须
 
   - url: http://www.ga1axy.top/
     blog: Ga1@xy师傅
     avatar: img/Ga1@xy.jpg
     desc: 贴贴 Misc和取证大佬
-    color: "#007903" # 代表色
+    color: "#0078e7" # 代表色
     email: # 非必须
 
 placeholder: 还没想好说些什么 # 默认对友链的描述
