@@ -1,5 +1,5 @@
 ---
-title: 2021ciscnawd
+title: 2021ciscn华东北半决赛
 comments: true
 hide: false
 date: 2021-06-20 14:34:46
