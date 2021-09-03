@@ -3,7 +3,7 @@ layout: links
 title: 我的小伙伴们|友情链接
 date: 2020-11-27 15:48:52
 keywords: 链接
-comments: false
+comments: true
 links:
   - url: https://blog.frieggs.com/
     blog: 王神
@@ -65,4 +65,4 @@ placeholder: 还没想好说些什么 # 默认对友链的描述
 tip: 友链加载中～如失败请刷新重试～
 ---
 
-<p align="center">互换友链请左侧栏联系我～</p>
+<p align="center">互换友链请左侧栏或留言联系我～</p>
