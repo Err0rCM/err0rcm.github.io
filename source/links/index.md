@@ -61,6 +61,13 @@ links:
     color: "#0078e7" # 代表色
     email: # 非必须
 
+  - url: http://www.xia0ji233.pro/
+    blog: xia0ji233师傅
+    avatar: img/xia0ji233.jpg
+    desc: 开发安全两不误大佬
+    color: "#0078e7" # 代表色
+    email: # 非必须
+
 placeholder: 还没想好说些什么 # 默认对友链的描述
 tip: 友链加载中～如失败请刷新重试～
 ---
