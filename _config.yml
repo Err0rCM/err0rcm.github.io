@@ -101,7 +101,8 @@ theme: yun
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: https://github.com/Err0rCM/err0rcm.github.io # 比如：https://github.com/YunYouJun/yunyoujun.github.io
+  # repo: https://github.com/Err0rCM/err0rcm.github.io # 比如：https://github.com/YunYouJun/yunyoujun.github.io
+  repo: git@github.com:Err0rCM/err0rcm.github.io.git # 比如：https://github.com/YunYouJun/yunyoujun.github.io
   branch: master # 默认使用 master 分支
   message: Update Hexo Static Content # 你可以自定义此次部署更新的说明
 

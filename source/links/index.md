@@ -67,6 +67,21 @@ links:
     desc: 开发安全两不误大佬
     color: "#0078e7" # 代表色
     email: # 非必须
+
+  - url: http://h3geeker.top/
+    blog: H3h3QAQ师傅
+    avatar: img/h3h3QAQ.jpg
+    desc: h3哥哥贴贴~
+    color: "#0078e7" # 代表色
+    email: # 非必须
+
+  - url: https://www.xiinnn.com/
+    blog: Lxxx师傅
+    avatar: img/Lxxx.jpg
+    desc: Lxxx师傅~
+    color: "#0078e7" # 代表色
+    email: # 非必须
+
 placeholder: 还没想好说些什么 # 默认对友链的描述
 tip: 友链加载中～如失败请刷新重试～
 ---
