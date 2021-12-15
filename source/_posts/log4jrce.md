@@ -7,7 +7,7 @@ urlname: log4jrce
 updated:
 password:
 tags:
-categories:
+categories: 漏洞复现
 ---
 
 开摸
@@ -250,6 +250,10 @@ java -jar JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar -A [ip] -C "[payload]"
 其实在今年早些时候V&Nctf有道题也是`JNDI-Injection-Exploit`
 
 [V&N ctf realezjvav](https://err0r.top/article/VN2021ctf/?highlight=realezjvav)
+
+> 不能说极其相似，只能说一摸一样，今年上半年都有ctf题目了
+>
+> 一个没被重视的洞，甚至没有CVE编号，终究还是扩大到了堪比永恒之蓝的范围...
 
 我发现我服务器上竟然还有源码，直接打就行了
 

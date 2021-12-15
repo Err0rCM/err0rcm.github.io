@@ -370,21 +370,21 @@ bg_image:
 # If enable true, reward would be displayed in every posts and pages by default.
 # You can show or hide reward in a specific page throuth `reward: true | false` in Front Matter.
 reward:
-  enable: false
+  enable: true
   icon: icon-hand-coin-line
-  comment: I'm so cute. Please give me money.
+  comment: 如果觉得我的文章对你有帮助，可以请俺喝冰阔落
   # url: https://github.com/YunYouJun/yunyoujun.github.io/issues/96
   methods:
     - name: 支付宝
-      path: 
+      path: /images/alipay.jpg
       color: "#00A3EE"
       icon: icon-alipay-line
     - name: QQ 支付
-      path: 
+      path: /images/qq.jpg
       color: "#12B7F5"
       icon: icon-qq-line
     - name: 微信支付
-      path: 
+      path: /images/wechat.jpg
       color: "#2DC100"
       icon: icon-wechat-pay-line
     # - name: paypal
