@@ -4,7 +4,7 @@ comments: true
 hide: false
 date: 2021-03-31 11:49:39
 urlname: phpstormdebug
-updated:
+updated: 2022-03-29 14:23:00
 password:
 tags:
 categories:
@@ -62,6 +62,22 @@ echo 'deb http://mirrors.aliyun.com/debian/ buster main non-free contrib \
  			deb http://mirrors.aliyun.com/debian-security/ buster/updates main non-free contrib \
  			deb-src http://mirrors.aliyun.com/debian-security/ buster/updates main non-free contrib'> /etc/apt/sources.list \
 && apt update && apt install -y vim
+```
+
+#### **更新一种换源方法，基本上各种系统均有效**：
+
+##### amd:
+
+```sh
+sed -i 's/http:\/\/archive.ubuntu.com\/ubuntu\//http:\/\/mirrors.tuna.tsinghua.edu.cn\/ubuntu\//g' /etc/apt/sources.list && \
+sed -i 's/http:\/\/security.ubuntu.com\/ubuntu\//http:\/\/mirrors.tuna.tsinghua.edu.cn\/ubuntu\//g' /etc/apt/sources.list
+```
+
+##### arm(一般为用mac的小伙伴):
+
+``` sh
+sed -i 's/http:\/\/archive.ubuntu.com\/ubuntu\//http:\/\/mirrors.tuna.tsinghua.edu.cn\/ubuntu-ports\//g' /etc/apt/sources.list && \
+sed -i 's/http:\/\/security.ubuntu.com\/ubuntu\//http:\/\/mirrors.tuna.tsinghua.edu.cn\/ubuntu-ports\//g' /etc/apt/sources.list
 ```
 
 安装xdebug模块
@@ -170,7 +186,7 @@ services:
         restart: always
 ```
 
-5.6的Dockerfile
+5.6的Dockerfile(此处未使用更新换源方法，如报错或有需要可自行更换)
 
 ```dockerfile
 FROM php:5.6-apache
@@ -195,7 +211,7 @@ RUN docker-php-ext-install mysqli \
 RUN apache2ctl restart
 ```
 
-7.4的dockerfile
+7.4的dockerfile(此处未使用更新换源方法，如报错或有需要可自行更换)
 
 ```dockerfile
 FROM php:7.4-apache
