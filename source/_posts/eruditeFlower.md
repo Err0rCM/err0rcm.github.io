@@ -1,7 +1,7 @@
 ---
 title: NepCTF2022博学多闻的花花WP&出题笔记
 comments: true
-hide: false
+hide: true
 date: 2022-07-18 19:41:52
 urlname: eruditeFlower
 updated:
