@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>云崽机器人与chatGPT插件的安装</title>
+      <link href="article/Yunzai-chatgptPlugin/"/>
+      <url>article/Yunzai-chatgptPlugin/</url>
+      
+        <content type="html"><![CDATA[<p>本篇记录云崽机器人在Ubuntu20下的Docker环境中的过程及chatgpt-plugin的安装和排错</p><span id="more"></span>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>taintAnalysis</title>
       <link href="article/null/"/>
       <url>article/null/</url>
