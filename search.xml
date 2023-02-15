@@ -8,7 +8,7 @@
       <link href="article/Yunzai-chatgptPlugin/"/>
       <url>article/Yunzai-chatgptPlugin/</url>
       
-        <content type="html"><![CDATA[<p>本篇记录云崽机器人在Ubuntu20下的Docker环境中的过程及chatgpt-plugin的安装和排错</p><span id="more"></span>]]></content>
+        <content type="html"><![CDATA[<p>本篇记录云崽机器人在Ubuntu20下的Docker环境中的过程及chatgpt-plugin的安装和排错</p><span id="more"></span><p>宿主机环境：Ubuntu20虚拟机</p><p>Yunzai环境：Docker</p><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本人原批（开门见山），一直在用云崽，最近chatGPT大火，偶然发现有大佬写了云崽的chatGPT插件，家里买了台新NAS（群晖黑转白），总想搞点什么折腾一下，于是乎把在云服务器上的云崽迁移了下来，并且重新安装了一遍。加入了chatGPT插件的群发现不少人有奇奇怪怪的问题，自己也遇到其中不少，就顺手写下此篇文章，给其他有问题的同学一个参考。</p><h2 id="环境及插件准备"><a href="#环境及插件准备" class="headerlink" title="环境及插件准备"></a>环境及插件准备</h2><p>声明：本方案可能较为繁琐，可以直接跳到对应的章节看对应的项目怎么安装。</p><p>系统：Ubuntu20虚拟机 下载地址：<a href="https://next.itellyou.cn/">MSDN</a></p><p>YunzaiBot：【2023.2.15 yunzai的github仓库被ban，目前转为gitee下载】<a href="https://gitee.com/Le-niao/Yunzai-Bot">Yunzai</a></p><p>chatGPT-Plugin：<a href="https://github.com/ikechan8370/chatgpt-plugin">chatGPT-Plugin</a></p><p><strong>以下选装，非本文主题</strong></p><p>Guoba-Plugin：[Guoba-Plugin]</p><p>miao-plugin：[miao-plugin]</p><p>rconsole-plugin：[rconsole-plugin]</p><p>xiaoyao-cvs-plugin：[xiaoyao-cvs-plugin]</p><p>xitian-plugin：[xitian-plugin]</p>]]></content>
       
       
       
