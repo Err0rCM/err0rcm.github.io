@@ -1,0 +1,145 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="Err0r"><meta name="copyright" content="Err0r"><meta name="generator" content="Hexo 6.3.0"><meta name="theme" content="hexo-theme-yun"><title>熵和信息的学习 | Err0r</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/star-markdown-css@0.4.1/dist/yun/yun-markdown.min.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/prism-theme-vars/base.css"><script src="https://fastly.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script><!-- hexo-inject:begin --><!-- hexo-inject:end -->function initScrollReveal() {
+  [".post-card",".markdown-body img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+}
+document.addEventListener("DOMContentLoaded", initScrollReveal);
+document.addEventListener("pjax:success", initScrollReveal);
+</script><link rel="stylesheet" type="text/css" href="https://fastly.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script defer src="https://fastly.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script><link rel="stylesheet" type="text/css" href="https://fastly.jsdelivr.net/npm/katex@latest/dist/contrib/copy-tex.min.css"><script defer src="https://fastly.jsdelivr.net/npm/katex@latest/dist/contrib/copy-tex.min.js"></script><script defer src="https://fastly.jsdelivr.net/npm/katex@latest/dist/contrib/auto-render.min.js"></script><script type="module">import { renderKatex } from '/js/utils.js'
+document.addEventListener("DOMContentLoaded", () => {
+  renderKatex({
+    ...{},
+    ...true?.options,
+  });
+});</script><link rel="icon" type="image/svg+xml" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://fastly.jsdelivr.net/npm/" crossorigin><script id="yun-config">
+    window.Yun = {}
+    window.CONFIG = {"hostname":"err0r.top","root":"/","title":"云游君的小站","version":"1.10.9","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）"},"anonymous_image":"https://cdn.yunyoujun.cn/img/avatar/none.jpg","say":{"api":"https://el-bot-api.vercel.app/api/words/young"},"fireworks":{"colors":null},"vendors":{"host":"https://fastly.jsdelivr.net/npm/","darken":"https://fastly.jsdelivr.net/npm/darken@1.5.0"}};
+  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/hexo-theme-yun.js" type="module"></script><link rel="alternate" href="/atom.xml" title="Err0r" type="application/atom+xml"><meta name="description" content="摸鱼的学习总结，搞作品赛必须的理论学习…">
+<meta property="og:type" content="article">
+<meta property="og:title" content="熵和信息的学习">
+<meta property="og:url" content="https://err0r.top/article/entropy/index.html">
+<meta property="og:site_name" content="Err0r">
+<meta property="og:description" content="摸鱼的学习总结，搞作品赛必须的理论学习…">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://err0r.top/article/entropy/640">
+<meta property="og:image" content="https://err0r.top/article/entropy/image-20210412143856985.png">
+<meta property="og:image" content="https://err0r.top/article/entropy/image-20210412144408346.png">
+<meta property="og:image" content="https://err0r.top/article/entropy/image-20210412152143538.png">
+<meta property="og:image" content="https://err0r.top/article/entropy/image-20210412152302898.png">
+<meta property="og:image" content="https://err0r.top/article/entropy/image-20210412153329273.png">
+<meta property="og:image" content="https://err0r.top/article/entropy/image-20210412153709078.png">
+<meta property="og:image" content="https://err0r.top/article/entropy/image-20210412180814429.png">
+<meta property="og:image" content="https://err0r.top/article/entropy/image-20210412204545002.png">
+<meta property="og:image" content="https://err0r.top/article/entropy/image-20210413213110288.png">
+<meta property="og:image" content="https://err0r.top/article/entropy/image-20210413213513800.png">
+<meta property="og:image" content="https://err0r.top/article/entropy/image-20210413214141284.png">
+<meta property="article:published_time" content="2021-04-12T05:27:56.000Z">
+<meta property="article:modified_time" content="2021-05-03T07:09:57.730Z">
+<meta property="article:author" content="Err0r">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://err0r.top/article/entropy/640"><script>(function() {
+  if (CONFIG.mode !== 'auto') return
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+  const setting = localStorage.getItem('darken-mode') || 'auto'
+  if (setting === 'dark' || (prefersDark && setting !== 'light'))
+    document.documentElement.classList.toggle('dark', true)
+})()</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><script src="https://code.iconify.design/2/2.1.1/iconify.min.js"></script><script><!-- hexo-inject:begin --><!-- hexo-inject:end -->// Define global variable
+IconifyProviders = {
+  // Empty prefix: overwrite default API provider configuration
+  '': {
+    // Use custom API first, use Iconify public API as backup
+    resources: [
+        'https://api.iconify.design',
+    ],
+    // Wait for 1 second before switching API hosts
+    rotate: 1000,
+  },
+};</script><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><span class="icon iconify" data-icon="ri:list-ordered"></span></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><span class="icon iconify" data-icon="ri:passport-line"></span></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="Err0r"><img width="96" loading="lazy" src="/yun.png" alt="Err0r"></a><div class="site-author-name"><a href="/about/">Err0r</a></div><a class="site-name" href="/about/site.html">Err0r</a><sub class="site-subtitle">gyy</sub><div class="site-description">gugugu</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:home-4-line"></span></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:archive-line"></span></span><span class="site-state-item-count">43</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:folder-2-line"></span></span><span class="site-state-item-count">7</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="site-state-item-count">11</span></a></div><a class="site-state-item hty-icon-button" target="_blank" rel="noopener" href="https://yun.yunyoujun.cn" title="文档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:settings-line"></span></span></a></nav><hr style="margin-bottom:0.5rem"><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们" style="color:dodgerblue"><span class="icon iconify" data-icon="ri:genderless-line"></span></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><span class="icon iconify" data-icon="ri:contrast-2-line"></span></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E7%86%B5"><span class="toc-number">1.</span> <span class="toc-text">信息熵</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E9%87%8F"><span class="toc-number">2.</span> <span class="toc-text">信息量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E4%B8%80%EF%BC%9A%E8%B0%83%E6%95%B4%E6%A6%82%E7%8E%87"><span class="toc-number">2.1.</span> <span class="toc-text">类型一：调整概率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E4%BA%8C%EF%BC%9A%E6%8E%92%E9%99%A4%E5%B9%B2%E6%89%B0"><span class="toc-number">2.2.</span> <span class="toc-text">类型二：排除干扰</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E4%B8%89%EF%BC%9A%E7%A1%AE%E5%AE%9A%E6%83%85%E5%86%B5"><span class="toc-number">2.3.</span> <span class="toc-text">类型三：确定情况</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E7%9A%84%E6%8E%A5%E6%94%B6"><span class="toc-number">3.</span> <span class="toc-text">信息的接收</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AA%92%E4%BB%8B%E6%97%A0%E5%85%B3"><span class="toc-number">3.1.</span> <span class="toc-text">媒介无关</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E5%AF%B9%E4%B8%AA%E4%BD%93"><span class="toc-number">3.2.</span> <span class="toc-text">相对个体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E5%AF%B9%E4%BA%8B%E4%BB%B6"><span class="toc-number">3.3.</span> <span class="toc-text">相对事件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97"><span class="toc-number">4.</span> <span class="toc-text">信息量的计算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9D%87%E5%8C%80%E5%88%86%E5%B8%83"><span class="toc-number">4.1.</span> <span class="toc-text">均匀分布</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E8%88%AC%E5%88%86%E5%B8%83"><span class="toc-number">4.2.</span> <span class="toc-text">一般分布</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">5.</span> <span class="toc-text">参考链接</span></a></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#0078E7;"><link itemprop="mainEntityOfPage" href="https://err0r.top/article/entropy/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="Err0r"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="Err0r"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">熵和信息的学习</h1><div class="post-meta"><div class="post-time"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-line"></span></span> <time title="创建时间：2021-04-12 13:27:56" itemprop="dateCreated datePublished" datetime="2021-04-12T13:27:56+08:00">2021-04-12</time><span class="post-meta-divider">-</span><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-2-line"></span></span> <time title="修改时间：2021-05-03 15:09:57" itemprop="dateModified" datetime="2021-05-03T15:09:57+08:00">2021-05-03</time></div><div class="post-classify"><span class="post-category"> <span class="post-meta-item-icon" style="margin-right:3px;"><span class="icon iconify" data-icon="ri:folder-line"></span></span><span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category-item" href="/categories/%E6%9D%82%E8%B0%88%E7%AC%94%E8%AE%B0/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">杂谈笔记</span></a></span> > <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category-item" href="/categories/%E6%9D%82%E8%B0%88%E7%AC%94%E8%AE%B0/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">学习笔记</span></a></span></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><p>摸鱼的学习总结，搞作品赛必须的理论学习…</p>
+<span id="more"></span>
+
+<blockquote>
+<p><strong>信息是从多个可能状态中确定实际状态的代价</strong></p>
+</blockquote>
+<p>有些平台的回答挺好的，建议看看参考链接</p>
+<img src="/article/entropy/640" class="" title="Entropy" loading="lazy">
+
+<p><strong>例子：How much is the shirt?</strong></p>
+<p><strong>衬衫的价格是9磅15便士，所以你选择B项，答案却是C项。</strong></p>
+<h2 id="信息熵"><a href="#信息熵" class="headerlink" title="信息熵"></a>信息熵</h2><p>当一件事情(宏观态)有很多种可能的情况时，这件事情(宏观态)对某人(观察者)而言具体是哪种情况(微观态)的不确定性叫做熵.</p>
+<p>即这(知情情况的不确定性)就是熵</p>
+<img src="/article/entropy/image-20210412143856985.png" class="" title="熵" loading="lazy">
+
+<p>而能<strong>消除这种不确定性的事物</strong>就是信息</p>
+<img src="/article/entropy/image-20210412144408346.png" class="" title="信息" loading="lazy">
+
+<h2 id="信息量"><a href="#信息量" class="headerlink" title="信息量"></a>信息量</h2><p>熵和信息的增减数量相等，获取信息的同时也会消除不确定性(熵)</p>
+<blockquote>
+<p><strong>消除</strong>熵 &#x3D;&#x3D; <strong>获取</strong>信息</p>
+</blockquote>
+<p>例如在举例中，ABCD四个选项对于不知道最终答案的人来说都是等概率(25%)的，熵在此时(等概率)最大。</p>
+<p>而告诉你答案是C的时候，这时熵最小。</p>
+<p>能够消除熵的信息有三种类型，本质都是能够<strong>正确</strong>的调整每个可能情况的概率。</p>
+<p>如果告诉你<code>&quot;答案是ABCD中的一个&quot;</code>则获取了0bit的信息，这种定义下，没有假信息的说法。只有能消除某人对某事不确定性的事物才叫做信息，即<code>&quot;答案是ABCD中的一个&quot;</code>不是信息</p>
+<img src="/article/entropy/image-20210412152143538.png" class="" title="ABCD" loading="lazy">
+
+<p>而告诉你<code>&quot;A是正确答案&quot;</code>也不是信息(正确答案为C)，因为它不是正确的。</p>
+<img src="/article/entropy/image-20210412152302898.png" class="" title="A" loading="lazy">
+
+<h3 id="类型一：调整概率"><a href="#类型一：调整概率" class="headerlink" title="类型一：调整概率"></a>类型一：调整概率</h3><p>听完听力后，你获取了一个消息”衬衫的价格是9磅15便士”，从这个消息中张三得知<code>&quot;有一半可能是C选项&quot;</code>，这个信息将C选项的概率提高到了50%(提供了0.21bits)</p>
+<img src="/article/entropy/image-20210412153329273.png" class="" title="halfC" loading="lazy">
+
+<h3 id="类型二：排除干扰"><a href="#类型二：排除干扰" class="headerlink" title="类型二：排除干扰"></a>类型二：排除干扰</h3><p>听完听力后，你获取了一个消息”衬衫的价格是9磅15便士”，从这个消息中李四得知<code>&quot;B选项是错的&quot;</code>，这个信息直接将B选项概率降低到0%(0.415bits)</p>
+<img src="/article/entropy/image-20210412153709078.png" class="" title="exclueB" loading="lazy">
+
+<h3 id="类型三：确定情况"><a href="#类型三：确定情况" class="headerlink" title="类型三：确定情况"></a>类型三：确定情况</h3><p>听完听力后，你获取了一个消息”衬衫的价格是9磅15便士”，王五英语非常好，从这个消息中王五直接得知<code>&quot;C选项是正确的&quot;</code>，这个信息直接将C选项概率提高到100%(2bits)，直接确定了实际情况。</p>
+<img src="/article/entropy/image-20210412180814429.png" class="" title="C" loading="lazy">
+
+<h2 id="信息的接收"><a href="#信息的接收" class="headerlink" title="信息的接收"></a>信息的接收</h2><h3 id="媒介无关"><a href="#媒介无关" class="headerlink" title="媒介无关"></a>媒介无关</h3><p><strong>同一个观察者对同一件事接受到的信息与传递信息的信号模式无关</strong></p>
+<p>王五写纸条给赵六<code>&quot;答案是C&quot;</code>传递的信息是2bits，直接告诉赵六传递的信息也是2bits，打三个响指(与赵六约定好，赵六能够理解)，传递的信息也是2bits</p>
+<h3 id="相对个体"><a href="#相对个体" class="headerlink" title="相对个体"></a>相对个体</h3><p><strong>接收到的信息是相对于观察者已经对该事情的实际了解程度而言的</strong></p>
+<p>王五会这道题，王五对这道题的熵就为0bit，不管王五搞不告诉赵六正确答案是C，因为观察者王五已经拥有这件事的所有信息，即王五确定(知道)这道题的答案是C，不确定性从最初就不存在。</p>
+<p>赵六不会这道题，所以赵六对这道题的熵为2bits，因为观察者赵六没有对于这件事的任何信息。</p>
+<p>对于李四而言，王五告诉张三<code>&quot;答案是C&quot;</code>，提供给李四1.58bits信息，因为观察者李四知道B是错的，观察者拥有关于这件事情的部分信息。</p>
+<p>赵六认为C是错的，再告诉赵六答案是C，熵不会减少，因为没有实际帮助赵六消除事情的不确定性，因为熵不会随着主观臆想而减少，信息也不随主观意识而改变。</p>
+<h3 id="相对事件"><a href="#相对事件" class="headerlink" title="相对事件"></a>相对事件</h3><p><code>&quot;太阳东升西落&quot;</code>，这句话对知道的人提供0bit信息，对知道或东或西升起的人提供了1bit信息，对认为东南西北都可能升起的人提供了2bits信息</p>
+<img src="/article/entropy/image-20210412204545002.png" class="" title="东南西北" loading="lazy">
+
+
+
+<h2 id="信息量的计算"><a href="#信息量的计算" class="headerlink" title="信息量的计算"></a>信息量的计算</h2><p>信息也是物理量，类似于<code>千克</code>，选种千克为单位物理量，则测量其他物体的质量就是以多少个单位质量，即多少千克来计算。</p>
+<p>信息也是参照单位事件的不确定性，看看待测事件的不确定性相当于”多少个”参照事件的不确定性，其中”多少个”，便是信息量。</p>
+<p>如果选择参照事件像是抛硬币这样50%两种等概率情况的事件时，测量的信息量的单位就称为比特(bit)。</p>
+<p>测量质量是，可以用待测物体质量m除以参照物体质量B，因为待测物体质量m&#x3D;参照物体质量B 乘 参照物体个数n，所以知道总质量m 求 个数 n 时，利用除法计算即可。</p>
+<p>可是测量信息时却不能用除法，因为抛三枚硬币产生的等可能结果并非 $3*2&#x3D;6种$，而是 $2^3&#x3D;8种$</p>
+<p><code>[正正正,正正反,正反正,正反反,反正正,反正反,反反正,反反反]</code></p>
+<p>不是线性关系，而是指数关系，所以当知道可能情况个数m，想求这些情况相当于多少个n参照事件产生的时，就用对数运算即可。</p>
+<p>$$ m &#x3D; 2^n $$</p>
+<p>$$ n &#x3D; log_2m $$</p>
+<p>所以对答案ABCD里哪一选项的不确定性即为<br>$$ log_24 &#x3D; 2 bits $$<br>这种情况因为每个选项都是25%的等概率才可以，与抛硬币一样，出现正反的概率都是相等的50%</p>
+<img src="/article/entropy/image-20210413213110288.png" class="" width="24" loading="lazy">
+
+<p>可张三知道有一半可能是C选项时，各个情况的概率就不一样了。这时要分别测量待测事件每种可能的信息量后乘它们各自发生的概率再相加即可。</p>
+<img src="/article/entropy/image-20210413213513800.png" class="" title="log2" loading="lazy">
+
+<p>不过我们不知道概率为1&#x2F;6的情况的不确定性相当于抛多少个硬币所产生的不确定性，m未知就没法用这个公式</p>
+<p>$$ log_2m_A $$</p>
+<p>但1%会发生的情况相当于从100个等概率情况中确定实际情况，而概率的倒数&#x3D;等概率情况的个数</p>
+<p>$$ p &#x3D; 1&#x2F;100 $$<br>$$ 100 &#x3D; 1&#x2F;p $$</p>
+<p>用概率的倒数1&#x2F;p替换等概率情况个数m后就可以计算每种情况的信息量了</p>
+<p>$$ m &#x3D; 1&#x2F;p $$</p>
+<img src="/article/entropy/image-20210413214141284.png" class="" title="p1" loading="lazy">
+
+<p>再将每个情况的信息量乘对应发生的概率再相加，就能算出总信息量了</p>
+<p>$$ P_A: 1&#x2F;6 log_2(6&#x2F;1) &#x3D; 0.43 bits $$</p>
+<p>$$ P_b:1&#x2F;6 log_2(6&#x2F;1) &#x3D; 0.43 bits $$</p>
+<p>$$ P_c:1&#x2F;2 log_2(2&#x2F;1) &#x3D; 0.5 bits $$</p>
+<p>$$ P_d:1&#x2F;6 log_2(6&#x2F;1) &#x3D; 0.43 bits $$</p>
+<p>张三得知<code>&quot;有一半可能是C选项&quot;</code>后的不确定性(熵)为 $1.79 bits$</p>
+<p>$$ P_a+P_b+P_c+P_d &#x3D; 1.79 bits $$</p>
+<p>告诉张三<code>&quot;有一半可能是C选项&quot;</code>后提供的信息为 $2-1.79&#x3D;0.21 bits$</p>
+<h3 id="均匀分布"><a href="#均匀分布" class="headerlink" title="均匀分布"></a>均匀分布</h3><p>$$ log_2m $$</p>
+<h3 id="一般分布"><a href="#一般分布" class="headerlink" title="一般分布"></a>一般分布</h3><p>$$ \sum p_i log_2 p_i^{-1} $$</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/22178202">知乎:信息熵是什么？</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/toPBIMFPKG0FNzkKu2owfw">微信公众号:超智能体 信息论</a></p>
+<p><a target="_blank" rel="noopener" href="https://kns.cnki.net/kcms/detail/detail.aspx?filename=WJFZ202010024&dbcode=CJFQ&dbname=CJFD2020&v=f5iFxWNeOELznrq%25mmd2BGTndyblA9BGrQdi6BASTgoipwWx5vvgdZDVsk9Y0pGb3T8Ra">马猛飞,石乐义,魏东平,徐兴华.基于信息熵的分布式Web服务移动目标防御方案[J].计算机技术与发展,2020,30(10):131-136.</a></p>
+</div></section><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="打赏" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><span class="icon iconify" data-icon="ri:hand-coin-line"></span></span><div id="reward-comment">I'm so cute. Please give me money.</div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>Err0r</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="https://err0r.top/article/entropy/" title="熵和信息的学习">https://err0r.top/article/entropy/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><span class="icon iconify" data-icon="ri:creative-commons-line"></span><span class="icon iconify" data-icon="ri:creative-commons-by-line"></span><span class="icon iconify" data-icon="ri:creative-commons-nc-line"></span><span class="icon iconify" data-icon="ri:creative-commons-sa-line"></span></a> 许可协议。</li></ul></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/article/xss/" rel="prev" title="xss学习"><span class="icon iconify" data-icon="ri:arrow-left-s-line"></span><span class="post-nav-text">xss学习</span></a></div><div class="post-nav-item"><a class="post-nav-next" href="/article/phpstormdebug/" rel="next" title="docker-php+mysql配置debug环境"><span class="post-nav-text">docker-php+mysql配置debug环境</span><span class="icon iconify" data-icon="ri:arrow-right-s-line"></span></a></div></div></div><div class="hty-card" id="comment"></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2019 – 2023 </span><span class="with-love" id="animate"><span class="icon iconify" data-icon="ri:cloud-line"></span></span><span class="author"> Err0r</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v6.3.0</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.10.9</span></div></footer></div><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><span class="icon iconify" data-icon="ri:arrow-up-s-line"></span><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>

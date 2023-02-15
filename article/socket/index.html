@@ -1,0 +1,413 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="Err0r"><meta name="copyright" content="Err0r"><meta name="generator" content="Hexo 6.3.0"><meta name="theme" content="hexo-theme-yun"><title>Socket网络通信编程项目 | Err0r</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/star-markdown-css@0.4.1/dist/yun/yun-markdown.min.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/prism-theme-vars/base.css"><script src="https://fastly.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script><!-- hexo-inject:begin --><!-- hexo-inject:end -->function initScrollReveal() {
+  [".post-card",".markdown-body img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+}
+document.addEventListener("DOMContentLoaded", initScrollReveal);
+document.addEventListener("pjax:success", initScrollReveal);
+</script><link rel="icon" type="image/svg+xml" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://fastly.jsdelivr.net/npm/" crossorigin><script id="yun-config">
+    window.Yun = {}
+    window.CONFIG = {"hostname":"err0r.top","root":"/","title":"云游君的小站","version":"1.10.9","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）"},"anonymous_image":"https://cdn.yunyoujun.cn/img/avatar/none.jpg","say":{"api":"https://el-bot-api.vercel.app/api/words/young"},"fireworks":{"colors":null},"vendors":{"host":"https://fastly.jsdelivr.net/npm/","darken":"https://fastly.jsdelivr.net/npm/darken@1.5.0"}};
+  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/hexo-theme-yun.js" type="module"></script><link rel="alternate" href="/atom.xml" title="Err0r" type="application/atom+xml"><meta name="description" content="基于多种编程语言组成的聊天室系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Socket网络通信编程项目">
+<meta property="og:url" content="https://err0r.top/article/socket/index.html">
+<meta property="og:site_name" content="Err0r">
+<meta property="og:description" content="基于多种编程语言组成的聊天室系统">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://err0r.top/article/socket/image-20220323201658269.png">
+<meta property="og:image" content="https://err0r.top/article/socket/server.png">
+<meta property="og:image" content="https://err0r.top/article/socket/client1.png">
+<meta property="og:image" content="https://err0r.top/article/socket/client2.png">
+<meta property="og:image" content="https://err0r.top/article/socket/TU4-0760934.png">
+<meta property="og:image" content="https://err0r.top/article/socket/TU1.png">
+<meta property="og:image" content="https://err0r.top/article/socket/TU2-0761014.png">
+<meta property="og:image" content="https://err0r.top/article/socket/TU3.png">
+<meta property="article:published_time" content="2021-12-30T05:34:57.000Z">
+<meta property="article:modified_time" content="2022-03-23T12:40:23.782Z">
+<meta property="article:author" content="Err0r">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://err0r.top/article/socket/image-20220323201658269.png"><script>(function() {
+  if (CONFIG.mode !== 'auto') return
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+  const setting = localStorage.getItem('darken-mode') || 'auto'
+  if (setting === 'dark' || (prefersDark && setting !== 'light'))
+    document.documentElement.classList.toggle('dark', true)
+})()</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><script src="https://code.iconify.design/2/2.1.1/iconify.min.js"></script><script><!-- hexo-inject:begin --><!-- hexo-inject:end -->// Define global variable
+IconifyProviders = {
+  // Empty prefix: overwrite default API provider configuration
+  '': {
+    // Use custom API first, use Iconify public API as backup
+    resources: [
+        'https://api.iconify.design',
+    ],
+    // Wait for 1 second before switching API hosts
+    rotate: 1000,
+  },
+};</script><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><span class="icon iconify" data-icon="ri:list-ordered"></span></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><span class="icon iconify" data-icon="ri:passport-line"></span></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="Err0r"><img width="96" loading="lazy" src="/yun.png" alt="Err0r"></a><div class="site-author-name"><a href="/about/">Err0r</a></div><a class="site-name" href="/about/site.html">Err0r</a><sub class="site-subtitle">gyy</sub><div class="site-description">gugugu</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:home-4-line"></span></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:archive-line"></span></span><span class="site-state-item-count">43</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:folder-2-line"></span></span><span class="site-state-item-count">7</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="site-state-item-count">11</span></a></div><a class="site-state-item hty-icon-button" target="_blank" rel="noopener" href="https://yun.yunyoujun.cn" title="文档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:settings-line"></span></span></a></nav><hr style="margin-bottom:0.5rem"><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们" style="color:dodgerblue"><span class="icon iconify" data-icon="ri:genderless-line"></span></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><span class="icon iconify" data-icon="ri:contrast-2-line"></span></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Socket%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E7%BC%96%E7%A8%8B%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.</span> <span class="toc-text">Socket网络通信编程项目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-number">1.1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E5%8A%9F%E8%83%BD%E7%AE%80%E4%BB%8B"><span class="toc-number">1.2.</span> <span class="toc-text">项目功能简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.3.</span> <span class="toc-text">系统设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.4.</span> <span class="toc-text">项目实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%B8%80%EF%BC%9A"><span class="toc-number">1.4.1.</span> <span class="toc-text">方案一：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%BA%8C%EF%BC%9A"><span class="toc-number">1.4.2.</span> <span class="toc-text">方案二：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84%E8%AF%B4%E6%98%8E"><span class="toc-number">1.5.</span> <span class="toc-text">代码结构说明</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%B8%80%EF%BC%9A-1"><span class="toc-number">1.5.1.</span> <span class="toc-text">方案一：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%BA%8C%EF%BC%9A-1"><span class="toc-number">1.5.2.</span> <span class="toc-text">方案二：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90"><span class="toc-number">1.6.</span> <span class="toc-text">代码分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%B8%80%EF%BC%9A-2"><span class="toc-number">1.6.1.</span> <span class="toc-text">方案一：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%BA%8C%EF%BC%9A-2"><span class="toc-number">1.6.2.</span> <span class="toc-text">方案二：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E9%A1%BE%E4%B8%8E%E5%B1%95%E6%9C%9B"><span class="toc-number">1.7.</span> <span class="toc-text">回顾与展望</span></a></li></ol></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#0078E7;"><link itemprop="mainEntityOfPage" href="https://err0r.top/article/socket/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="Err0r"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="Err0r"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">Socket网络通信编程项目</h1><div class="post-meta"><div class="post-time"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-line"></span></span> <time title="创建时间：2021-12-30 13:34:57" itemprop="dateCreated datePublished" datetime="2021-12-30T13:34:57+08:00">2021-12-30</time><span class="post-meta-divider">-</span><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-2-line"></span></span> <time title="修改时间：2022-03-23 20:40:23" itemprop="dateModified" datetime="2022-03-23T20:40:23+08:00">2022-03-23</time></div><div class="post-classify"><span class="post-category"> <span class="post-meta-item-icon" style="margin-right:3px;"><span class="icon iconify" data-icon="ri:folder-line"></span></span><span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category-item" href="/categories/Programme/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">Programme</span></a></span></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><p>基于多种编程语言组成的聊天室系统</p>
+<span id="more"></span>
+
+<h2 id="Socket网络通信编程项目"><a href="#Socket网络通信编程项目" class="headerlink" title="Socket网络通信编程项目"></a>Socket网络通信编程项目</h2><h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>为深入研究socket编程，本人开发应用了一套socket通信编程项目，旨在深入学习其原理和实现方法。本人独立实现了方案一，并参与帮助完成了方案二。</p>
+<h3 id="项目功能简介"><a href="#项目功能简介" class="headerlink" title="项目功能简介"></a>项目功能简介</h3><p>本项目实现网络聊天室的功能，可以进行多人在线聊天，自定义昵称并记录历史记录和发言时间。利用socket编程，多线程和队列，能够使得任意加入server的客户端进行通信，其中服务端模块用Python语言在Linux系统上完成开发，而客户端模块用Go语言在Windows系统上完成开发，系统具有跨平台跨语言分布特性。其中在认证方面还设计了RSA加密，以保证认证通信的保密性。</p>
+<p>项目链接：<a href="https://err0r.top/article/socket/">https://err0r.top/article/socket/</a></p>
+<h3 id="系统设计"><a href="#系统设计" class="headerlink" title="系统设计"></a>系统设计</h3><p>方案一：项目包括客户端和服务端两个部分，其中服务端模块用Python语言在Linux系统上完成开发，而客户端模块用Go语言在Windows系统上完成开发，系统具有跨平台跨语言分布特性。</p>
+<p>方案二：项目包括客户端和服务端两个部分，其中服务端模块用C语言在Linux系统上完成开发，而客户端模块用Python语言在Windows系统上完成开发，系统具有跨平台跨语言分布特性。</p>
+<h3 id="项目实现"><a href="#项目实现" class="headerlink" title="项目实现"></a>项目实现</h3><h4 id="方案一："><a href="#方案一：" class="headerlink" title="方案一："></a>方案一：</h4><p>程序流程图</p>
+<img src="/article/socket/image-20220323201658269.png" class="" title="image-20220323201658269" loading="lazy">
+
+<p>在Linux操作系统中，运行server.py程序，可以启动服务端，在Windows操作系统中，再运行goClient.exe程序，可以启动客户端。在弹出的聊天室窗口输入服务端IP和端口，若输入正确则服务端连接成功并打印“conn success！”，若输入错误则窗口消失。在服务端连接成功后，输入用户名则可以开始聊天，在聊天窗口输入histroy，则可以查看所以历史记录。</p>
+<p>服务端窗口：</p>
+<img src="/article/socket/server.png" class="" title="server" loading="lazy">
+
+<p>客户端窗口：</p>
+<img src="/article/socket/client1.png" class="" title="client1" loading="lazy">
+
+<img src="/article/socket/client2.png" class="" title="client2" loading="lazy">
+
+<h4 id="方案二："><a href="#方案二：" class="headerlink" title="方案二："></a>方案二：</h4><p>在Linux操作系统中，运行netdemo.c程序，可以启动服务端，在Windows操作系统中，再运行test2.py程序，可以启动客户端。在服务端和客户端启动成功后，输入用户名登录成功后则可以开始聊天。</p>
+<p>服务端窗口：</p>
+<img src="/article/socket/TU4-0760934.png" class="" title="TU4" loading="lazy">
+
+<p>客户端登录窗口：</p>
+<img src="/article/socket/TU1.png" class="" title="TU1" loading="lazy">
+
+<p>客户端登录成功：</p>
+<img src="/article/socket/TU2-0761014.png" class="" title="TU2" loading="lazy">
+
+<p>聊天窗口：</p>
+<img src="/article/socket/TU3.png" class="" title="TU3" loading="lazy">
+
+<h3 id="代码结构说明"><a href="#代码结构说明" class="headerlink" title="代码结构说明"></a>代码结构说明</h3><p>各函数名称和所实现功能列表如下：</p>
+<h4 id="方案一：-1"><a href="#方案一：-1" class="headerlink" title="方案一："></a>方案一：</h4><table>
+<thead>
+<tr>
+<th>函数名</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>rsa_decrypt()</td>
+<td>用于rsa解密</td>
+</tr>
+<tr>
+<td>rsa_encrypt()</td>
+<td>用于rsa加密</td>
+</tr>
+<tr>
+<td>printStackTrace()</td>
+<td>用于debug调试，输出错误信息</td>
+</tr>
+<tr>
+<td>vertify()</td>
+<td>用于认证模块</td>
+</tr>
+<tr>
+<td>game()</td>
+<td>主流程模块</td>
+</tr>
+<tr>
+<td>thread_task()</td>
+<td>线程任务</td>
+</tr>
+<tr>
+<td>socket_task()</td>
+<td>套接字处理</td>
+</tr>
+<tr>
+<td>init_Thread()</td>
+<td>线程初始化</td>
+</tr>
+<tr>
+<td>init_Process()</td>
+<td>进程初始化</td>
+</tr>
+</tbody></table>
+<h4 id="方案二：-1"><a href="#方案二：-1" class="headerlink" title="方案二："></a>方案二：</h4><table>
+<thead>
+<tr>
+<th>函数名</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>login_socket()</td>
+<td>客户端与服务端进行socket连接</td>
+</tr>
+<tr>
+<td>ChatUI()</td>
+<td>聊天窗口UI</td>
+</tr>
+<tr>
+<td>sendMsgEvent()</td>
+<td>实现回车登录或发送消息</td>
+</tr>
+<tr>
+<td>senddata()</td>
+<td>发送数据</td>
+</tr>
+<tr>
+<td>recvdata()</td>
+<td>接收数据</td>
+</tr>
+<tr>
+<td>close()</td>
+<td>关闭程序</td>
+</tr>
+</tbody></table>
+<h3 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h3><h4 id="方案一：-2"><a href="#方案一：-2" class="headerlink" title="方案一："></a>方案一：</h4><p>在实现rsa解密功能时，借助了rsa_decrypt()函数，关键代码为：  </p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">rsa_decrypt</span><span class="token punctuation">(</span>text<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""校验RSA加密 使用私钥进行解密"""</span>
+    private_key <span class="token operator">=</span> <span class="token triple-quoted-string string">'''私钥，略'''</span>
+    cipher <span class="token operator">=</span> PKCS1_v1_5<span class="token punctuation">.</span>new<span class="token punctuation">(</span>RSA<span class="token punctuation">.</span>importKey<span class="token punctuation">(</span>private_key<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    retval <span class="token operator">=</span> cipher<span class="token punctuation">.</span>decrypt<span class="token punctuation">(</span>base64<span class="token punctuation">.</span>b64decode<span class="token punctuation">(</span>text<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">'ERROR'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token string">'utf-8'</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> retval<span class="token punctuation">.</span>replace<span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">.</span>replace<span class="token punctuation">(</span><span class="token string">"\r"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span> <span class="token comment"># 去除换行符</span></code></pre>
+
+<p>在实现rsa加密功能时，借助了rsa_encrypt()函数，关键代码为：</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">rsa_encrypt</span><span class="token punctuation">(</span>text<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    PUBLIC_KEY <span class="token operator">=</span> <span class="token triple-quoted-string string">'''公钥，略'''</span>
+    cipher <span class="token operator">=</span> PKCS1_v1_5<span class="token punctuation">.</span>new<span class="token punctuation">(</span>RSA<span class="token punctuation">.</span>importKey<span class="token punctuation">(</span>PUBLIC_KEY<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    cipher_text <span class="token operator">=</span> base64<span class="token punctuation">.</span>b64encode<span class="token punctuation">(</span>cipher<span class="token punctuation">.</span>encrypt<span class="token punctuation">(</span><span class="token builtin">bytes</span><span class="token punctuation">(</span>text<span class="token punctuation">,</span> encoding<span class="token operator">=</span><span class="token string">"utf8"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> cipher_text<span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token string">"utf-8"</span><span class="token punctuation">)</span></code></pre>
+
+<p>在实现debug调试，输出错误信息功能时，借助了printStackTrace(函数，关键代码为：</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">printStackTrace</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> e<span class="token punctuation">,</span> current_name<span class="token operator">=</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        info <span class="token operator">=</span> <span class="token string">"\n"</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>datetime<span class="token punctuation">.</span>now<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">7</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">" "</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>current_name<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" Error: "</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"\nat "</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>
+            e<span class="token punctuation">.</span>__traceback__<span class="token punctuation">.</span>tb_frame<span class="token punctuation">.</span>f_globals<span class="token punctuation">[</span><span class="token string">"__file__"</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"\nat line: "</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span>__traceback__<span class="token punctuation">.</span>tb_lineno<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"\n"</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>info<span class="token punctuation">)</span>
+        <span class="token comment"># 写入文件</span>
+        <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">"logs.txt"</span><span class="token punctuation">,</span> <span class="token string">"a"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> logger<span class="token punctuation">:</span>
+            logger<span class="token punctuation">.</span>write<span class="token punctuation">(</span>info<span class="token punctuation">)</span></code></pre>
+
+<p>连接建立后，需要对用户进行认证，这里接收用户名后利用rsa解密，解密成功即使用了正确的客户端，否则服务端会断开于客户端的连接</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">vertify</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> socket_handle<span class="token punctuation">)</span><span class="token punctuation">:</span>
+		<span class="token keyword">try</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    前段略
+    """</span>
+        name <span class="token operator">=</span> socket_handle<span class="token punctuation">.</span>recv<span class="token punctuation">(</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        name <span class="token operator">=</span> self<span class="token punctuation">.</span>rsa_decrypt<span class="token punctuation">(</span>name<span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"%s has entered!"</span> <span class="token operator">%</span> <span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        
+		<span class="token comment"># 防止并发错误</span>
+        lock<span class="token punctuation">.</span>acquire<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token comment"># 写入消息和历史记录</span>
+        history<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token string">"[!] "</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>datetime<span class="token punctuation">.</span>now<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">7</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">" "</span> <span class="token operator">+</span> name <span class="token operator">+</span> <span class="token string">":has entered!"</span><span class="token punctuation">)</span>
+        tmp_message<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token string">"name"</span><span class="token punctuation">:</span> name<span class="token punctuation">,</span> <span class="token string">"view_names"</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                            <span class="token string">"message"</span><span class="token punctuation">:</span> <span class="token string">"[!] "</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>datetime<span class="token punctuation">.</span>now<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">7</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">" "</span> <span class="token operator">+</span> name <span class="token operator">+</span> <span class="token string">":has entered!"</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+        lock<span class="token punctuation">.</span>release<span class="token punctuation">(</span><span class="token punctuation">)</span>
+		
+        <span class="token comment"># 认证完成后接入主聊天流程</span>
+        self<span class="token punctuation">.</span>game<span class="token punctuation">(</span>socket_handle<span class="token punctuation">,</span> name<span class="token punctuation">)</span>
+    <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+        <span class="token comment"># 出错说明认证失败，断开连接</span>
+        socket_handle<span class="token punctuation">.</span>send<span class="token punctuation">(</span><span class="token string">b"\n[-] Please use the authentication client to connect!"</span><span class="token punctuation">)</span>
+        socket_handle<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+
+
+
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">game</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> socket_handle<span class="token punctuation">,</span> name<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+      	<span class="token triple-quoted-string string">"""
+    前段略
+    		"""</span>
+      	<span class="token comment"># 挂起程序，防止退出</span>
+        <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+            sleep<span class="token punctuation">(</span><span class="token number">0.25</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span> tmp_message<span class="token punctuation">:</span>
+              <span class="token comment"># 对每个消息都进行处理</span>
+                <span class="token keyword">for</span> item <span class="token keyword">in</span> tmp_message<span class="token punctuation">:</span>
+                  <span class="token comment"># 如果发送人非本人，且本人不在"已阅消息"列表，则发送客户端此消息，并添加到已阅列表</span>
+                    <span class="token keyword">if</span> item<span class="token punctuation">[</span><span class="token string">"name"</span><span class="token punctuation">]</span> <span class="token operator">!=</span> name <span class="token keyword">and</span> name <span class="token keyword">not</span> <span class="token keyword">in</span> item<span class="token punctuation">[</span><span class="token string">"view_names"</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+                        socket_handle<span class="token punctuation">.</span>send<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token string">"\n"</span> <span class="token operator">+</span> item<span class="token punctuation">[</span><span class="token string">"message"</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                        <span class="token comment"># 防止并发错误</span>
+                        lock<span class="token punctuation">.</span>acquire<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                        item<span class="token punctuation">[</span><span class="token string">"view_names"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>append<span class="token punctuation">(</span>name<span class="token punctuation">)</span>
+                        lock<span class="token punctuation">.</span>release<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+            socket_handle<span class="token punctuation">.</span>send<span class="token punctuation">(</span><span class="token string">b"\n>> "</span><span class="token punctuation">)</span>
+            <span class="token comment"># 接收客户端消息</span>
+            msg <span class="token operator">=</span> socket_handle<span class="token punctuation">.</span>recv<span class="token punctuation">(</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span> msg<span class="token punctuation">:</span>
+              <span class="token comment"># 如果客户端输入了"history"，则返回全部历史信息</span>
+                <span class="token keyword">if</span> msg <span class="token operator">==</span> <span class="token string">"history"</span><span class="token punctuation">:</span>
+                    <span class="token comment"># print(history)</span>
+                    <span class="token keyword">for</span> i <span class="token keyword">in</span> history<span class="token punctuation">:</span>
+                        socket_handle<span class="token punctuation">.</span>send<span class="token punctuation">(</span><span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token keyword">else</span><span class="token punctuation">:</span>
+                  <span class="token comment"># 否则即为正常消息，防止并发冲突</span>
+                    lock<span class="token punctuation">.</span>acquire<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                  <span class="token comment"># 添加至历史记录</span>
+                    history<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token builtin">str</span><span class="token punctuation">(</span>datetime<span class="token punctuation">.</span>now<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">7</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">" "</span> <span class="token operator">+</span> name <span class="token operator">+</span> <span class="token string">":"</span> <span class="token operator">+</span> msg<span class="token punctuation">)</span>
+                  <span class="token comment"># 添加至待处理消息list中，其中每条消息都是发送人，已阅列表，信息内容三个关键字组成的字典</span>
+                    tmp_message<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token string">"name"</span><span class="token punctuation">:</span> name<span class="token punctuation">,</span> <span class="token string">"view_names"</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                                        <span class="token string">"message"</span><span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">(</span>datetime<span class="token punctuation">.</span>now<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">7</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">" "</span> <span class="token operator">+</span> name <span class="token operator">+</span> <span class="token string">":"</span> <span class="token operator">+</span> msg<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+                    lock<span class="token punctuation">.</span>release<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+    <span class="token keyword">finally</span><span class="token punctuation">:</span>
+      <span class="token comment"># 最终关闭连接</span>
+        socket_handle<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+
+<p>其中有进程任务，即处理每个连接的客户端送至认证模块中</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">thread_task</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+        sleep<span class="token punctuation">(</span><span class="token number">0.25</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> queue<span class="token punctuation">.</span>unfinished_tasks<span class="token punctuation">:</span>
+          <span class="token comment"># 队列取还未认证的套接字</span>
+            item <span class="token operator">=</span> queue<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token keyword">try</span><span class="token punctuation">:</span>
+                self<span class="token punctuation">.</span>vertify<span class="token punctuation">(</span>item<span class="token punctuation">)</span>
+            <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+                self<span class="token punctuation">.</span>printStackTrace<span class="token punctuation">(</span>e<span class="token punctuation">,</span> threading<span class="token punctuation">.</span>current_thread<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>name<span class="token punctuation">)</span>
+                
+<span class="token keyword">def</span> <span class="token function">init_Thread</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>threading_nums<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        item <span class="token operator">=</span> threading<span class="token punctuation">.</span>Thread<span class="token punctuation">(</span>target<span class="token operator">=</span>self<span class="token punctuation">.</span>thread_task<span class="token punctuation">,</span> name<span class="token operator">=</span><span class="token string">"Thread"</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        item<span class="token punctuation">.</span>setDaemon<span class="token punctuation">(</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+        item<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+
+<p>进程任务是由线程任务触发的</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">socket_task</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+<span class="token comment"># 套接字任务，初始化线程</span>
+    self<span class="token punctuation">.</span>init_Thread<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>multiprocessing<span class="token punctuation">.</span>current_process<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>name<span class="token punctuation">,</span> <span class="token string">" OK, under Threads:"</span><span class="token punctuation">,</span> self<span class="token punctuation">.</span>threading_nums<span class="token punctuation">,</span> <span class="token string">"OK"</span><span class="token punctuation">)</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+          <span class="token comment"># 挂起，持续接收连接的套接字</span>
+            socket_handle<span class="token punctuation">,</span> address <span class="token operator">=</span> self<span class="token punctuation">.</span>socket<span class="token punctuation">.</span>accept<span class="token punctuation">(</span><span class="token punctuation">)</span>
+          <span class="token comment"># 长超时设置</span>
+            socket_handle<span class="token punctuation">.</span>settimeout<span class="token punctuation">(</span><span class="token number">999999</span><span class="token punctuation">)</span>
+          <span class="token comment"># 收到了就将其put到队列中，等待线程处理</span>
+            queue<span class="token punctuation">.</span>put<span class="token punctuation">(</span>socket_handle<span class="token punctuation">)</span>
+            info <span class="token operator">=</span> <span class="token builtin">str</span><span class="token punctuation">(</span>datetime<span class="token punctuation">.</span>now<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">7</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">" Accepting Connection from: "</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>address<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"\n"</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>info<span class="token punctuation">)</span>
+          <span class="token comment"># 写日志</span>
+            <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">"logs.txt"</span><span class="token punctuation">,</span> <span class="token string">"a"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> logger<span class="token punctuation">:</span>
+                logger<span class="token punctuation">.</span>write<span class="token punctuation">(</span>info<span class="token punctuation">)</span>
+
+    <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>printStackTrace<span class="token punctuation">(</span>e<span class="token punctuation">,</span> multiprocessing<span class="token punctuation">.</span>current_process<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>name<span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">init_Process</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"start init..."</span><span class="token punctuation">)</span>
+    <span class="token comment"># 初始化多进程</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>process_nums<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        p <span class="token operator">=</span> multiprocessing<span class="token punctuation">.</span>Process<span class="token punctuation">(</span>target<span class="token operator">=</span>self<span class="token punctuation">.</span>socket_task<span class="token punctuation">,</span> name<span class="token operator">=</span><span class="token string">"Process"</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> daemon<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+        p<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+
+<p>主函数仅做后台挂起，直接初始化进程后挂后台</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">main</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    self<span class="token punctuation">.</span>init_Process<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+        sleep<span class="token punctuation">(</span><span class="token number">60000</span><span class="token punctuation">)</span></code></pre>
+
+<h4 id="方案二：-2"><a href="#方案二：-2" class="headerlink" title="方案二："></a>方案二：</h4><p>在实现客户端与服务端socket连接功能时，借助了login_socket()函数，关键代码为：  </p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">login_socket</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># try:</span>
+        <span class="token keyword">if</span> <span class="token builtin">str</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>input_username<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token number">1.0</span><span class="token punctuation">,</span>END<span class="token punctuation">)</span><span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token string">''</span><span class="token punctuation">:</span>
+            tkinter<span class="token punctuation">.</span>messagebox<span class="token punctuation">.</span>askretrycancel<span class="token punctuation">(</span>title<span class="token operator">=</span><span class="token string">'message'</span><span class="token punctuation">,</span> message<span class="token operator">=</span><span class="token string">'请输入用户名'</span><span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>client <span class="token operator">=</span> socket<span class="token punctuation">.</span>socket<span class="token punctuation">(</span>socket<span class="token punctuation">.</span>AF_INET<span class="token punctuation">,</span> socket<span class="token punctuation">.</span>SOCK_STREAM<span class="token punctuation">)</span>
+            self<span class="token punctuation">.</span>client<span class="token punctuation">.</span>connect<span class="token punctuation">(</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>local<span class="token punctuation">,</span> <span class="token number">8888</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            self<span class="token punctuation">.</span>flag <span class="token operator">=</span> <span class="token boolean">True</span>
+            self<span class="token punctuation">.</span>username_data <span class="token operator">=</span> <span class="token builtin">str</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>input_username<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token number">1.0</span><span class="token punctuation">,</span>END<span class="token punctuation">)</span><span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token number">12</span><span class="token punctuation">]</span>
+            self<span class="token punctuation">.</span>client<span class="token punctuation">.</span>send<span class="token punctuation">(</span>self<span class="token punctuation">.</span>username_data<span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            ret <span class="token operator">=</span> self<span class="token punctuation">.</span>client<span class="token punctuation">.</span>recv<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span> ret <span class="token operator">==</span> <span class="token string">b'Y'</span><span class="token punctuation">:</span>
+                tkinter<span class="token punctuation">.</span>messagebox<span class="token punctuation">.</span>showinfo<span class="token punctuation">(</span>title<span class="token operator">=</span><span class="token string">''</span><span class="token punctuation">,</span> message<span class="token operator">=</span><span class="token string">'登录成功！'</span><span class="token punctuation">)</span>
+                self<span class="token punctuation">.</span>root<span class="token punctuation">.</span>destroy<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                self<span class="token punctuation">.</span>is_login <span class="token operator">=</span> <span class="token boolean">False</span>
+                ClientUI<span class="token punctuation">.</span>ChatUI<span class="token punctuation">(</span>self<span class="token punctuation">)</span>
+            <span class="token keyword">elif</span> ret <span class="token operator">==</span> <span class="token string">b'N'</span><span class="token punctuation">:</span>
+                tkinter<span class="token punctuation">.</span>messagebox<span class="token punctuation">.</span>askretrycancel<span class="token punctuation">(</span>title<span class="token operator">=</span><span class="token string">'message'</span><span class="token punctuation">,</span> message<span class="token operator">=</span><span class="token string">'请输入用户名！'</span><span class="token punctuation">)</span>
+                <span class="token keyword">return</span>
+            <span class="token keyword">elif</span> ret <span class="token operator">==</span> <span class="token string">b'R'</span><span class="token punctuation">:</span>
+                tkinter<span class="token punctuation">.</span>messagebox<span class="token punctuation">.</span>askretrycancel<span class="token punctuation">(</span>title<span class="token operator">=</span><span class="token string">'message'</span><span class="token punctuation">,</span> message<span class="token operator">=</span><span class="token string">'用户名重复！'</span><span class="token punctuation">)</span>
+                <span class="token keyword">return</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Login Done!\n"</span><span class="token punctuation">)</span></code></pre>
+
+<p>在实现聊天窗口UI功能时，借助了ChatUI()函数，关键代码为：  </p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">ChatUI</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    self<span class="token punctuation">.</span>root <span class="token operator">=</span> Tk<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>title <span class="token operator">+=</span> self<span class="token punctuation">.</span>username_data
+    self<span class="token punctuation">.</span>root<span class="token punctuation">.</span>title<span class="token punctuation">(</span>self<span class="token punctuation">.</span>title<span class="token punctuation">)</span>
+
+    self<span class="token punctuation">.</span>frame <span class="token operator">=</span> <span class="token punctuation">[</span>tkinter<span class="token punctuation">.</span>Frame<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> tkinter<span class="token punctuation">.</span>Frame<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> tkinter<span class="token punctuation">.</span>Frame<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> tkinter<span class="token punctuation">.</span>Frame<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+    self<span class="token punctuation">.</span>talk_list <span class="token operator">=</span> Listbox<span class="token punctuation">(</span>self<span class="token punctuation">.</span>root<span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>talk_list<span class="token punctuation">.</span>pack<span class="token punctuation">(</span>side<span class="token operator">=</span>tkinter<span class="token punctuation">.</span>LEFT<span class="token punctuation">,</span> fill<span class="token operator">=</span>tkinter<span class="token punctuation">.</span>Y<span class="token punctuation">)</span>
+    <span class="token comment"># self.talk_list.insert(0,'asd')</span>
+
+    self<span class="token punctuation">.</span>chatTextScrollBar <span class="token operator">=</span> tkinter<span class="token punctuation">.</span>Scrollbar<span class="token punctuation">(</span>self<span class="token punctuation">.</span>frame<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>chatTextScrollBar<span class="token punctuation">.</span>pack<span class="token punctuation">(</span>side<span class="token operator">=</span>tkinter<span class="token punctuation">.</span>RIGHT<span class="token punctuation">,</span> fill<span class="token operator">=</span>tkinter<span class="token punctuation">.</span>Y<span class="token punctuation">)</span>
+
+    ft <span class="token operator">=</span> tkFont<span class="token punctuation">.</span>Font<span class="token punctuation">(</span>family<span class="token operator">=</span><span class="token string">'Fixdsys'</span><span class="token punctuation">,</span> size<span class="token operator">=</span><span class="token number">11</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>chatText <span class="token operator">=</span> tkinter<span class="token punctuation">.</span>Listbox<span class="token punctuation">(</span>self<span class="token punctuation">.</span>frame<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> width<span class="token operator">=</span><span class="token number">70</span><span class="token punctuation">,</span> height<span class="token operator">=</span><span class="token number">18</span><span class="token punctuation">,</span> font<span class="token operator">=</span>ft<span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>chatText<span class="token punctuation">[</span><span class="token string">'yscrollcommand'</span><span class="token punctuation">]</span> <span class="token operator">=</span> self<span class="token punctuation">.</span>chatTextScrollBar<span class="token punctuation">.</span><span class="token builtin">set</span>
+    self<span class="token punctuation">.</span>chatText<span class="token punctuation">.</span>pack<span class="token punctuation">(</span>expand<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> fill<span class="token operator">=</span>tkinter<span class="token punctuation">.</span>BOTH<span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>chatTextScrollBar<span class="token punctuation">[</span><span class="token string">'command'</span><span class="token punctuation">]</span> <span class="token operator">=</span> self<span class="token punctuation">.</span>chatText<span class="token punctuation">.</span>yview<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>frame<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>pack<span class="token punctuation">(</span>expand<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> fill<span class="token operator">=</span>tkinter<span class="token punctuation">.</span>BOTH<span class="token punctuation">)</span>
+
+    label <span class="token operator">=</span> tkinter<span class="token punctuation">.</span>Label<span class="token punctuation">(</span>self<span class="token punctuation">.</span>frame<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> height<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span>
+    label<span class="token punctuation">.</span>pack<span class="token punctuation">(</span>fill<span class="token operator">=</span>tkinter<span class="token punctuation">.</span>BOTH<span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>frame<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>pack<span class="token punctuation">(</span>expand<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> fill<span class="token operator">=</span>tkinter<span class="token punctuation">.</span>BOTH<span class="token punctuation">)</span>
+
+    self<span class="token punctuation">.</span>inputTextScrollBar <span class="token operator">=</span> tkinter<span class="token punctuation">.</span>Scrollbar<span class="token punctuation">(</span>self<span class="token punctuation">.</span>frame<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>inputTextScrollBar<span class="token punctuation">.</span>pack<span class="token punctuation">(</span>side<span class="token operator">=</span>tkinter<span class="token punctuation">.</span>RIGHT<span class="token punctuation">,</span> fill<span class="token operator">=</span>tkinter<span class="token punctuation">.</span>Y<span class="token punctuation">)</span>
+
+    ft <span class="token operator">=</span> tkFont<span class="token punctuation">.</span>Font<span class="token punctuation">(</span>family<span class="token operator">=</span><span class="token string">'Fixdsys'</span><span class="token punctuation">,</span> size<span class="token operator">=</span><span class="token number">11</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>inputText <span class="token operator">=</span> tkinter<span class="token punctuation">.</span>Text<span class="token punctuation">(</span>self<span class="token punctuation">.</span>frame<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> width<span class="token operator">=</span><span class="token number">70</span><span class="token punctuation">,</span> height<span class="token operator">=</span><span class="token number">8</span><span class="token punctuation">,</span> font<span class="token operator">=</span>ft<span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>inputText<span class="token punctuation">.</span>focus_set<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>inputText<span class="token punctuation">.</span>bind_all<span class="token punctuation">(</span><span class="token string">"&lt;KeyPress-Return>"</span><span class="token punctuation">,</span>self<span class="token punctuation">.</span>sendMsgEvent<span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>inputText<span class="token punctuation">[</span><span class="token string">'yscrollcommand'</span><span class="token punctuation">]</span> <span class="token operator">=</span> self<span class="token punctuation">.</span>inputTextScrollBar<span class="token punctuation">.</span><span class="token builtin">set</span>
+    self<span class="token punctuation">.</span>inputText<span class="token punctuation">.</span>pack<span class="token punctuation">(</span>expand<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> fill<span class="token operator">=</span>tkinter<span class="token punctuation">.</span>BOTH<span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>inputTextScrollBar<span class="token punctuation">[</span><span class="token string">'command'</span><span class="token punctuation">]</span> <span class="token operator">=</span> self<span class="token punctuation">.</span>chatText<span class="token punctuation">.</span>yview<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>frame<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">.</span>pack<span class="token punctuation">(</span>expand<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> fill<span class="token operator">=</span>tkinter<span class="token punctuation">.</span>BOTH<span class="token punctuation">)</span>
+
+    self<span class="token punctuation">.</span>sendButton <span class="token operator">=</span> tkinter<span class="token punctuation">.</span>Button<span class="token punctuation">(</span>self<span class="token punctuation">.</span>frame<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span> text<span class="token operator">=</span><span class="token string">' 发 送 '</span><span class="token punctuation">,</span> width<span class="token operator">=</span><span class="token number">10</span><span class="token punctuation">,</span> command<span class="token operator">=</span>self<span class="token punctuation">.</span>senddata<span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>sendButton<span class="token punctuation">.</span>pack<span class="token punctuation">(</span>expand<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> side<span class="token operator">=</span>tkinter<span class="token punctuation">.</span>BOTTOM <span class="token keyword">and</span> tkinter<span class="token punctuation">.</span>RIGHT<span class="token punctuation">,</span> padx<span class="token operator">=</span><span class="token number">15</span><span class="token punctuation">,</span> pady<span class="token operator">=</span><span class="token number">8</span><span class="token punctuation">)</span>
+
+    self<span class="token punctuation">.</span>closeButton <span class="token operator">=</span> tkinter<span class="token punctuation">.</span>Button<span class="token punctuation">(</span>self<span class="token punctuation">.</span>frame<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span> text<span class="token operator">=</span><span class="token string">' 关 闭 '</span><span class="token punctuation">,</span> width<span class="token operator">=</span><span class="token number">10</span><span class="token punctuation">,</span> command<span class="token operator">=</span>self<span class="token punctuation">.</span>close<span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>closeButton<span class="token punctuation">.</span>pack<span class="token punctuation">(</span>expand<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> side<span class="token operator">=</span>tkinter<span class="token punctuation">.</span>RIGHT<span class="token punctuation">,</span> padx<span class="token operator">=</span><span class="token number">15</span><span class="token punctuation">,</span> pady<span class="token operator">=</span><span class="token number">8</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>frame<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">.</span>pack<span class="token punctuation">(</span>expand<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> fill<span class="token operator">=</span>tkinter<span class="token punctuation">.</span>BOTH<span class="token punctuation">)</span>
+
+    t1 <span class="token operator">=</span> threading<span class="token punctuation">.</span>Thread<span class="token punctuation">(</span>target<span class="token operator">=</span>self<span class="token punctuation">.</span>recvdata<span class="token punctuation">,</span> name<span class="token operator">=</span><span class="token string">'recvdata'</span><span class="token punctuation">)</span>
+    t1<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>root<span class="token punctuation">.</span>mainloop<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+
+<p>在实现登录和发送信息功能时，借助了sendMsgEvent()函数，关键代码为：  </p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">sendMsgEvent</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> event<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> event<span class="token punctuation">.</span>keysym <span class="token operator">==</span> <span class="token string">"Return"</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> self<span class="token punctuation">.</span>is_login <span class="token operator">==</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>login_socket<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>senddata<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+
+<p>在实现发送数据和接收数据功能时，借助了senddata()和recvdata()函数，关键代码为： </p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">senddata</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    message <span class="token operator">=</span> self<span class="token punctuation">.</span>inputText<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">'1.0'</span><span class="token punctuation">,</span> tkinter<span class="token punctuation">.</span>END<span class="token punctuation">)</span>
+    theTime <span class="token operator">=</span> time<span class="token punctuation">.</span>strftime<span class="token punctuation">(</span><span class="token string">"%Y-%m-%d %H:%M:%S"</span><span class="token punctuation">,</span> time<span class="token punctuation">.</span>localtime<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    new_message <span class="token operator">=</span> <span class="token string">'['</span> <span class="token operator">+</span> theTime <span class="token operator">+</span> <span class="token string">'] '</span> <span class="token operator">+</span> self<span class="token punctuation">.</span>username_data
+    self<span class="token punctuation">.</span>chatText<span class="token punctuation">.</span>insert<span class="token punctuation">(</span>tkinter<span class="token punctuation">.</span>END<span class="token punctuation">,</span> new_message<span class="token punctuation">.</span>rjust<span class="token punctuation">(</span><span class="token number">70</span><span class="token punctuation">,</span><span class="token string">' '</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">' \n'</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>chatText<span class="token punctuation">.</span>itemconfig<span class="token punctuation">(</span>tkinter<span class="token punctuation">.</span>END<span class="token punctuation">,</span> fg<span class="token operator">=</span><span class="token string">'green'</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>chatText<span class="token punctuation">.</span>insert<span class="token punctuation">(</span>tkinter<span class="token punctuation">.</span>END<span class="token punctuation">,</span> <span class="token string">'  '</span> <span class="token operator">+</span> message<span class="token punctuation">.</span>rjust<span class="token punctuation">(</span><span class="token number">66</span><span class="token punctuation">,</span><span class="token string">' '</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">'\n'</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>chatText<span class="token punctuation">.</span>see<span class="token punctuation">(</span>END<span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>client<span class="token punctuation">.</span>send<span class="token punctuation">(</span>message<span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>inputText<span class="token punctuation">.</span>delete<span class="token punctuation">(</span><span class="token number">0.0</span><span class="token punctuation">,</span> message<span class="token punctuation">.</span>__len__<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1.0</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">recvdata</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+        theTime <span class="token operator">=</span> time<span class="token punctuation">.</span>strftime<span class="token punctuation">(</span><span class="token string">"%Y-%m-%d %H:%M:%S"</span><span class="token punctuation">,</span> time<span class="token punctuation">.</span>localtime<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        message <span class="token operator">=</span> self<span class="token punctuation">.</span>client<span class="token punctuation">.</span>recv<span class="token punctuation">(</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        new_message <span class="token operator">=</span> message<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">'\n'</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>chatText<span class="token punctuation">.</span>insert<span class="token punctuation">(</span>tkinter<span class="token punctuation">.</span>END<span class="token punctuation">,</span>   new_message<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">' ['</span> <span class="token operator">+</span> theTime <span class="token operator">+</span> <span class="token string">'] ：\n'</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>chatText<span class="token punctuation">.</span>itemconfig<span class="token punctuation">(</span>tkinter<span class="token punctuation">.</span>END<span class="token punctuation">,</span> fg<span class="token operator">=</span><span class="token string">'red'</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>chatText<span class="token punctuation">.</span>insert<span class="token punctuation">(</span>tkinter<span class="token punctuation">.</span>END<span class="token punctuation">,</span> <span class="token string">'  '</span> <span class="token operator">+</span> new_message<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">'\n'</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>chatText<span class="token punctuation">.</span>see<span class="token punctuation">(</span>END<span class="token punctuation">)</span></code></pre>
+
+<p>在实现关闭程序时，借助了close()函数，关键代码为： </p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">close</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    self<span class="token punctuation">.</span>client<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>root<span class="token punctuation">.</span>destroy<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+
+<h3 id="回顾与展望"><a href="#回顾与展望" class="headerlink" title="回顾与展望"></a>回顾与展望</h3><p>通过本项目使我的代码能力和纠错能力得到了进一步提升，尤其是在独立面对困难和程序bug的时候多多调试就可以解决问题，并且记录下来，这样对我的学习非常有帮助。</p>
+</div></section><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="打赏" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><span class="icon iconify" data-icon="ri:hand-coin-line"></span></span><div id="reward-comment">I'm so cute. Please give me money.</div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>Err0r</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="https://err0r.top/article/socket/" title="Socket网络通信编程项目">https://err0r.top/article/socket/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><span class="icon iconify" data-icon="ri:creative-commons-line"></span><span class="icon iconify" data-icon="ri:creative-commons-by-line"></span><span class="icon iconify" data-icon="ri:creative-commons-nc-line"></span><span class="icon iconify" data-icon="ri:creative-commons-sa-line"></span></a> 许可协议。</li></ul></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/article/starctf2022/" rel="prev" title="starctf2022"><span class="icon iconify" data-icon="ri:arrow-left-s-line"></span><span class="post-nav-text">starctf2022</span></a></div><div class="post-nav-item"><a class="post-nav-next" href="/article/log4jrce/" rel="next" title="Log4j2 RCE漏洞代码浅析"><span class="post-nav-text">Log4j2 RCE漏洞代码浅析</span><span class="icon iconify" data-icon="ri:arrow-right-s-line"></span></a></div></div></div><div class="hty-card" id="comment"></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2019 – 2023 </span><span class="with-love" id="animate"><span class="icon iconify" data-icon="ri:cloud-line"></span></span><span class="author"> Err0r</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v6.3.0</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.10.9</span></div></footer></div><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><span class="icon iconify" data-icon="ri:arrow-up-s-line"></span><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>
