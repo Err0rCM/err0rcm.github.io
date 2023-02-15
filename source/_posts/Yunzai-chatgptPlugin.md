@@ -734,6 +734,16 @@ sudo update-grub
 
 
 
+### 【ChatGPT】503
+
+问题详情：Error: Failed to send message.HTTP 503...
+
+原因：1. 网不好 2. 代理挂了 3. 浏览器校验没通过
+
+解决方式：换个代理，或者再试试
+
+
+
 
 
 待续...
