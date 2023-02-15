@@ -26,14 +26,30 @@ document.addEventListener("pjax:success", initScrollReveal);
 <meta property="og:site_name" content="Err0r的小站">
 <meta property="og:description" content="本篇记录云崽机器人在Ubuntu20下的Docker环境中的过程及chatgpt-plugin的安装和排错">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://err0r.top/article/Yunzai-chatgptPlugin/image-20230215220213208.png">
+<meta property="og:image" content="https://err0r.top/article/Yunzai-chatgptPlugin/image-20230215220526567.png">
+<meta property="og:image" content="https://err0r.top/article/Yunzai-chatgptPlugin/image-20230215221128864.png">
+<meta property="og:image" content="https://err0r.top/article/Yunzai-chatgptPlugin/image-20230215220956779.png">
+<meta property="og:image" content="https://err0r.top/article/Yunzai-chatgptPlugin/image-20230215223558251.png">
+<meta property="og:image" content="https://err0r.top/article/Yunzai-chatgptPlugin/image-20230215223738225.png">
+<meta property="og:image" content="https://err0r.top/article/Yunzai-chatgptPlugin/image-20230215224253515.png">
+<meta property="og:image" content="https://err0r.top/article/Yunzai-chatgptPlugin/image-20230215224533490.png">
+<meta property="og:image" content="https://err0r.top/article/Yunzai-chatgptPlugin/image-20230215231252730.png">
+<meta property="og:image" content="https://err0r.top/article/Yunzai-chatgptPlugin/e55c4bab_9454279.jpeg">
+<meta property="og:image" content="https://err0r.top/article/Yunzai-chatgptPlugin/image-20230215214728708.png">
+<meta property="og:image" content="https://err0r.top/article/Yunzai-chatgptPlugin/image-20230215215409836.png">
+<meta property="og:image" content="https://err0r.top/article/Yunzai-chatgptPlugin/image-20230215220014930.png">
+<meta property="og:image" content="https://err0r.top/article/Yunzai-chatgptPlugin/image-20230215234115777.png">
+<meta property="og:image" content="https://err0r.top/article/Yunzai-chatgptPlugin/image-20230215234728748.png">
 <meta property="article:published_time" content="2023-02-15T11:35:54.000Z">
-<meta property="article:modified_time" content="2023-02-15T11:59:28.624Z">
+<meta property="article:modified_time" content="2023-02-15T15:58:16.084Z">
 <meta property="article:author" content="Err0r">
 <meta property="article:tag" content="blog">
 <meta property="article:tag" content="博客">
 <meta property="article:tag" content="Err0r">
 <meta property="article:tag" content="CTF">
-<meta name="twitter:card" content="summary"><script>(function() {
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://err0r.top/article/Yunzai-chatgptPlugin/image-20230215220213208.png"><script>(function() {
   if (CONFIG.mode !== 'auto') return
   const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
   const setting = localStorage.getItem('darken-mode') || 'auto'
@@ -50,22 +66,426 @@ IconifyProviders = {
     // Wait for 1 second before switching API hosts
     rotate: 1000,
   },
-};</script><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><span class="icon iconify" data-icon="ri:list-ordered"></span></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><span class="icon iconify" data-icon="ri:passport-line"></span></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="Err0r"><img width="96" loading="lazy" src="/images/avatar.jpg" alt="Err0r"></a><div class="site-author-name"><a href="/about/">Err0r</a></div><a class="site-name" href="/about/site.html">Err0r的小站</a><sub class="site-subtitle">gyy</sub><div class="site-description">学的越多，越觉得自己渺小</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">44</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">7</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">11</span></a></div><a class="site-state-item hty-icon-button" href="/about/#comment" title="留言板"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-clipboard-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" title="QQ MTkwNjk2ODc2NA==" target="_blank" style="color:#12B7F5"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qq-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/Err0rCM" title="GitHub" target="_blank" style="color:#6e5494"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://space.bilibili.com/8408670" title="哔哩哔哩" target="_blank" style="color:#FF8EB3"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-bilibili-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="mailto:err0rcm@qq.com" title="E-Mail" target="_blank" style="color:#8E71C1"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-mail-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="/atom.xml" title="RSS" target="_blank" style="color:orange"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-rss-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://travellings.link/" title="Travelling" target="_blank" style="color:var(--hty-text-color)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-send-plane-2-line"></use></svg></a></div><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们|友情链接" style="color:dodgerblue"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-open-arm-line"></use></svg></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><span class="icon iconify" data-icon="ri:contrast-2-line"></span></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%8A%E6%8F%92%E4%BB%B6%E5%87%86%E5%A4%87"><span class="toc-number">2.</span> <span class="toc-text">环境及插件准备</span></a></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#000000;"><link itemprop="mainEntityOfPage" href="https://err0r.top/article/Yunzai-chatgptPlugin/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="Err0r"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="Err0r的小站"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">云崽机器人与chatGPT插件的安装</h1><div class="post-meta"><div class="post-time" style="display:block"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-line"></span></span> <time title="创建时间：2023-02-15 19:35:54" itemprop="dateCreated datePublished" datetime="2023-02-15T19:35:54+08:00">2023-02-15</time></div><span class="post-count"><span class="post-symbolcount"><span class="post-meta-item-icon" title="本文字数"><span class="icon iconify" data-icon="ri:file-word-line"></span></span> <span title="本文字数">279</span><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读时长"><span class="icon iconify" data-icon="ri:timer-line"></span></span> <span title="阅读时长">1m</span></span></span><span class="post-busuanzi"><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读次数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-eye-line"></use></svg> <span id="busuanzi_value_page_pv"></span></span></span><span class="post-meta-divider">-</span><a href="#comment"><span class="post-meta-item-icon" title="评论数"><span class="icon iconify" data-icon="ri:chat-3-line"></span> <span class="waline-comment-count" id="/article/Yunzai-chatgptPlugin/"></span></span></a><div class="post-classify"></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><p>本篇记录云崽机器人在Ubuntu20下的Docker环境中的过程及chatgpt-plugin的安装和排错</p>
+};</script><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><span class="icon iconify" data-icon="ri:list-ordered"></span></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><span class="icon iconify" data-icon="ri:passport-line"></span></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="Err0r"><img width="96" loading="lazy" src="/images/avatar.jpg" alt="Err0r"></a><div class="site-author-name"><a href="/about/">Err0r</a></div><a class="site-name" href="/about/site.html">Err0r的小站</a><sub class="site-subtitle">gyy</sub><div class="site-description">学的越多，越觉得自己渺小</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">44</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">7</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">11</span></a></div><a class="site-state-item hty-icon-button" href="/about/#comment" title="留言板"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-clipboard-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" title="QQ MTkwNjk2ODc2NA==" target="_blank" style="color:#12B7F5"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qq-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/Err0rCM" title="GitHub" target="_blank" style="color:#6e5494"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://space.bilibili.com/8408670" title="哔哩哔哩" target="_blank" style="color:#FF8EB3"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-bilibili-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="mailto:err0rcm@qq.com" title="E-Mail" target="_blank" style="color:#8E71C1"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-mail-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="/atom.xml" title="RSS" target="_blank" style="color:orange"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-rss-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://travellings.link/" title="Travelling" target="_blank" style="color:var(--hty-text-color)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-send-plane-2-line"></use></svg></a></div><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们|友情链接" style="color:dodgerblue"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-open-arm-line"></use></svg></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><span class="icon iconify" data-icon="ri:contrast-2-line"></span></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%8A%E6%8F%92%E4%BB%B6%E5%87%86%E5%A4%87"><span class="toc-number">2.</span> <span class="toc-text">环境及插件准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B"><span class="toc-number">3.</span> <span class="toc-text">安装过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Ubuntu20%E5%8F%8A%E7%9B%B8%E5%85%B3%E8%AE%BE%E7%BD%AE"><span class="toc-number">3.1.</span> <span class="toc-text">安装Ubuntu20及相关设置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEroot%E7%99%BB%E9%99%86"><span class="toc-number">3.1.1.</span> <span class="toc-text">配置root登陆</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Docker%E5%8F%8Adocker-compose"><span class="toc-number">3.2.</span> <span class="toc-text">安装Docker及docker-compose</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%90%86"><span class="toc-number">3.3.</span> <span class="toc-text">设置代理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BDclash"><span class="toc-number">3.3.1.</span> <span class="toc-text">下载clash</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%81%E4%B9%85%E5%8C%96%E8%BF%90%E8%A1%8C"><span class="toc-number">3.3.2.</span> <span class="toc-text">持久化运行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">3.3.3.</span> <span class="toc-text">********</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E7%B3%BB%E7%BB%9F%E4%BB%A3%E7%90%86"><span class="toc-number">3.3.4.</span> <span class="toc-text">设置系统代理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%87%8D%E8%BD%BD-x2F-etc-x2F-profile-%E9%85%8D%E7%BD%AE"><span class="toc-number">3.3.5.</span> <span class="toc-text">重载 &#x2F;etc&#x2F;profile 配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8clash%E5%B9%B6%E8%AE%BE%E7%BD%AE%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF"><span class="toc-number">3.3.6.</span> <span class="toc-text">启动clash并设置开机自启</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BDYunzai%E5%8F%8A%E5%AF%B9%E5%BA%94%E7%9A%84%E6%8F%92%E4%BB%B6"><span class="toc-number">3.4.</span> <span class="toc-text">下载Yunzai及对应的插件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BDYunzai"><span class="toc-number">3.4.1.</span> <span class="toc-text">下载Yunzai</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E5%AF%B9%E5%BA%94%E6%8F%92%E4%BB%B6"><span class="toc-number">3.4.2.</span> <span class="toc-text">下载对应插件</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#chatGPT-Plugin"><span class="toc-number">3.4.2.1.</span> <span class="toc-text">chatGPT-Plugin</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Guoba-Plugin"><span class="toc-number">3.4.2.2.</span> <span class="toc-text">Guoba-Plugin</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#miao-plugin"><span class="toc-number">3.4.2.3.</span> <span class="toc-text">miao-plugin</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#rconsole-plugin"><span class="toc-number">3.4.2.4.</span> <span class="toc-text">rconsole-plugin</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#xiaoyao-cvs-plugin"><span class="toc-number">3.4.2.5.</span> <span class="toc-text">xiaoyao-cvs-plugin</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#xitian-plugin"><span class="toc-number">3.4.2.6.</span> <span class="toc-text">xitian-plugin</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0docker-compose-yaml%E6%96%87%E4%BB%B6"><span class="toc-number">3.5.</span> <span class="toc-text">更新docker-compose.yaml文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90docker%E3%80%91%E5%BC%80%E5%A7%8B%E5%AE%89%E8%A3%85"><span class="toc-number">3.6.</span> <span class="toc-text">【docker】开始安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E8%A1%8C%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE"><span class="toc-number">3.7.</span> <span class="toc-text">进行相关配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Yunzai%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-number">3.7.1.</span> <span class="toc-text">Yunzai的配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96ticket"><span class="toc-number">3.7.2.</span> <span class="toc-text">获取ticket</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#chatGPT%E5%AF%B9%E5%BA%94%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-number">3.7.3.</span> <span class="toc-text">chatGPT对应的配置</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E3%80%90docker%E3%80%91%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86%EF%BC%88%E9%87%8D%E7%82%B9%EF%BC%89"><span class="toc-number">3.7.3.1.</span> <span class="toc-text">【docker】配置代理（重点）</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96"><span class="toc-number">3.7.4.</span> <span class="toc-text">安装依赖</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90docker%E3%80%91%E6%9C%80%E5%90%8E"><span class="toc-number">3.8.</span> <span class="toc-text">【docker】最后</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E3%80%90docker%E3%80%91chatGPT-Plugin%E6%83%B3%E4%BD%BF%E7%94%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E5%BC%8F%E6%80%8E%E4%B9%88%E5%8A%9E"><span class="toc-number">4.</span> <span class="toc-text">【docker】chatGPT-Plugin想使用浏览器模式怎么办</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94"><span class="toc-number">5.</span> <span class="toc-text">问题解答</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90bot%E3%80%91%E8%BD%BD%E5%85%A5%E6%8F%92%E4%BB%B6%E9%94%99%E8%AF%AF%EF%BC%9Achat"><span class="toc-number">5.1.</span> <span class="toc-text">【bot】载入插件错误：chat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90bot%E3%80%91chatgpt-puppeteer-%E5%90%AF%E5%8A%A8%E5%A4%B1%E8%B4%A5"><span class="toc-number">5.2.</span> <span class="toc-text">【bot】chatgpt puppeteer 启动失败</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90bot%E3%80%91-10003"><span class="toc-number">5.3.</span> <span class="toc-text">【bot】-10003</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90bot%E3%80%91%E6%88%91%E7%9A%84bot%E7%AA%81%E7%84%B6%E6%8E%89%E7%BA%BF%E5%86%8D%E7%99%BB%E5%BD%95%E6%8F%90%E7%A4%BA%E7%A6%81%E6%AD%A2%E7%99%BB%E5%BD%95-x2F-%E7%89%88%E6%9C%AC%E8%BF%87%E4%BD%8E%E6%80%8E%E4%B9%88%E5%8A%9E"><span class="toc-number">5.4.</span> <span class="toc-text">【bot】我的bot突然掉线再登录提示禁止登录&#x2F;版本过低怎么办</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90docker%E3%80%91%E6%88%91%E6%89%A7%E8%A1%8Cdocker-compose%E7%9A%84%E6%97%B6%E5%80%99%E6%8A%A5%E5%A6%82%E4%B8%8B%E9%94%99%E8%AF%AF%E6%80%8E%E4%B9%88%E5%8A%9E"><span class="toc-number">5.5.</span> <span class="toc-text">【docker】我执行docker compose的时候报如下错误怎么办</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90docker%E3%80%91%E5%9C%A8docker-Running%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%AD%E6%8A%A5%E5%A6%82%E4%B8%8B%E9%94%99%E8%AF%AF%E6%80%8E%E4%B9%88%E5%8A%9E"><span class="toc-number">5.6.</span> <span class="toc-text">【docker】在docker Running的过程中报如下错误怎么办</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90ChatGPT%E3%80%91timed-out"><span class="toc-number">5.7.</span> <span class="toc-text">【ChatGPT】timed out</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90ChatGPT%E3%80%91ERR-ABORTED"><span class="toc-number">5.8.</span> <span class="toc-text">【ChatGPT】ERR_ABORTED</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90ChatGPT%E3%80%91ERR-CONNECTION-RESET"><span class="toc-number">5.9.</span> <span class="toc-text">【ChatGPT】ERR_CONNECTION_RESET</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90ChatGPT%E3%80%91ERR-PROXY-CONNECTION-FAILED"><span class="toc-number">5.10.</span> <span class="toc-text">【ChatGPT】ERR_PROXY_CONNECTION_FAILED</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90ChatGPT%E3%80%91ECONNRESET"><span class="toc-number">5.11.</span> <span class="toc-text">【ChatGPT】ECONNRESET</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90ChatGPT%E3%80%91Not-signed-in"><span class="toc-number">5.12.</span> <span class="toc-text">【ChatGPT】Not signed in</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90ChatGPT%E3%80%91404"><span class="toc-number">5.13.</span> <span class="toc-text">【ChatGPT】404</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90ChatGPT%E3%80%91429"><span class="toc-number">5.14.</span> <span class="toc-text">【ChatGPT】429</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90ChatGPT%E3%80%91capacity"><span class="toc-number">5.15.</span> <span class="toc-text">【ChatGPT】capacity</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90%E6%A0%87%E7%AD%BE%E3%80%91%E9%97%AE%E9%A2%98%E6%A0%87%E9%A2%98"><span class="toc-number">5.16.</span> <span class="toc-text">【标签】问题标题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E8%AE%B0"><span class="toc-number">6.</span> <span class="toc-text">后记</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0%E5%8F%8A%E6%84%9F%E8%B0%A2"><span class="toc-number">7.</span> <span class="toc-text">参考文章及感谢</span></a></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#000000;"><link itemprop="mainEntityOfPage" href="https://err0r.top/article/Yunzai-chatgptPlugin/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="Err0r"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="Err0r的小站"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">云崽机器人与chatGPT插件的安装</h1><div class="post-meta"><div class="post-time" style="display:block"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-line"></span></span> <time title="创建时间：2023-02-15 19:35:54" itemprop="dateCreated datePublished" datetime="2023-02-15T19:35:54+08:00">2023-02-15</time></div><span class="post-count"><span class="post-symbolcount"><span class="post-meta-item-icon" title="本文字数"><span class="icon iconify" data-icon="ri:file-word-line"></span></span> <span title="本文字数">4.3k</span><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读时长"><span class="icon iconify" data-icon="ri:timer-line"></span></span> <span title="阅读时长">17m</span></span></span><span class="post-busuanzi"><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读次数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-eye-line"></use></svg> <span id="busuanzi_value_page_pv"></span></span></span><span class="post-meta-divider">-</span><a href="#comment"><span class="post-meta-item-icon" title="评论数"><span class="icon iconify" data-icon="ri:chat-3-line"></span> <span class="waline-comment-count" id="/article/Yunzai-chatgptPlugin/"></span></span></a><div class="post-classify"></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><p>本篇记录云崽机器人在Ubuntu20下的Docker环境中的过程及chatgpt-plugin的安装和排错</p>
 <span id="more"></span>
 
 <p>宿主机环境：Ubuntu20虚拟机</p>
 <p>Yunzai环境：Docker</p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本人原批（开门见山），一直在用云崽，最近chatGPT大火，偶然发现有大佬写了云崽的chatGPT插件，家里买了台新NAS（群晖黑转白），总想搞点什么折腾一下，于是乎把在云服务器上的云崽迁移了下来，并且重新安装了一遍。加入了chatGPT插件的群发现不少人有奇奇怪怪的问题，自己也遇到其中不少，就顺手写下此篇文章，给其他有问题的同学一个参考。</p>
-<h2 id="环境及插件准备"><a href="#环境及插件准备" class="headerlink" title="环境及插件准备"></a>环境及插件准备</h2><p>声明：本方案可能较为繁琐，可以直接跳到对应的章节看对应的项目怎么安装。</p>
-<p>系统：Ubuntu20虚拟机 下载地址：<a target="_blank" rel="noopener" href="https://next.itellyou.cn/">MSDN</a></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>原文地址：<a href="https://err0r.top/article/Yunzai-chatgptPlugin/">https://err0r.top/article/Yunzai-chatgptPlugin/</a></p>
+<p>转载请注明作者和原文地址，谢谢！</p>
+<p>本人原批（开门见山），一直在用云崽，最近chatGPT大火，偶然发现有大佬写了云崽的chatGPT插件，家里买了台新NAS（群晖黑转白），总想搞点什么折腾一下，于是乎把在云服务器上的云崽迁移了下来，并且重新安装了一遍。加入了chatGPT插件的群发现不少人有奇奇怪怪的问题，自己也遇到其中不少，就顺手写下此篇文章，给其他有问题的同学一个参考。由于本人非酋抽不到bing的测试资格，相关配置等拿到资格了再说，生气。</p>
+<p><strong>声明</strong>：本方案较为繁琐，可以直接跳到对应的章节看对应的项目怎么安装。本教程记录了全部安装过程，贴出很多指令为防本人后续忘记，如您已经配置完毕即可跳过对应小节:)</p>
+<h2 id="环境及插件准备"><a href="#环境及插件准备" class="headerlink" title="环境及插件准备"></a>环境及插件准备</h2><p>系统：Ubuntu20虚拟机 下载地址：<a target="_blank" rel="noopener" href="https://next.itellyou.cn/">MSDN</a></p>
 <p>YunzaiBot：【2023.2.15 yunzai的github仓库被ban，目前转为gitee下载】<a target="_blank" rel="noopener" href="https://gitee.com/Le-niao/Yunzai-Bot">Yunzai</a></p>
 <p>chatGPT-Plugin：<a target="_blank" rel="noopener" href="https://github.com/ikechan8370/chatgpt-plugin">chatGPT-Plugin</a></p>
 <p><strong>以下选装，非本文主题</strong></p>
-<p>Guoba-Plugin：[Guoba-Plugin]</p>
-<p>miao-plugin：[miao-plugin]</p>
-<p>rconsole-plugin：[rconsole-plugin]</p>
-<p>xiaoyao-cvs-plugin：[xiaoyao-cvs-plugin]</p>
-<p>xitian-plugin：[xitian-plugin]</p>
+<p>Guoba-Plugin：<a target="_blank" rel="noopener" href="https://github.com/guoba-yunzai/guoba-plugin">Guoba-Plugin</a></p>
+<p>miao-plugin：<a target="_blank" rel="noopener" href="https://github.com/yoimiya-kokomi/miao-plugin">miao-plugin</a></p>
+<p>rconsole-plugin：<a target="_blank" rel="noopener" href="https://gitee.com/kyrzy0416/rconsole-plugin">rconsole-plugin</a></p>
+<p>xiaoyao-cvs-plugin：<a target="_blank" rel="noopener" href="https://github.com/ctrlcvs/xiaoyao-cvs-plugin">xiaoyao-cvs-plugin</a></p>
+<p>xitian-plugin：<a target="_blank" rel="noopener" href="https://github.com/XiTianGame/xitian-plugin">xitian-plugin</a></p>
+<h2 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h2><p>保姆级教程，大佬们可以跳过前段部分</p>
+<h3 id="安装Ubuntu20及相关设置"><a href="#安装Ubuntu20及相关设置" class="headerlink" title="安装Ubuntu20及相关设置"></a>安装Ubuntu20及相关设置</h3><p>因为是在NAS上跑虚拟机，所以我选择了Live版，纯命令行版本，安装过程会让你配一些选项，这里选择装一下OpenSSH，后续可以远程连接</p>
+<h4 id="配置root登陆"><a href="#配置root登陆" class="headerlink" title="配置root登陆"></a>配置root登陆</h4><p><strong>注意，本次安装是在家里的NAS上安装，如在公网或非安全环境下请勿配置root登陆并设置强密码！！！</strong></p>
+<p><strong>为方便复制和非root用户，本文中大部分可能需要权限的指令都加上了<code>sudo</code>，请自行斟酌</strong></p>
+<p>默认的ssh配置<code>/etc/ssh/sshd_config</code>是这样的</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># PermitRootLogin without-password</span></code></pre>
+
+<p>是注释状态，我们不用管，直接在最后补一行<code>PermitRootLogin yes</code>即可</p>
+<p>命令行运行：</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token builtin class-name">echo</span> <span class="token string">"PermitRootLogin yes"</span> <span class="token operator">>></span> /etc/ssh/sshd_config
+<span class="token function">sudo</span> <span class="token function">service</span> <span class="token function">ssh</span> restart</code></pre>
+
+<p>即可远程登录系统</p>
+<h3 id="安装Docker及docker-compose"><a href="#安装Docker及docker-compose" class="headerlink" title="安装Docker及docker-compose"></a>安装Docker及docker-compose</h3><p>（很多人喜欢直接在本机装yunzai，不过我还是喜欢Docker版的，虽说有点麻烦，但整理方便）</p>
+<p><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/install/ubuntu/">docker官网的文档</a></p>
+<blockquote>
+<p>新装的系统不存在旧版本安装的问题，如果已安装Docker且无法正常运行，请运行：<code>sudo apt-get remove docker docker-engine docker.io containerd runc</code></p>
+</blockquote>
+<p>不做过多阐述，按照命令行如下安装即可：</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> update
+<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> <span class="token punctuation">\</span>
+    ca-certificates <span class="token punctuation">\</span>
+    <span class="token function">curl</span> <span class="token punctuation">\</span>
+    gnupg <span class="token punctuation">\</span>
+    lsb-release <span class="token parameter variable">-y</span>
+<span class="token function">sudo</span> <span class="token function">mkdir</span> <span class="token parameter variable">-m</span> 0755 <span class="token parameter variable">-p</span> /etc/apt/keyrings
+<span class="token function">curl</span> <span class="token parameter variable">-fsSL</span> https://download.docker.com/linux/ubuntu/gpg <span class="token operator">|</span> <span class="token function">sudo</span> gpg <span class="token parameter variable">--dearmor</span> <span class="token parameter variable">-o</span> /etc/apt/keyrings/docker.gpg
+<span class="token builtin class-name">echo</span> <span class="token punctuation">\</span>
+  <span class="token string">"deb [arch=<span class="token variable"><span class="token variable">$(</span>dpkg --print-architecture<span class="token variable">)</span></span> signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  <span class="token variable"><span class="token variable">$(</span>lsb_release <span class="token parameter variable">-cs</span><span class="token variable">)</span></span> stable"</span> <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">tee</span> /etc/apt/sources.list.d/docker.list <span class="token operator">></span> /dev/null
+<span class="token function">sudo</span> <span class="token function">apt-get</span> update
+<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin <span class="token parameter variable">-y</span></code></pre>
+
+<p>如果有问题请去官网查看文档，都有很详细的解释和排错</p>
+<h3 id="设置代理"><a href="#设置代理" class="headerlink" title="设置代理"></a>设置代理</h3><p>这里是在宿主机使用clash设置代理和自动启动</p>
+<h4 id="下载clash"><a href="#下载clash" class="headerlink" title="下载clash"></a>下载clash</h4><p><a target="_blank" rel="noopener" href="https://github.com/Dreamacro/clash/releases">clash</a></p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">wget</span> <span class="token parameter variable">-O</span> clash.gz https://github.com/Dreamacro/clash/releases/download/v1.13.0/clash-linux-amd64-v1.13.0.gz</code></pre>
+
+
+<p>下载好后解压安装包中 clash 到 &#x2F;usr&#x2F;local&#x2F;bin&#x2F; 目录下，给予执行权限，并以此在全局环境运行软件</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">gzip</span> <span class="token parameter variable">-dc</span> clash.gz <span class="token operator">></span> /usr/local/bin/clash
+<span class="token function">chmod</span> +x /usr/local/bin/clash</code></pre>
+
+<p>创建配置文件目录，并<a target="_blank" rel="noopener" href="https://www.sub-speeder.com/client-download/Country.mmdb">下载 MMDB 文件</a>（如果速度慢可以直接下载后上传）</p>
+<blockquote>
+<p>MMDB 文件可以提供 IP 与地理位置相对应的数据信息，可以更精确地确认 IP 所对应地域，以此提高网络分流的效率和质量</p>
+</blockquote>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> /etc/clash
+<span class="token function">wget</span> <span class="token parameter variable">-O</span> /etc/clash/Country.mmdb https://www.sub-speeder.com/client-download/Country.mmdb</code></pre>
+
+<h4 id="持久化运行"><a href="#持久化运行" class="headerlink" title="持久化运行"></a>持久化运行</h4><p>创建 systemd 脚本，以使程序持久化运行</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token builtin class-name">echo</span> <span class="token string">"[Unit]
+Description=clash daemon
+ 
+[Service]
+Type=simple
+# 注意此处user
+User=root
+ExecStart=/usr/local/bin/clash -d /etc/clash/
+Restart=on-failure
+ 
+[Install]
+WantedBy=multi-user.target"</span> <span class="token operator">></span> /etc/systemd/system/clash.service</code></pre>
+
+<p>重载 systemd</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> systemctl daemon-reload</code></pre>
+
+<h4 id=""><a href="#" class="headerlink" title="********"></a>********</h4><p>下载你的配置文件后写入<code>/etc/clash/config.yaml</code></p>
+<p>或者直接wget下载</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">wget</span> <span class="token parameter variable">-O</span> /etc/clash/config.yaml https://example.com/config.yaml</code></pre>
+
+<h4 id="设置系统代理"><a href="#设置系统代理" class="headerlink" title="设置系统代理"></a>设置系统代理</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token builtin class-name">echo</span> <span class="token string">'export http_proxy="http://127.0.0.1:7890"
+export https_proxy="https://127.0.0.1:7890"
+export no_proxy="localhost, 127.0.0.1"'</span> <span class="token operator">></span> /etc/profile.d/proxy.sh</code></pre>
+
+<h4 id="重载-x2F-etc-x2F-profile-配置"><a href="#重载-x2F-etc-x2F-profile-配置" class="headerlink" title="重载 &#x2F;etc&#x2F;profile 配置"></a>重载 &#x2F;etc&#x2F;profile 配置</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">source</span> /etc/profile</code></pre>
+
+<h4 id="启动clash并设置开机自启"><a href="#启动clash并设置开机自启" class="headerlink" title="启动clash并设置开机自启"></a>启动clash并设置开机自启</h4><pre class="language-bash" data-language="bash"><code class="language-bash">systemctl start clash
+systemctl <span class="token builtin class-name">enable</span> clash</code></pre>
+
+<p>此时可以通过<code>curl www.google.com</code>测试代理是否正常</p>
+<h3 id="下载Yunzai及对应的插件"><a href="#下载Yunzai及对应的插件" class="headerlink" title="下载Yunzai及对应的插件"></a>下载Yunzai及对应的插件</h3><h4 id="下载Yunzai"><a href="#下载Yunzai" class="headerlink" title="下载Yunzai"></a>下载Yunzai</h4><p>在你想要的目录运行</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone <span class="token parameter variable">--depth</span><span class="token operator">=</span><span class="token number">1</span> <span class="token parameter variable">-b</span> main https://gitee.com/Le-niao/Yunzai-Bot.git</code></pre>
+
+<p>进入Yunzai目录</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> Yunzai-Bot/</code></pre>
+
+<p><strong>注意：至此以后所有的目录默认均在Yunzai目录下！！！</strong></p>
+<h4 id="下载对应插件"><a href="#下载对应插件" class="headerlink" title="下载对应插件"></a>下载对应插件</h4><p><strong>注意</strong>：如果卡的话请将<code>github</code>更换为<code>gitee</code>，如不需要可跳过本小节，安装插件前请看好对应作用及说明，本教程会展示安装全部插件及所需库的过程</p>
+<h5 id="chatGPT-Plugin"><a href="#chatGPT-Plugin" class="headerlink" title="chatGPT-Plugin"></a>chatGPT-Plugin</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone <span class="token parameter variable">--depth</span><span class="token operator">=</span><span class="token number">1</span> https://github.com/ikechan8370/chatgpt-plugin.git ./plugins/chatgpt-plugin</code></pre>
+
+<h5 id="Guoba-Plugin"><a href="#Guoba-Plugin" class="headerlink" title="Guoba-Plugin"></a>Guoba-Plugin</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone <span class="token parameter variable">--depth</span><span class="token operator">=</span><span class="token number">1</span> https://github.com/guoba-yunzai/guoba-plugin.git ./plugins/Guoba-Plugin/</code></pre>
+
+<h5 id="miao-plugin"><a href="#miao-plugin" class="headerlink" title="miao-plugin"></a>miao-plugin</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone <span class="token parameter variable">--depth</span><span class="token operator">=</span><span class="token number">1</span> https://github.com/yoimiya-kokomi/miao-plugin.git ./plugins/miao-plugin/</code></pre>
+
+<h5 id="rconsole-plugin"><a href="#rconsole-plugin" class="headerlink" title="rconsole-plugin"></a>rconsole-plugin</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone <span class="token parameter variable">--depth</span><span class="token operator">=</span><span class="token number">1</span> https://gitee.com/kyrzy0416/rconsole-plugin ./plugins/rconsole-plugin/</code></pre>
+
+<h5 id="xiaoyao-cvs-plugin"><a href="#xiaoyao-cvs-plugin" class="headerlink" title="xiaoyao-cvs-plugin"></a>xiaoyao-cvs-plugin</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone <span class="token parameter variable">--depth</span><span class="token operator">=</span><span class="token number">1</span> https://github.com/Ctrlcvs/xiaoyao-cvs-plugin.git ./plugins/xiaoyao-cvs-plugin/</code></pre>
+
+<h5 id="xitian-plugin"><a href="#xitian-plugin" class="headerlink" title="xitian-plugin"></a>xitian-plugin</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone <span class="token parameter variable">--depth</span><span class="token operator">=</span><span class="token number">1</span> https://github.com/XiTianGame/xitian-plugin.git ./plugins/xitian-plugin/</code></pre>
+
+<h3 id="更新docker-compose-yaml文件"><a href="#更新docker-compose-yaml文件" class="headerlink" title="更新docker-compose.yaml文件"></a>更新docker-compose.yaml文件</h3><p>如果您不使用docker搭建Yunzai，请跳过此步骤</p>
+<p>正常情况下默认的docker-compose文件肯定是不行的，我们要把插件加进去，下面给出一份参考文件，可以直接复制但请一定对比看好注释，默认的注释已全部删除，仅放出修改部分的注释</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">"3"</span>
+<span class="token key atrule">services</span><span class="token punctuation">:</span>
+  <span class="token key atrule">yunzai-bot</span><span class="token punctuation">:</span>
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> yunzai<span class="token punctuation">-</span>bot
+    <span class="token comment"># image: swr.cn-south-1.myhuaweicloud.com/sirly/yunzai-bot:v3         # 使用云端精简镜像</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> swr.cn<span class="token punctuation">-</span>south<span class="token punctuation">-</span>1.myhuaweicloud.com/sirly/yunzai<span class="token punctuation">-</span>bot<span class="token punctuation">:</span>v3plus   <span class="token comment"># 使用扩展镜像，如果你想节省资源可以注释此行用上面的精简镜像</span>
+    <span class="token key atrule">restart</span><span class="token punctuation">:</span> always
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token string">"50831:50831"</span>      <span class="token comment"># 映射锅巴插件端口</span>
+      <span class="token punctuation">-</span> <span class="token string">"5900:5900"</span>        <span class="token comment"># 此端口为chatGPT浏览器模式所需的桌面程序所释放的端口</span>
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> ./yunzai/config/<span class="token punctuation">:</span>/app/Yunzai<span class="token punctuation">-</span>Bot/config/config/
+      <span class="token punctuation">-</span> ./yunzai/genshin_config<span class="token punctuation">:</span>/app/Yunzai<span class="token punctuation">-</span>Bot/plugins/genshin/config
+      <span class="token punctuation">-</span> ./yunzai/logs<span class="token punctuation">:</span>/app/Yunzai<span class="token punctuation">-</span>Bot/logs
+      <span class="token punctuation">-</span> ./yunzai/data<span class="token punctuation">:</span>/app/Yunzai<span class="token punctuation">-</span>Bot/data
+      
+      <span class="token comment"># 以下目录是插件目录，安装完插件后需要手动添加映射（如有其他插件请自行添加）</span>
+      <span class="token comment"># 映射格式：./yunzai/plugins/&lt;插件目录名>:/app/Yunzai-Bot/plugins/&lt;插件目录名></span>
+      <span class="token punctuation">-</span> ./yunzai/plugins/example<span class="token punctuation">:</span>/app/Yunzai<span class="token punctuation">-</span>Bot/plugins/example                          <span class="token comment"># 单js插件目录</span>
+      <span class="token punctuation">-</span> ./yunzai/plugins/miao<span class="token punctuation">-</span>plugin<span class="token punctuation">:</span>/app/Yunzai<span class="token punctuation">-</span>Bot/plugins/miao<span class="token punctuation">-</span>plugin                  <span class="token comment"># 喵喵插件</span>
+      <span class="token comment"># - ./yunzai/plugins/py-plugin:/app/Yunzai-Bot/plugins/py-plugin                      # 新py插件</span>
+      <span class="token punctuation">-</span> ./yunzai/plugins/xiaoyao<span class="token punctuation">-</span>cvs<span class="token punctuation">-</span>plugin<span class="token punctuation">:</span>/app/Yunzai<span class="token punctuation">-</span>Bot/plugins/xiaoyao<span class="token punctuation">-</span>cvs<span class="token punctuation">-</span>plugin    <span class="token comment"># 图鉴插件</span>
+      <span class="token punctuation">-</span> ./yunzai/plugins/chatgpt<span class="token punctuation">-</span>plugin<span class="token punctuation">:</span>/app/Yunzai<span class="token punctuation">-</span>Bot/plugins/chatgpt<span class="token punctuation">-</span>plugin    <span class="token comment"># chatgpt插件</span>
+      <span class="token punctuation">-</span> ./yunzai/plugins/xitian<span class="token punctuation">-</span>plugin<span class="token punctuation">:</span>/app/Yunzai<span class="token punctuation">-</span>Bot/plugins/xitian<span class="token punctuation">-</span>plugin    <span class="token comment"># xitian插件</span>
+      <span class="token punctuation">-</span> ./yunzai/plugins/rconsole<span class="token punctuation">-</span>plugin<span class="token punctuation">:</span>/app/Yunzai<span class="token punctuation">-</span>Bot/plugins/rconsole<span class="token punctuation">-</span>plugin    <span class="token comment"># R插件</span>
+      <span class="token punctuation">-</span> ./yunzai/plugins/Guoba<span class="token punctuation">-</span>Plugin<span class="token punctuation">:</span>/app/Yunzai<span class="token punctuation">-</span>Bot/plugins/Guoba<span class="token punctuation">-</span>Plugin                <span class="token comment"># 锅巴插件</span>
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> CUID=1000
+      <span class="token punctuation">-</span> CGID=1000
+    <span class="token key atrule">depends_on</span><span class="token punctuation">:</span>
+      <span class="token key atrule">redis</span><span class="token punctuation">:</span> <span class="token punctuation">&#123;</span> <span class="token key atrule">condition</span><span class="token punctuation">:</span> service_healthy <span class="token punctuation">&#125;</span>
+    <span class="token key atrule">deploy</span><span class="token punctuation">:</span>
+      <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+        <span class="token key atrule">limits</span><span class="token punctuation">:</span>
+          <span class="token key atrule">memory</span><span class="token punctuation">:</span> 2G
+
+  <span class="token key atrule">redis</span><span class="token punctuation">:</span>
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> yunzai<span class="token punctuation">-</span>redis
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> redis<span class="token punctuation">:</span>alpine
+    <span class="token key atrule">restart</span><span class="token punctuation">:</span> always
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> ./redis/data<span class="token punctuation">:</span>/data
+      <span class="token punctuation">-</span> ./redis/logs<span class="token punctuation">:</span>/logs
+    <span class="token key atrule">healthcheck</span><span class="token punctuation">:</span>
+      <span class="token key atrule">test</span><span class="token punctuation">:</span> <span class="token punctuation">[</span> <span class="token string">"CMD"</span><span class="token punctuation">,</span> <span class="token string">"redis-cli"</span><span class="token punctuation">,</span> <span class="token string">"PING"</span> <span class="token punctuation">]</span>
+      <span class="token key atrule">start_period</span><span class="token punctuation">:</span> 10s
+      <span class="token key atrule">interval</span><span class="token punctuation">:</span> 5s
+      <span class="token key atrule">timeout</span><span class="token punctuation">:</span> 1s
+</code></pre>
+
+
+
+<h3 id="【docker】开始安装"><a href="#【docker】开始安装" class="headerlink" title="【docker】开始安装"></a>【docker】开始安装</h3><p><strong>如果您不使用docker版请按照Yunzai的README所提供的方式启动</strong></p>
+<p>Yunzai目录下运行</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> compose up <span class="token parameter variable">-d</span></code></pre>
+
+<blockquote>
+<p>如果您是安装的docker compose standalone，非plugin，则命令为<code>docker-compose up -d</code></p>
+</blockquote>
+<img src="/article/Yunzai-chatgptPlugin/image-20230215220213208.png" class="" title="image-20230215220213208" loading="lazy">
+
+<p>安装完毕后运行<code>docker ps</code>会看到如上</p>
+<h3 id="进行相关配置"><a href="#进行相关配置" class="headerlink" title="进行相关配置"></a>进行相关配置</h3><h4 id="Yunzai的配置"><a href="#Yunzai的配置" class="headerlink" title="Yunzai的配置"></a>Yunzai的配置</h4><p>进入docker容器</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token builtin class-name">exec</span> <span class="token parameter variable">-it</span> yunzai-bot <span class="token function">bash</span></code></pre>
+
+<img src="/article/Yunzai-chatgptPlugin/image-20230215220526567.png" class="" title="image-20230215220526567" loading="lazy">
+
+<p>结合前图所示，可以看到命令行前符号变成了<code>root@2c02297a53c1</code>，而这个<code>2c02297a53c1</code>就是前图所示我的yunzai-bot的<code>CONTAINER ID</code>，说明我们<strong>已经进入了yunzai-bot容器内部</strong></p>
+<p>在容器内部运行<code>exit</code>即可退出容器，标志为命令行符号变成主机名了</p>
+<blockquote>
+<p>接下的步骤基本同在主机安装的步骤一样</p>
+</blockquote>
+<p>在<strong>容器内部</strong>的Yunzai目录（默认就在，不用动）运行</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> run login</code></pre>
+
+<p>按照提示输入账号密码，登录端口默认ipad就行</p>
+<p>可以不设置密码，进行扫码登录，但扫码登录要求设备和系统<strong>在同一个网络环境下</strong></p>
+<img src="/article/Yunzai-chatgptPlugin/image-20230215221128864.png" class="" title="image-20230215221128864" loading="lazy">
+
+<h4 id="获取ticket"><a href="#获取ticket" class="headerlink" title="获取ticket"></a>获取ticket</h4><p>触发了验证选择<code>手动获取ticket</code>的步骤，选择<code>滑动验证app</code>请跳过并按照要求操作</p>
+<ol>
+<li>先打开给出的链接，在浏览器中首先<strong>按下F12或直接打开开发者模式</strong></li>
+<li>打开”网络”或”Network”</li>
+<li>完成滑动验证</li>
+<li>在网络请求中找到<code>cap_union_new_verify</code>，点击Preview，右键<code>ticket</code>选择<code>Copy value</code></li>
+<li>回到系统粘贴</li>
+</ol>
+<img src="/article/Yunzai-chatgptPlugin/image-20230215220956779.png" class="" title="image-20230215220956779" loading="lazy">
+
+<p>如果触发了二次验证，请按要求验证</p>
+<blockquote>
+<p>2023.2.15 本人试了几台机子<code>网页扫码验证</code>都显示不出来</p>
+<img src="/article/Yunzai-chatgptPlugin/image-20230215223558251.png" class="" title="image-20230215223558251" loading="lazy">
+</blockquote>
+<p>成功登陆后本地就保存了登录的token，按CTRL+C退出到容器命令行界面</p>
+<img src="/article/Yunzai-chatgptPlugin/image-20230215223738225.png" class="" title="image-20230215223738225" loading="lazy">
+
+
+
+<h4 id="chatGPT对应的配置"><a href="#chatGPT对应的配置" class="headerlink" title="chatGPT对应的配置"></a>chatGPT对应的配置</h4><p>配置文件位置</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">plugins/chatgpt-plugin/config/index.js</code></pre>
+
+<blockquote>
+<p>注意：如果您是docker用户，在安装完（即执行完<code>docker-compose up -d</code>后，可以发现Yunzai-bot的目录下多了一个yunzai文件夹，这是Yunzai在编译的时候映射入docker容器内的文件夹，文件夹目录如下</p>
+<pre class="language-none"><code class="language-none">yunzai
+├── config
+│   ├── bot.yaml
+│   ├── group.yaml
+│   ├── other.yaml
+│   ├── qq.yaml
+│   └── redis.yaml
+├── data
+│   ├── [你登录的qq号]
+│   │   └── device-[你登录的qq号].json
+│   ├── html
+│   └── image
+├── genshin_config
+├── logs
+└── plugins</code></pre>
+
+<p>所有的文件修改请在此文件夹下修改，如我需要改<code>qq.yaml</code>，请勿在<code>Yunzai-Bot/config/qq.yaml</code>更改，而是在<code>Yunzai-Bot/yunzai/config/qq.yaml</code>修改！！！</p>
+<p>此处有两种方案</p>
+<ol>
+<li><strong>退出容器</strong>，在宿主机的<code>Yunzai-Bot/yunzai/plugins/chatgpt-plugin/config/index.js</code></li>
+<li>在容器内，修改<code>Yunzai-Bot/plugins/chatgpt-plugin/config/index.js</code></li>
+</ol>
+</blockquote>
+<p>请自行查看文档并上传或vim等方式修改</p>
+<h5 id="【docker】配置代理（重点）"><a href="#【docker】配置代理（重点）" class="headerlink" title="【docker】配置代理（重点）"></a>【docker】配置代理（重点）</h5><p><strong>如使用docker版，请一定一定注意代理的配置！！！在配置文件的第二行</strong></p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">const</span> <span class="token constant">PROXY</span> <span class="token operator">=</span> <span class="token string">''</span></code></pre>
+
+<p>注意！由于是docker版，docker内部的网络与宿主机不同，我们需要宿主机的代理，请注意宿主机的代理需设置为允许lan连接</p>
+<blockquote>
+<p>Docker 服务默认会创建一个 <em>docker0</em> 网桥(其上有一个 docker0 内部接口)，它在内核层连通了其他的物理或虚拟网卡</p>
+</blockquote>
+<p>在宿主机，即主机运行</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> network <span class="token function">ls</span></code></pre>
+
+<img src="/article/Yunzai-chatgptPlugin/image-20230215224253515.png" class="" title="image-20230215224253515" loading="lazy">
+
+<p>可以看到有一个yunzai的网络，运行命令查看</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> network inspect yunzai-bot_default</code></pre>
+
+<img src="/article/Yunzai-chatgptPlugin/image-20230215224533490.png" class="" title="image-20230215224533490" loading="lazy">
+
+<p>可以看到这就是我的yunzai-bot所在的虚拟网，我们只要关注<code>IPAM-Config-Gateway</code>即可，这个地址就是我们宿主机和这个网络通信的地址，也是我们宿主机在这个网络的地址，所以我们的代理地址就需要填这个而不是127.0.0.1</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 每个人每台机子随机分配地址，不一定一样，请按照自己的情况配置，这里我就该配置</span>
+<span class="token keyword">const</span> <span class="token constant">PROXY</span> <span class="token operator">=</span> <span class="token string">'http://172.21.0.1:7890'</span> <span class="token comment">// 7890是我宿主机的clash默认的http代理端口</span></code></pre>
+
+<h4 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h4><p>如果是docker用户请注意，所有依赖均需要在<strong>容器内</strong>安装，如未安装插件则无需安装其依赖</p>
+<p>miao-plugin&#x2F;py-plugin&#x2F;xiaoyao-cvs-plugin&#x2F;Guoba-Plugin插件依赖默认在docker构建镜像时就已经安装，无需额外操作</p>
+<p>chatGPT-Plugin所需依赖</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">pnpm</span> <span class="token function">install</span> <span class="token parameter variable">-w</span> undici chatgpt showdown mathjax-node delay uuid remark strip-markdown random puppeteer-extra-plugin-recaptcha puppeteer-extra puppeteer-extra-plugin-stealth @waylaidwanderer/chatgpt-api keyv-file</code></pre>
+
+<p>rconsole-plugin所需依赖</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">pnpm</span> <span class="token function">add</span> mongodb axios tunnel twitter-api-v2 <span class="token parameter variable">-w</span></code></pre>
+
+<h3 id="【docker】最后"><a href="#【docker】最后" class="headerlink" title="【docker】最后"></a>【docker】最后</h3><p>重启Yunzai-Bot容器</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> restart yunzai-bot</code></pre>
+
+<p>基础安装教程到这里就结束了</p>
+<h2 id="【docker】chatGPT-Plugin想使用浏览器模式怎么办"><a href="#【docker】chatGPT-Plugin想使用浏览器模式怎么办" class="headerlink" title="【docker】chatGPT-Plugin想使用浏览器模式怎么办"></a>【docker】chatGPT-Plugin想使用浏览器模式怎么办</h2><p>chatGPT-Plugin想使用浏览器模式需要有桌面环境</p>
+<ol>
+<li>宿主机执行，安装xvfb和fluxbox，并选择安装screen或tmux，这里以screen演示</li>
+</ol>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">apt-get</span> <span class="token function">install</span> x11vnc xvfb fluxbox <span class="token function">screen</span></code></pre>
+
+<ol start="2">
+<li>启动桌面环境</li>
+</ol>
+<p>首先运行</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">screen</span></code></pre>
+
+<p>接着在弹出来的新命令行输入</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">x11vnc <span class="token parameter variable">-create</span> <span class="token parameter variable">-env</span> <span class="token assign-left variable">FD_PROG</span><span class="token operator">=</span>/usr/bin/fluxbox <span class="token parameter variable">-env</span> <span class="token assign-left variable">X11VNC_FINDDISPLAY_ALWAYS_FAILS</span><span class="token operator">=</span><span class="token number">1</span>   <span class="token parameter variable">-env</span> <span class="token assign-left variable">X11VNC_CREATE_GEOM</span><span class="token operator">=</span><span class="token variable">$&#123;1<span class="token operator">:-</span>1024x768x16&#125;</span>   <span class="token parameter variable">-nopw</span> <span class="token parameter variable">-forever</span></code></pre>
+
+<p>然后直接关闭这个窗口吧～</p>
+<blockquote>
+<p>你问我为啥，因为这个一启动就一直占前台，没机会CTRL+D退到后台，如果你的机器可以那就退到后台就行</p>
+<p>用nohup挂后台反而多此一举</p>
+</blockquote>
+<ol start="3">
+<li>使用vnc客户端连接至桌面</li>
+</ol>
+<p>vnc连接你宿主机的 <code>[ip]:5900</code>，之前的端口映射就是为了把容器内部的端口映射到宿主机</p>
+<blockquote>
+<p>注意！再次强调安全问题！！！注意本命令使用默认5900端口和无密码，请勿在公网或非安全环境下使用</p>
+</blockquote>
+<img src="/article/Yunzai-chatgptPlugin/image-20230215231252730.png" class="" title="image-20230215231252730" loading="lazy">
+
+<p>使用vnc客户端连接至云桌面，右键Applications &gt; Shells &gt; Bash打开终端，然后进入Yunzai目录（默认就是）下运行node app即可</p>
+<h2 id="问题解答"><a href="#问题解答" class="headerlink" title="问题解答"></a>问题解答</h2><h3 id="【bot】载入插件错误：chat"><a href="#【bot】载入插件错误：chat" class="headerlink" title="【bot】载入插件错误：chat"></a>【bot】载入插件错误：chat</h3><p>问题详情：Error [ERR_MODULE_NOT_FOUND]: Cannot find package ‘showdown’ imported from &#x2F;app&#x2F;Yunzai-Bot&#x2F;plugins&#x2F;chatgpt-plugin&#x2F;apps&#x2F;chat.js</p>
+<p>原因：没装依赖</p>
+<p>解决方式：请参考文档用<code>pnmp install -w xxx</code>安装依赖</p>
+<h3 id="【bot】chatgpt-puppeteer-启动失败"><a href="#【bot】chatgpt-puppeteer-启动失败" class="headerlink" title="【bot】chatgpt puppeteer 启动失败"></a>【bot】chatgpt puppeteer 启动失败</h3><p>问题详情：TypeError: this.browser.pages is not a function</p>
+<p>原因：没有桌面环境</p>
+<p>解决方式：请参照文档安装桌面环境<code>apt-get install x11vnc xvfb fluxbox</code></p>
+<h3 id="【bot】-10003"><a href="#【bot】-10003" class="headerlink" title="【bot】-10003"></a>【bot】-10003</h3><p>问题详情：Error: unsuccessful retcode: -10003</p>
+<p>原因：登录失效</p>
+<p>解决方式：重新登录bot，运行<code>node app</code>或<code>npm run login</code></p>
+<h3 id="【bot】我的bot突然掉线再登录提示禁止登录-x2F-版本过低怎么办"><a href="#【bot】我的bot突然掉线再登录提示禁止登录-x2F-版本过低怎么办" class="headerlink" title="【bot】我的bot突然掉线再登录提示禁止登录&#x2F;版本过低怎么办"></a>【bot】我的bot突然掉线再登录提示禁止登录&#x2F;版本过低怎么办</h3><p>问题详情：[温馨提示]当前QQ版本过低，请升级至最新版本后再登录。点击进入下载页面</p>
+<p>原因：Yunzai-bot的内置QQ版本与最新版本相差过大，且账号容易被风控</p>
+<p>解决方式：不保证成功</p>
+<ol>
+<li>更改登录设备，在<code>config/qq.yaml</code>修改登录设备</li>
+</ol>
+<blockquote>
+<p>注意：如果您是docker用户，在安装完（即执行完<code>docker-compose up -d</code>后，可以发现Yunzai-bot的目录下多了一个yunzai文件夹，这是Yunzai在编译的时候映射入docker容器内的文件夹，文件夹目录如下</p>
+<pre class="language-none"><code class="language-none">yunzai
+├── config
+│   ├── bot.yaml
+│   ├── group.yaml
+│   ├── other.yaml
+│   ├── qq.yaml
+│   └── redis.yaml
+├── data
+│   ├── [你登录的qq号]
+│   │   └── device-[你登录的qq号].json
+│   ├── html
+│   └── image
+├── genshin_config
+├── logs
+└── plugins</code></pre>
+
+<p>所有的文件修改请在此文件夹下修改，如我需要改<code>qq.yaml</code>，请勿在<code>Yunzai-Bot/config/qq.yaml</code>更改，而是在<code>Yunzai-Bot/yunzai/config/qq.yaml</code>修改！！！</p>
+</blockquote>
+<ol start="2">
+<li>尝试修改设备信息</li>
+</ol>
+<img src="/article/Yunzai-chatgptPlugin/e55c4bab_9454279.jpeg" class="" title="img" loading="lazy">
+
+<ol start="3">
+<li>膜一膜<a target="_blank" rel="noopener" href="https://gitee.com/Le-niao/Yunzai-Bot">Le-niao</a>大佬更新下云崽</li>
+</ol>
+<h3 id="【docker】我执行docker-compose的时候报如下错误怎么办"><a href="#【docker】我执行docker-compose的时候报如下错误怎么办" class="headerlink" title="【docker】我执行docker compose的时候报如下错误怎么办"></a>【docker】我执行docker compose的时候报如下错误怎么办</h3><p>问题详情：ERROR: The Compose file ‘.&#x2F;docker-compose.yaml’ is invalid</p>
+<img src="/article/Yunzai-chatgptPlugin/image-20230215214728708.png" class="" title="image-20230215214728708" loading="lazy">
+
+<p>原因：docker compose版本过低</p>
+<p>解决方式：升级docker compose版本——<a target="_blank" rel="noopener" href="https://docs.docker.com/compose/install/">重新下载plugin或standalone</a></p>
+<h3 id="【docker】在docker-Running的过程中报如下错误怎么办"><a href="#【docker】在docker-Running的过程中报如下错误怎么办" class="headerlink" title="【docker】在docker Running的过程中报如下错误怎么办"></a>【docker】在docker Running的过程中报如下错误怎么办</h3><p>问题详情：Your kernel does not support swap limit capabilities or the cgroup is not mounted</p>
+<img src="/article/Yunzai-chatgptPlugin/image-20230215215409836.png" class="" title="image-20230215215409836" loading="lazy">
+
+<p>原因：系统默认未开启swap内存限制</p>
+<p>解决方式：编辑<code>/etc/default/grub file</code>，注意有<strong>两个文件</strong>，建议用vim</p>
+<img src="/article/Yunzai-chatgptPlugin/image-20230215220014930.png" class="" title="image-20230215220014930" loading="lazy">
+
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /etc/default/grub <span class="token function">file</span></code></pre>
+
+<p>添加一行，如果用vin需要按<code>:wq</code>后按回车再来一次保存</p>
+<p><code>GRUB_CMDLINE_LINUX=&quot;cgroup_enable=memory swapaccount=1&quot;</code></p>
+<p>执行</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">update-grub</span></code></pre>
+
+<p>执行完后重启系统</p>
+<h3 id="【ChatGPT】timed-out"><a href="#【ChatGPT】timed-out" class="headerlink" title="【ChatGPT】timed out"></a>【ChatGPT】timed out</h3><p>问题详情：Error: ChatGPT timed out waiting for response</p>
+<p>原因：卡了</p>
+<p>解决方式：再试试</p>
+<h3 id="【ChatGPT】ERR-ABORTED"><a href="#【ChatGPT】ERR-ABORTED" class="headerlink" title="【ChatGPT】ERR_ABORTED"></a>【ChatGPT】ERR_ABORTED</h3><p>问题详情：Error: net::ERR_ABORTED at <a target="_blank" rel="noopener" href="https://chat.openai.com/auth/login">https://chat.openai.com/auth/login</a></p>
+<p>原因：在恢复会话登录的时候失败了</p>
+<p>解决方式：再试试</p>
+<h3 id="【ChatGPT】ERR-CONNECTION-RESET"><a href="#【ChatGPT】ERR-CONNECTION-RESET" class="headerlink" title="【ChatGPT】ERR_CONNECTION_RESET"></a>【ChatGPT】ERR_CONNECTION_RESET</h3><p>问题详情：Error: net::ERR_CONNECTION_RESET at <a target="_blank" rel="noopener" href="https://chat.openai.com/chat">https://chat.openai.com/chat</a></p>
+<p>原因：1. 网络不好 2. 代理挂了</p>
+<p>解决方式：重试或者换代理</p>
+<h3 id="【ChatGPT】ERR-PROXY-CONNECTION-FAILED"><a href="#【ChatGPT】ERR-PROXY-CONNECTION-FAILED" class="headerlink" title="【ChatGPT】ERR_PROXY_CONNECTION_FAILED"></a>【ChatGPT】ERR_PROXY_CONNECTION_FAILED</h3><p>问题详情：Error: net::ERR_PROXY_CONNECTION_FAILED at <a target="_blank" rel="noopener" href="https://chat.openai.com/chat">https://chat.openai.com/chat</a></p>
+<p>原因：代理挂了</p>
+<p>解决方式：检查代理配置</p>
+<h3 id="【ChatGPT】ECONNRESET"><a href="#【ChatGPT】ECONNRESET" class="headerlink" title="【ChatGPT】ECONNRESET"></a>【ChatGPT】ECONNRESET</h3><p>问题详情：FetchError: request to <a target="_blank" rel="noopener" href="https://chat.duti.tech/api/conversation">https://chat.duti.tech/api/conversation</a> failed, reason: read ECONNRESET</p>
+<p>原因：连不上服务器</p>
+<p>解决方式：检查代理</p>
+<h3 id="【ChatGPT】Not-signed-in"><a href="#【ChatGPT】Not-signed-in" class="headerlink" title="【ChatGPT】Not signed in"></a>【ChatGPT】Not signed in</h3><p>问题详情：Error: Not signed in</p>
+<p>原因：登录流程结束但是实际上未登录，一般是主机卡了一下，或者服务器capacity了</p>
+<p>解决方式：再试试，一般要么就好了要么就会报其他的错 &#x3D; &#x3D;</p>
+<img src="/article/Yunzai-chatgptPlugin/image-20230215234115777.png" class="" title="image-20230215234115777" loading="lazy">
+
+<h3 id="【ChatGPT】404"><a href="#【ChatGPT】404" class="headerlink" title="【ChatGPT】404"></a>【ChatGPT】404</h3><p>问题详情：Error: ChatGPTAPI error 404</p>
+<p>原因：一般是服务器抽风，少量情况是代理被ban了</p>
+<p>解决方式：更换代理或再试试</p>
+<h3 id="【ChatGPT】429"><a href="#【ChatGPT】429" class="headerlink" title="【ChatGPT】429"></a>【ChatGPT】429</h3><p>问题详情：Error: ChatGPTAPI error 429</p>
+<p>原因：请求太多，多半是代理的问题</p>
+<p>解决方式：关了浏览器重开或更换代理再试试</p>
+<img src="/article/Yunzai-chatgptPlugin/image-20230215234728748.png" class="" title="image-20230215234728748" loading="lazy">
+
+
+
+<h3 id="【ChatGPT】capacity"><a href="#【ChatGPT】capacity" class="headerlink" title="【ChatGPT】capacity"></a>【ChatGPT】capacity</h3><p>问题详情：Error: ChatGPT is at capacity</p>
+<p>原因：每天晚上固定时间忙碌</p>
+<p>解决方式：尊贵的plus用户永远不会遇到此问题</p>
+<p>待续…</p>
+<hr>
+<h3 id="【标签】问题标题"><a href="#【标签】问题标题" class="headerlink" title="【标签】问题标题"></a>【标签】问题标题</h3><p>问题详情：</p>
+<p>原因：</p>
+<p>解决方式：</p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>还没想好，还会更新</p>
+<p>原文地址：<a href="https://err0r.top/article/Yunzai-chatgptPlugin/">https://err0r.top/article/Yunzai-chatgptPlugin/</a></p>
+<p>转载请注明作者和原文地址，谢谢！</p>
+<h2 id="参考文章及感谢"><a href="#参考文章及感谢" class="headerlink" title="参考文章及感谢"></a>参考文章及感谢</h2><p><a target="_blank" rel="noopener" href="https://gitee.com/Le-niao/Yunzai-Bot">Yunzai-Bot</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ikechan8370/chatgpt-plugin">chatGPT-Plugin作者</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.ahdark.com/som/1643.shtml">使用 Clash 为 Linux 提供网络代理服务</a></p>
+<p>所有在chatGPT-Plugin插件群的群友们，爱你们～</p>
 </div></section><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="打赏" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-hand-coin-line"></use></svg></span><div id="reward-comment">如果觉得我的文章对你有帮助，可以请俺喝冰阔落</div><div id="qr" style="display:none;"><div style="display:inline-block"><a href="/images/alipay.jpg"><img loading="lazy" src="/images/alipay.jpg" alt="支付宝" title="支付宝"></a><div><span style="color:#00A3EE"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-alipay-line"></use></svg></span></div></div><div style="display:inline-block"><a href="/images/qq.jpg"><img loading="lazy" src="/images/qq.jpg" alt="QQ 支付" title="QQ 支付"></a><div><span style="color:#12B7F5"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qq-line"></use></svg></span></div></div><div style="display:inline-block"><a href="/images/wechat.jpg"><img loading="lazy" src="/images/wechat.jpg" alt="微信支付" title="微信支付"></a><div><span style="color:#2DC100"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-wechat-pay-line"></use></svg></span></div></div></div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>Err0r</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="https://err0r.top/article/Yunzai-chatgptPlugin/" title="云崽机器人与chatGPT插件的安装">https://err0r.top/article/Yunzai-chatgptPlugin/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><span class="icon iconify" data-icon="ri:creative-commons-line"></span><span class="icon iconify" data-icon="ri:creative-commons-by-line"></span><span class="icon iconify" data-icon="ri:creative-commons-nc-line"></span><span class="icon iconify" data-icon="ri:creative-commons-sa-line"></span></a> 许可协议。</li></ul></article><div class="post-nav"><div class="post-nav-item"></div><div class="post-nav-item"><a class="post-nav-next" href="/article/eruditeFlower/" rel="next" title="NepCTF2022博学多闻的花花WP&amp;出题笔记"><span class="post-nav-text">NepCTF2022博学多闻的花花WP&amp;出题笔记</span><span class="icon iconify" data-icon="ri:arrow-right-s-line"></span></a></div></div></div><div class="hty-card" id="comment"><div class="comment-tooltip text-center"><span>若您想及时得到回复提醒，建议私发邮件联系。</span><br><span>评论请遵守评论公德，博主会不定时检查评论并进行回复。</span><br></div><div id="waline"></div><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/@waline/client@v2/dist/waline.css"><script>window.CONFIG.waline.config.path = "/article/Yunzai-chatgptPlugin/"</script><div class="js-Pjax"><script src="/js/comments/waline.js" type="module" defer></script></div></div></main><footer class="sidebar-translate" id="footer"><div class="beian"><a rel="noopener" href="https://beian.miit.gov.cn/" target="_blank">苏ICP备20028116号-1</a></div><div class="copyright"><span>&copy; 2020 – 2023 </span><span class="with-love" id="animate"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cloud-line"></use></svg></span><span class="author"> Err0r</span></div><div class="live-time"><span>本博客已在各种灾难中运行了</span><span id="display_live_time"></span><span class="moe-text">(●'◡'●)</span><script>function blog_live_time() {
   setTimeout(blog_live_time, 1000);
   const start = new Date('2020-10-20T00:00:00');
