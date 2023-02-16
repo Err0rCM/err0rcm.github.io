@@ -492,10 +492,18 @@ docker restart yunzai-bot
 
 chatGPT-Plugin想使用浏览器模式需要有桌面环境
 
-1. 宿主机执行，安装xvfb和fluxbox，并选择安装screen或tmux，这里以screen演示
+1. **容器内**执行，安装xvfb和fluxbox，并选择安装screen或tmux，这里以screen演示
+
+Ubuntu：
 
 ```sh
 apt-get install x11vnc xvfb fluxbox screen
+```
+
+CentOS：
+
+```sh
+yum install x11vnc Xvfb fluxbox screen
 ```
 
 2. 启动桌面环境
@@ -530,13 +538,43 @@ vnc连接你宿主机的 `[ip]:5900`，之前的端口映射就是为了把容�
 
 ## 问题解答
 
+### 【system】ERR_PNPM_ADDING_TO_ROOT
+
+问题详情：Running this command will add the dependency to the workspace root
+
+原因：依赖安装问题，添加依赖项到了根目录中
+
+解决方式：检查命令是否出错以及权限问题
+
+
+
+### 【system】ERR_PNPM_UNEXPECTED_STORE 
+
+问题详情：Unexpected store location
+
+原因：迁移了node_modules的目录
+
+解决方式：`pnpm install`重新安装依赖
+
+
+
+### 【system】Invalid Environment
+
+问题详情：Error: Invalid Environment; fetch is not defined
+
+原因：node版本过低
+
+解决方式：请升级到nodejs18
+
+
+
 ### 【bot】载入插件错误：chat
 
 问题详情：Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'showdown' imported from /app/Yunzai-Bot/plugins/chatgpt-plugin/apps/chat.js
 
 原因：没装依赖
 
-解决方式：请参考文档用`pnmp install -w xxx`安装依赖
+解决方式：请参考文档用`pnmp install -w xxx`安装依赖，遇到的情况是`apt-get install x11vnc xvfb fluxbox`，安装完就不报错了
 
 
 
@@ -546,7 +584,7 @@ vnc连接你宿主机的 `[ip]:5900`，之前的端口映射就是为了把容�
 
 原因：没有桌面环境
 
-解决方式：请参照文档安装桌面环境`apt-get install x11vnc xvfb fluxbox`
+解决方式：请参照文档[安装桌面环境](#【docker】chatGPT-Plugin想使用浏览器模式怎么办)
 
 
 
@@ -702,23 +740,13 @@ sudo update-grub
 
 ![image-20230215234115777](Yunzai-chatgptPlugin/image-20230215234115777.png)
 
-### 【ChatGPT】404
+### 【ChatGPT】404/429/503
 
-问题详情：Error: ChatGPTAPI error 404
+问题详情：Error: ChatGPTAPI error 404 / Error: ChatGPTAPI error 429 / Error: Failed to send message.HTTP 503...
 
-原因：一般是服务器抽风，少量情况是代理被ban了
+原因：一般是服务器抽风，多数情况是代理被ban了，可能是请求太多，也可能是没钱了，具体要看返回的message
 
-解决方式：更换代理或再试试
-
-
-
-### 【ChatGPT】429
-
-问题详情：Error: ChatGPTAPI error 429
-
-原因：请求太多，多半是代理的问题
-
-解决方式：关了浏览器重开或更换代理再试试
+解决方式：1. 关了浏览器重开 2. 更换代理再试试 3. 钞能力
 
 ![image-20230215234728748](Yunzai-chatgptPlugin/image-20230215234728748.png)
 
@@ -734,13 +762,7 @@ sudo update-grub
 
 
 
-### 【ChatGPT】503
 
-问题详情：Error: Failed to send message.HTTP 503...
-
-原因：1. 网不好 2. 代理挂了 3. 浏览器校验没通过
-
-解决方式：换个代理，或者再试试
 
 
 
