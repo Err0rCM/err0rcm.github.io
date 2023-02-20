@@ -196,6 +196,16 @@ systemctl enable clash
 
 此时可以通过`curl www.google.com`测试代理是否正常
 
+#### 配置git代理&跳过ssl证书校验
+
+```sh
+git config --global http.proxy 127.0.0.1:7890
+git config --global https.proxy 127.0.0.1:7890
+git config --global https.sslverify false
+```
+
+
+
 ### 下载Yunzai及对应的插件
 
 #### 下载Yunzai
@@ -536,6 +546,44 @@ vnc连接你宿主机的 `[ip]:5900`，之前的端口映射就是为了把容�
 
 使用vnc客户端连接至云桌面，右键Applications > Shells > Bash打开终端，然后进入Yunzai目录（默认就是）下运行node app即可
 
+## 如何更新插件
+
+一般情况下分为两种
+
+### 通过云崽机器人对话更新
+
+发送`#更新`即可更新机器人，如果插件支持自动更新，可以查看插件文档，如`#更新chatgpt`（TODO）
+
+**注意：**通过对话更新请在可以操作搭建环境的情况下进行，否则出现问题可能会导致崩溃无法解决
+
+### 直接操作源码更新
+
+进入仓库目录，打开命令行运行如下（默认已安装所需环境如git等）
+
+```sh
+git stash -p
+```
+
+运行后进入交互界面
+
+![image-20230220194247500](Yunzai-chatgptPlugin/image-20230220194247500.png)
+
+按`y`保存需要的内容，按n不保存，一般只需要注意下`config/index.js`的内容
+
+保存后运行
+
+```sh
+git pull
+```
+
+拉好更新后再运行
+
+```sh
+git stash pop
+```
+
+将之前存储的更改复原，之后重启机器人即可
+
 ## 问题解答
 
 ### 【system】ERR_PNPM_ADDING_TO_ROOT
@@ -574,7 +622,7 @@ vnc连接你宿主机的 `[ip]:5900`，之前的端口映射就是为了把容�
 
 原因：没装依赖
 
-解决方式：请参考文档用`pnmp install -w xxx`安装依赖，遇到的情况是`apt-get install x11vnc xvfb fluxbox`，安装完就不报错了
+解决方式：请参考文档用`pnmp install -w xxx`安装依赖，遇到的情况一般是`pnpm install -w undici chatgpt showdown mathjax-node delay uuid remark strip-markdown random puppeteer-extra-plugin-recaptcha puppeteer-extra puppeteer-extra-plugin-stealth @waylaidwanderer/chatgpt-api keyv-file`，安装完就不报错了
 
 
 
