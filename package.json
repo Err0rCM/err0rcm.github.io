@@ -30,6 +30,7 @@
     "hexo-renderer-stylus": "^2.1.0",
     "hexo-server": "^2.0.0",
     "hexo-simple-image": "^1.0.2",
+    "hexo-submit-urls-to-search-engine": "^2.1.0",
     "hexo-theme-yun": "^1.10.9",
     "hexo-wordcount": "^6.0.1",
     "prismjs": "^1.22.0",
