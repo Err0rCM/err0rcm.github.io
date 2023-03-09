@@ -7,3 +7,4 @@ public/
 .deploy*/
 deploy.sh
 update.sh
+speedy*.json
