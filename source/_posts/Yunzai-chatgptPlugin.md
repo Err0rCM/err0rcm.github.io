@@ -7,7 +7,12 @@ urlname: Yunzai-chatgptPlugin
 updated:
 password:
 tags:
+ - chatgpt
+ - yunzai
+ - 搭建教程
 categories:
+ - 杂谈笔记
+ - 菜鸡教程
 ---
 
 
@@ -400,11 +405,13 @@ npm run login
 
 #### chatGPT对应的配置
 
-配置文件位置
+默认配置文件位置
 
 ```sh
-plugins/chatgpt-plugin/config/index.js
+plugins/chatgpt-plugin/config/config.example.json
 ```
+
+请将其复制一份为`config.json`到统一目录下即可自定义配置，推荐使用锅巴插件进行配置
 
 > 注意：如果您是docker用户，在安装完（即执行完`docker-compose up -d`后，可以发现Yunzai-bot的目录下多了一个yunzai文件夹，这是Yunzai在编译的时候映射入docker容器内的文件夹，文件夹目录如下
 >
@@ -430,17 +437,17 @@ plugins/chatgpt-plugin/config/index.js
 >
 > 此处有两种方案
 >
-> 1. **退出容器**，在宿主机的`Yunzai-Bot/yunzai/plugins/chatgpt-plugin/config/index.js`
-> 2. 在容器内，修改`Yunzai-Bot/plugins/chatgpt-plugin/config/index.js`
+> 1. **退出容器**，在宿主机的`Yunzai-Bot/yunzai/plugins/chatgpt-plugin/config/config.json`
+> 2. 在容器内，修改`Yunzai-Bot/plugins/chatgpt-plugin/config/config.json`
 
 请自行查看文档并上传或vim等方式修改
 
 ##### 【docker】配置代理（重点）
 
-**如使用docker版，请一定一定注意代理的配置！！！在配置文件的第二行**
+**如使用docker版，请一定一定注意代理的配置！！！在配置文件的第二条**
 
-```js
-const PROXY = ''
+```json
+"proxy": "",
 ```
 
 注意！由于是docker版，docker内部的网络与宿主机不同，我们需要宿主机的代理，请注意宿主机的代理需设置为允许lan连接
@@ -467,7 +474,7 @@ docker network inspect yunzai-bot_default
 
 ```js
 // 每个人每台机子随机分配地址，不一定一样，请按照自己的情况配置，这里我就该配置
-const PROXY = 'http://172.21.0.1:7890' // 7890是我宿主机的clash默认的http代理端口
+"proxy": "http://172.21.0.1:7890", // 7890是我宿主机的clash默认的http代理端口
 ```
 
 #### 安装依赖
@@ -498,7 +505,7 @@ docker restart yunzai-bot
 
 基础安装教程到这里就结束了
 
-## 【docker】chatGPT-Plugin想使用浏览器模式怎么办
+## 【docker】【目前已不推荐使用】chatGPT-Plugin想使用浏览器模式怎么办
 
 chatGPT-Plugin想使用浏览器模式需要有桌面环境
 
@@ -552,7 +559,7 @@ vnc连接你宿主机的 `[ip]:5900`，之前的端口映射就是为了把容�
 
 ### 通过云崽机器人对话更新
 
-发送`#更新`即可更新机器人，如果插件支持自动更新，可以查看插件文档，如`#更新chatgpt`（TODO）
+发送`#更新`即可更新机器人，如果插件支持自动更新，可以查看插件文档，如`#chatgpt更新`
 
 **注意：**通过对话更新请在可以操作搭建环境的情况下进行，否则出现问题可能会导致崩溃无法解决
 
@@ -686,7 +693,7 @@ git stash pop
 
 3. 膜一膜[Le-niao](https://gitee.com/Le-niao/Yunzai-Bot)大佬更新下云崽
 
-
+4. 参考其他issue的方法
 
 ### 【docker】我执行docker compose的时候报如下错误怎么办
 
