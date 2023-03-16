@@ -380,15 +380,6 @@
   </url>
   
   <url>
-    <loc>https://err0r.top/tags/index.html</loc>
-    
-    <lastmod>2021-02-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://err0r.top/slides/index.html</loc>
     
     <lastmod>2021-02-19</lastmod>
@@ -398,7 +389,7 @@
   </url>
   
   <url>
-    <loc>https://err0r.top/download/index.html</loc>
+    <loc>https://err0r.top/tags/index.html</loc>
     
     <lastmod>2021-02-19</lastmod>
     
@@ -417,6 +408,15 @@
   
   <url>
     <loc>https://err0r.top/categories/index.html</loc>
+    
+    <lastmod>2021-02-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://err0r.top/download/index.html</loc>
     
     <lastmod>2021-02-19</lastmod>
     
@@ -500,21 +500,7 @@
   </url>
   
   <url>
-    <loc>https://err0r.top/tags/CTFd/</loc>
-    <lastmod>2023-03-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://err0r.top/tags/Python/</loc>
-    <lastmod>2023-03-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://err0r.top/tags/Netcat/</loc>
     <lastmod>2023-03-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -535,7 +521,28 @@
   </url>
   
   <url>
+    <loc>https://err0r.top/tags/CTFd/</loc>
+    <lastmod>2023-03-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://err0r.top/tags/Netcat/</loc>
+    <lastmod>2023-03-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://err0r.top/tags/SSTI/</loc>
+    <lastmod>2023-03-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://err0r.top/tags/%E7%BC%96%E7%A8%8B/</loc>
     <lastmod>2023-03-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -557,13 +564,6 @@
   
   <url>
     <loc>https://err0r.top/tags/%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/</loc>
-    <lastmod>2023-03-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://err0r.top/tags/%E7%BC%96%E7%A8%8B/</loc>
     <lastmod>2023-03-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -607,14 +607,14 @@
   </url>
   
   <url>
-    <loc>https://err0r.top/categories/Programme/</loc>
+    <loc>https://err0r.top/categories/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/</loc>
     <lastmod>2023-03-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://err0r.top/categories/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/</loc>
+    <loc>https://err0r.top/categories/Programme/</loc>
     <lastmod>2023-03-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
